@@ -10,6 +10,10 @@ export function GET({ site: url }: { site: URL }) {
     'Preferred-Languages: en',
     `Canonical: ${new URL('/.well-known/security.txt', url)}`,
     '',
+    // step 2 of the flag trail, comments are allowed by rfc 9116
+    '# Thanks for checking. If you are here for the flag, step 2 of 3:',
+    `# ${Buffer.from(`/${site.flag.finalPath}/`).toString('base64')}`,
+    '',
   ].join('\n');
   return new Response(body, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 }

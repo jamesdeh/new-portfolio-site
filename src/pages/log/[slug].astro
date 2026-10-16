@@ -46,7 +46,7 @@ if (week) {
 }
 ---
 <Base title={d.title} description={d.summary} current="log" scripts={['reading-progress', 'paper-toggle', 'copy-code', 'section-index']}>
-  <div class="pbar pbar--read" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+  <div class="pbar pbar--read" aria-hidden="true">
     {Array.from({ length: 12 }, () => <i></i>)}
   </div>
   <main class="wrap" id="main">
@@ -70,7 +70,7 @@ if (week) {
       {week && <p class="disclaimer micro"><Icon name="note" />Views are my own and don't represent Atlassian.</p>}
     </header>
     <div class="doc doc--post">
-      <aside class="doc__rail">{toc.length > 0 && <Toc items={toc} />}</aside>
+      <aside class="doc__rail" aria-label="Page contents">{toc.length > 0 && <Toc items={toc} />}</aside>
       <article class="doc__body">
         {toc.length > 0 && <Toc items={toc} mobile />}
         {d.draft && <Callout type="warn" label="Draft · not published">This post is a draft. It shows here because drafts are on for this build, and it won't appear on the live site until it's marked ready.</Callout>}
@@ -89,9 +89,9 @@ if (week) {
           </nav>
         )}
       </article>
-      <aside class="doc__aside">
+      <aside class="doc__aside" aria-label="Details">
         {week && <div class="stack gap-8"><span class="label muted">Series</span><span class="px aside-count">{pad2(week)}<span class="muted">/12</span></span></div>}
-        <div class="stack gap-8"><span class="label muted">Tags</span><div class="tags">{d.tags.map((t) => <a class="tag" href="/log/">{t}</a>)}</div></div>
+        <div class="stack gap-8"><span class="label muted">Tags</span><div class="tags">{d.tags.map((t) => <a class="tag" href={`/log/tag/${t.toLowerCase()}/`}>{t}</a>)}</div></div>
         <div class="stack gap-8"><span class="label muted">Share</span><button class="btn btn--ghost btn--sm btn--bare" type="button" data-copy-link hidden>Copy link</button><noscript><span class="micro muted">Copy the address bar</span></noscript></div>
       </aside>
     </div>

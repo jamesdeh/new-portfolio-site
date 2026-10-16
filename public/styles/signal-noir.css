@@ -1114,3 +1114,41 @@ html[data-os="mac"] .sn .k-mac { display: inline; }
   .sn .pipe__panel { grid-template-columns: minmax(0, 1fr); padding: var(--s-4); }
 }
 @media (prefers-reduced-motion: reduce) { .sn .pipe__track { transition: none; } }
+/* tag page links reuse the filter look, the current tag gets the accent square */
+.sn a.tag--filter { text-decoration: none; }
+.sn a.tag[aria-current="page"] { color: var(--text); border-color: var(--text); }
+.sn a.tag[aria-current="page"]::before { content: ""; width: 6px; height: 6px; background: var(--accent); }
+
+/* ---------- cv ---------- */
+.sn .cv-contact { align-items: center; }
+.sn .cv-links { display: flex; flex-wrap: wrap; gap: 6px 10px; }
+.sn .cv .kv dd { font-size: 1rem; line-height: 1.55; }
+.sn .cv-note { display: block; margin-top: 4px; font-size: var(--fs-small); }
+.sn .cv-points { list-style: none; margin-top: var(--s-2); display: flex; flex-direction: column; gap: 6px; }
+.sn .cv-points li { position: relative; padding-left: 1.2em; font-size: var(--fs-small); color: var(--muted); }
+.sn .cv-points li::before { content: ""; position: absolute; left: 0; top: 0.65em; width: 5px; height: 5px; background: var(--muted); }
+
+/* ---------- print: paper colours, no chrome, links spelled out ---------- */
+@media print {
+  @page { margin: 16mm; }
+  html, html[data-mode="paper"], body { background: #fff !important; }
+  .sn {
+    --bg: #fff; --surface: #fff; --surface-2: #fff; --line: #ccc; --line-2: #999; --control: #999;
+    --text: #000; --muted: #444; --accent: #B8261C; --margin: 0px; --section: 32px;
+    background: #fff; color: #000; font-size: 11pt;
+  }
+  .sn::after, .sn .topbar, .sn .footer, .sn .skip, .sn .doc__rail, .sn .doc__aside, .sn .toc-mobile,
+  .sn .pbar--read, .sn [data-print], .sn .toast-host, .sn dialog, .sn .rail, .sn .hero__field, .sn .pn,
+  .sn .toggle, .sn .code__copy { display: none !important; }
+  .sn .doc__body, .sn .doc__body--wide, .sn .main { grid-column: 1 / -1; }
+  .sn .case-head { padding-top: 0; }
+  .sn .case-head > * { grid-column: 1 / -1; }
+  .sn .h1 { font-size: 28pt; }
+  .sn .col-section { margin-top: 20px; }
+  .sn .kv { grid-template-columns: 150px minmax(0, 1fr); padding: 8px 0; break-inside: avoid; }
+  .sn section, .sn .callout, .sn figure { break-inside: avoid; }
+  .sn .prose a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.8em; color: #444; }
+  .sn * { animation: none !important; transition: none !important; }
+}
+/* cv bullets sit inside .hl-list, so undo its row grid */
+.sn .cv .cv-points li { display: block; border: 0; padding: 0 0 0 1.2em; }

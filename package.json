@@ -4,12 +4,15 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/copy-cms.mjs",
     "dev": "astro dev",
     "dev:during": "cross-env SITE_NOW=2026-12-09 astro dev",
     "dev:after": "cross-env SITE_NOW=2027-02-20 astro dev",
     "build": "astro build",
     "build:drafts": "cross-env SHOW_DRAFTS=1 astro build",
-    "preview": "wrangler dev"
+    "preview": "wrangler dev",
+    "prebuild": "node scripts/copy-cms.mjs",
+    "prebuild:drafts": "node scripts/copy-cms.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "7.3.2",
@@ -20,6 +23,8 @@
     "shiki": "4.5.0"
   },
   "devDependencies": {
+    "@sveltia/cms": "0.227.2",
+    "axe-core": "4.13.0",
     "cross-env": "7.0.3",
     "esbuild": "0.28.2",
     "wrangler": "4.149.0"

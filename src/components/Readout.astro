@@ -1,6 +1,7 @@
 ---
 // values are checked by the audit hook at build, the js size is written in by it
 import Icon from './Icon.astro';
+import { commit } from '../lib/build';
 const size = import.meta.env.DEV ? 'dev' : '__JS_SIZE__';
 ---
 <div class="readout" aria-label="Security readout">
@@ -13,4 +14,5 @@ const size = import.meta.env.DEV ? 'dev' : '__JS_SIZE__';
   <span class="item">Cookies <b>0</b></span>
   <span class="dot" aria-hidden="true">·</span>
   <span class="item">JS <b>{size}</b></span>
+  {commit && <><span class="dot" aria-hidden="true">·</span><span class="item">Build <a class="link link--quiet" href={commit.url} aria-label={`Built from commit ${commit.short}`}>{commit.short}</a></span></>}
 </div>

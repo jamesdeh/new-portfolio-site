@@ -1,0 +1,52 @@
+---
+// one page per tag, so filtering works without js and each tag has a link to share
+import Base from '../../../layouts/Base.astro';
+import PostRow from '../../../components/PostRow.astro';
+import { getPosts, TAGS, type Post } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return TAGS.map((tag) => ({
+    params: { tag: tag.toLowerCase() },
+    props: { tag, posts: posts.filter((p) => p.data.tags.includes(tag)) },
+  }));
+}
+
+interface Props {
+  tag: string;
+  posts: Post[];
+}
+const { tag, posts } = Astro.props;
+const blurb: Record<string, string> = {
+  Internship: 'The twelve-week Atlassian series, one post a week.',
+  Writeups: 'CTF and Hack The Box writeups, dead ends included.',
+  Builds: 'Things I built and deployed.',
+  Notes: 'Short notes.',
+};
+---
+<Base title={`${tag} · The Log`} description={blurb[tag]} current="log">
+  <main class="wrap" id="main">
+    <header class="case-head">
+      <nav class="crumb label" aria-label="Breadcrumb"><a href="/log/">Log</a><span aria-hidden="true">/</span><span aria-current="page">{tag}</span></nav>
+      <h1 class="h1">Tag <span class="px">{tag.toUpperCase()}</span></h1>
+      <p class="lead muted mw-52">{blurb[tag]}</p>
+    </header>
+    <div class="grid log-grid">
+      <div class="col-main">
+        <div class="row log-tools">
+          <nav class="tags" aria-label="Tags">
+            <a class="tag tag--filter" href="/log/">All</a>
+            {TAGS.map((t) => <a class="tag tag--filter" href={`/log/tag/${t.toLowerCase()}/`} aria-current={t === tag ? 'page' : undefined}>{t}</a>)}
+          </nav>
+        </div>
+        <h2 class="sr-only">Posts tagged {tag}</h2>
+        <p class="micro muted log-count">{posts.length === 1 ? '1 post' : `${posts.length} posts`}</p>
+        {posts.length > 0 ? (
+          <div class="rows">{posts.map((p) => <PostRow post={p} />)}</div>
+        ) : (
+          <div class="log-empty"><p class="label">ls: nothing tagged {tag.toLowerCase()} yet</p><p class="small muted">Check back soon, or read the whole Log.</p></div>
+        )}
+      </div>
+    </div>
+  </main>
+</Base>

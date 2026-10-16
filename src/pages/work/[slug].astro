@@ -52,7 +52,7 @@ const updated = isoDate(d.updated ?? new Date(site.nowUpdated));
       <figure class="case-cover"><img src={d.cover.src} alt="" width={d.cover.width} height={d.cover.height} /></figure>
     </header>
     <div class="doc doc--case">
-      <aside class="doc__rail">
+      <aside class="doc__rail" aria-label="Page contents">
         {toc.length > 0 && <Toc items={toc} />}
         <div class="stack micro muted gap-6"><span>Read time · {readingMinutes(work.body)} min</span><span>Updated · {updated}</span></div>
       </aside>
@@ -69,7 +69,7 @@ const updated = isoDate(d.updated ?? new Date(site.nowUpdated));
           </nav>
         )}
       </article>
-      <aside class="doc__aside">
+      <aside class="doc__aside" aria-label="Details">
         {d.aside?.map((a) => <div class="stack gap-6"><span class="label muted">{a.label}</span><span class="small">{a.value}</span></div>)}
         <div class="stack gap-6"><span class="label muted">Tags</span><div class="tags">{d.tags.slice(0, 2).map((t) => <span class="tag">{t}</span>)}</div></div>
       </aside>

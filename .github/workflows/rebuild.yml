@@ -1,0 +1,19 @@
+# daily rebuild so the internship phase, week number and security.txt expiry stay right without a push
+# set the repo secret DEPLOY_HOOK_URL to the cloudflare deploy hook once the project exists; until then this skips
+name: daily rebuild
+
+on:
+  schedule:
+    - cron: '5 11 * * *' # 00:05 nzdt
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: call deploy hook
+        env:
+          HOOK: ${{ secrets.DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "no DEPLOY_HOOK_URL yet, skipping"; exit 0; fi
+          curl -fsS -X POST "$HOOK"
