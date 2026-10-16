@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "dev:during": "cross-env SITE_NOW=2026-11-26 astro dev",
-    "dev:after": "cross-env SITE_NOW=2027-02-10 astro dev",
+    "dev:during": "cross-env SITE_NOW=2026-12-09 astro dev",
+    "dev:after": "cross-env SITE_NOW=2027-02-20 astro dev",
     "build": "astro build",
     "build:drafts": "cross-env SHOW_DRAFTS=1 astro build",
     "preview": "wrangler dev"

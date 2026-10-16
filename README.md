@@ -18,7 +18,7 @@ npm run build:drafts
 npm run preview
 ```
 
-Open http://localhost:8787. Use `npm run build` instead to see exactly what would go live, with drafts hidden.
+Open http://localhost:8787. Use `npm run build` instead to see exactly what would go live, with drafts hidden. After a rebuild, stop the preview with Ctrl+C and start it again, because it indexes `dist/` when it starts.
 
 Preview the other internship phases with `npm run dev:during` (week 3) or `npm run dev:after`.
 
