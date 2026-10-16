@@ -12,8 +12,8 @@
     const total = Math.max(1, r.height - innerHeight);
     const p = Math.min(1, Math.max(0, -r.top / total));
     const n = Math.round(p * cells.length);
+    // the bar is visual only (aria-hidden), screen readers have their own position
     cells.forEach((c, i) => c.classList.toggle('on', i < n));
-    bar.setAttribute('aria-valuenow', String(Math.round(p * 100)));
   };
 
   addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });

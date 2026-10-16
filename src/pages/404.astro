@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import Shortcut from '../components/Shortcut.astro';
 ---
 <Base title="404 · Access denied" noindex>
   <main class="wrap nf" id="main">
@@ -26,7 +27,7 @@ cat: /flag.txt: Permission denied
           <a class="btn btn--primary" href="/">Back home<Icon name="arrow" /></a>
           <a class="btn btn--secondary" href="/log/">Read the Log</a>
         </div>
-        <span class="micro muted">Or press ⌘K and type where you meant to go</span>
+        <span class="micro muted">Or press <Shortcut /> and type where you meant to go</span>
       </div>
     </div>
   </main>

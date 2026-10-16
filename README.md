@@ -22,6 +22,22 @@ Open http://localhost:8787. Use `npm run build` instead to see exactly what woul
 
 Preview the other internship phases with `npm run dev:during` (week 3) or `npm run dev:after`.
 
+## Editing with the CMS
+
+Run `npm run dev`, open http://localhost:4321/admin/index.html in Chrome or Edge, choose **Work with Local Repository** and pick this folder. Edits are written straight to `src/content/`, so review and commit them like any other change. New posts start as drafts.
+
+On the live site `/admin` will sign in through GitHub once the auth worker and Cloudflare Access are set up (see `public/admin/config.yml`).
+
+## Automation
+
+| Workflow | What it does | Needs |
+|---|---|---|
+| `build.yml` | Runs the full build on every push and PR, so the audit fails CI if the readout would be untrue | nothing |
+| `observatory.yml` | Weekly Mozilla HTTP Observatory scan; the colophon shows the real grade | repo variable `SITE_HOST` |
+| `rebuild.yml` | Daily rebuild so the internship week and `security.txt` expiry stay current | repo secret `DEPLOY_HOOK_URL` |
+
+Fonts are subset from `handoff/fonts` with `python scripts/subset-fonts.py` (needs `fonttools` and `brotli`).
+
 ## Where things live
 
 | Path | What |

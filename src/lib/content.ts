@@ -2,6 +2,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import { showDrafts } from '../config/site';
 
 export type Post = CollectionEntry<'log'>;
+export const TAGS = ['Internship', 'Writeups', 'Builds', 'Notes'] as const;
 export type Work = CollectionEntry<'work'>;
 
 export const readingMinutes = (body = '') => {

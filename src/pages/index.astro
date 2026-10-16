@@ -7,6 +7,7 @@ import CaseCard from '../components/CaseCard.astro';
 import PostCard from '../components/PostCard.astro';
 import SeriesFeature from '../components/SeriesFeature.astro';
 import HandNote from '../components/HandNote.astro';
+import Shortcut from '../components/Shortcut.astro';
 import { site, pgpGroups } from '../config/site';
 import { phaseInfo, pad2 } from '../lib/phase';
 import { getPosts, getWork } from '../lib/content';
@@ -68,7 +69,7 @@ const kit = [
           <li><a href="#contact"><span class="n">06</span>Contact</a></li>
         </ul>
       </nav>
-      <div class="rail__foot micro muted"><span>⌘K · search</span><span>No cookies here</span></div>
+      <div class="rail__foot micro muted"><span><Shortcut /> · search</span><span>No cookies here</span></div>
     </aside>
 
     <main class="main">
@@ -97,7 +98,11 @@ const kit = [
         <SectionHeader n="01" label="Now" id="now-h" lead="Right" pixel="NOW"><span slot="aside">Updated {site.nowUpdated}</span></SectionHeader>
         <div class="now">
           <div class="now__route">
-            <div class="route" role="img" aria-label="Wellington to Sydney"><span>WLG</span><span class="route__line" aria-hidden="true"></span><span>SYD</span></div>
+            <div class:list={['route', { 'route--back': phase === 'after' }]} role="img" aria-label={phase === 'after' ? 'Sydney back to Wellington' : 'Wellington to Sydney'} data-play>
+              <span class="route__end route__from">WLG</span>
+              <span class="route__line" aria-hidden="true"><span class="route__run"><i class="route__dot"></i></span></span>
+              <span class="route__end route__to">SYD</span>
+            </div>
             <div class="stack micro muted gap-6">{now.route.map((r) => <span>{r}</span>)}</div>
             <div class="stack gap-8 mt-8">
               <div class="row micro between"><span>Internship</span><span class="muted">{now.bar}</span></div>

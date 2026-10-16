@@ -1,5 +1,6 @@
 ---
 import fs from 'node:fs';
+import observatory from '../data/observatory.json';
 import Base from '../layouts/Base.astro';
 import Readout from '../components/Readout.astro';
 import Stats from '../components/Stats.astro';
@@ -20,6 +21,8 @@ const why: Record<string, [string, string, string]> = {
   'x-frame-options': ['X-Frame-Options', 'Legacy backup for frame-ancestors.', 'Legacy'],
 };
 const rows = Object.entries(why).filter(([k]) => headers[k]).map(([k, [name, note, status]]) => ({ name, value: headers[k], note, status }));
+// a real weekly scan replaces the target once the observatory workflow has run
+const obs = 'grade' in observatory ? (observatory as { grade: string; scannedAt: string; testsPassed: number; testsQuantity: number; url: string }) : null;
 const styles = fs.readdirSync('public/styles').filter((f) => f.endsWith('.css')).length;
 
 const toc = [
@@ -46,7 +49,7 @@ const stack = [
       <p class="lead muted mw-52">What this site runs on, the headers it sends and what changed. If you spot a weak header, I'd like to know.</p>
     </header>
     <div class="doc doc--colophon">
-      <aside class="doc__rail"><Toc items={toc} /></aside>
+      <aside class="doc__rail" aria-label="Page contents"><Toc items={toc} /></aside>
       <div class="doc__body doc__body--wide">
         <section aria-labelledby="stack">
           <div class="sh"><span class="sh__id"><b>01</b><span>/</span><span id="stack">Stack</span></span><span>Static, near-zero JS</span></div>
@@ -58,10 +61,14 @@ const stack = [
         <section class="col-section" aria-labelledby="headers">
           <div class="sh"><span class="sh__id"><b>02</b><span>/</span><span id="headers">Security headers</span></span><span>Checked in CI on every deploy</span></div>
           <div class="row grades">
-            <div class="grade-card"><span class="grade top">A+</span><span class="stack gap-4"><span class="label">HTTP Observatory</span><span class="micro muted">Target · scored at launch</span></span></div>
+            {obs ? (
+              <div class="grade-card"><span class:list={['grade', { top: obs.grade === 'A+' }]}>{obs.grade}</span><span class="stack gap-4"><a class="label link link--quiet" href={obs.url}>HTTP Observatory</a><span class="micro muted">Scored {obs.scannedAt.slice(0, 10)} · {obs.testsPassed}/{obs.testsQuantity} tests</span></span></div>
+            ) : (
+              <div class="grade-card"><span class="grade top">A+</span><span class="stack gap-4"><span class="label">HTTP Observatory</span><span class="micro muted">Target · scored at launch</span></span></div>
+            )}
             <div class="grade-card"><span class="grade top">A+</span><span class="stack gap-4"><span class="label">securityheaders.com</span><span class="micro muted">Target · scored at launch</span></span></div>
           </div>
-          <div class="tbl-wrap" tabindex="0" role="region" aria-label="Security headers">
+          <div class="tbl-wrap" tabindex="0" role="region" aria-label="Security headers table">
             <table class="tbl">
               <thead><tr><th scope="col">Header</th><th scope="col">Value</th><th scope="col">Why</th><th scope="col">Status</th></tr></thead>
               <tbody>

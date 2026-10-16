@@ -1,27 +1,56 @@
 ---
-// the harmless flag behind the robots.txt hint
+// the harmless flag trail: 404 hints at robots.txt, robots.txt lists step one,
+// step one points at security.txt, whose base64 comment leads to the flag
 import Base from '../layouts/Base.astro';
 import { site } from '../config/site';
 
 export function getStaticPaths() {
-  return [{ params: { flag: site.flag.path } }];
+  return [
+    { params: { flag: site.flag.path }, props: { step: 1 } },
+    { params: { flag: site.flag.finalPath }, props: { step: 3 } },
+  ];
 }
+
+const { step } = Astro.props as { step: 1 | 3 };
 ---
-<Base title="Flag" noindex>
+<Base title={step === 1 ? 'Warmer' : 'Flag'} noindex>
   <main class="wrap nf" id="main">
-    <div class="classif"><span class="lvl">Classification: public, now</span><span class="dot" aria-hidden="true">·</span><span>You found it</span></div>
-    <h1 class="h1">Nice <span class="px">FIND.</span></h1>
-    <div class="nf__grid">
-      <figure class="code">
-        <div class="code__bar"><span class="code__tab">flag.txt <span class="lang">txt</span></span></div>
+    {step === 1 ? (
+      <>
+        <div class="classif"><span class="lvl">Classification: restricted</span><span class="dot" aria-hidden="true">·</span><span>Step 1 of 3</span></div>
+        <h1 class="h1">Warmer, not <span class="px">THERE.</span></h1>
+        <div class="nf__grid">
+          <figure class="code">
+            <div class="code__bar"><span class="code__tab">note.txt <span class="lang">txt</span></span></div>
+<pre tabindex="0"><code><span class="muted">$</span> cat note.txt
+robots was step one.
+the rest is where a researcher looks
+before they report a bug.
+<span class="c"># hint: rfc 9116, read the comments</span></code></pre>
+          </figure>
+          <div class="stack gap-24">
+            <p class="lead">Good start. The flag isn't here.</p>
+            <div class="row gap-12"><a class="btn btn--secondary" href="/">Back home</a></div>
+          </div>
+        </div>
+      </>
+    ) : (
+      <>
+        <div class="classif"><span class="lvl">Classification: public, now</span><span class="dot" aria-hidden="true">·</span><span>Step 3 of 3</span></div>
+        <h1 class="h1">Nice <span class="px">FIND.</span></h1>
+        <div class="nf__grid">
+          <figure class="code">
+            <div class="code__bar"><span class="code__tab">flag.txt <span class="lang">txt</span></span></div>
 <pre tabindex="0"><code><span class="muted">$</span> cat flag.txt
 <span class="flag-out">{site.flag.text}</span></code></pre>
-      </figure>
-      <div class="stack gap-24">
-        <p class="lead">Thanks for poking around. That's the whole prize: no login, no tracking, just a flag.</p>
-        <p class="body muted">If you found something on this site that isn't meant to be found, please tell me. The contact details are in <a class="link" href="/.well-known/security.txt">security.txt</a>.</p>
-        <div class="row gap-12"><a class="btn btn--secondary" href="/">Back home</a></div>
-      </div>
-    </div>
+          </figure>
+          <div class="stack gap-24">
+            <p class="lead">Thanks for poking around. That's the whole prize: no login, no tracking, just a flag.</p>
+            <p class="body muted">If you found something on this site that isn't meant to be found, please tell me. The contact details are in <a class="link" href="/.well-known/security.txt">security.txt</a>.</p>
+            <div class="row gap-12"><a class="btn btn--secondary" href="/">Back home</a></div>
+          </div>
+        </div>
+      </>
+    )}
   </main>
 </Base>

@@ -1,0 +1,116 @@
+---
+// cv: same facts as the rest of the site, laid out to print on two a4 pages
+// "save as pdf" uses the browser's own print dialog, see the print rules in signal-noir.css
+import Base from '../layouts/Base.astro';
+import Toc from '../components/Toc.astro';
+import { site } from '../config/site';
+import { getWork, hasPage } from '../lib/content';
+
+// only link the writeups once that page exists on the live site
+const ctf = (await getWork()).find((w) => w.id === 'ctf-writeups');
+const ctfLinked = ctf ? hasPage(ctf) : false;
+
+const toc = [
+  { slug: 'experience', text: 'Experience' },
+  { slug: 'projects', text: 'Projects' },
+  { slug: 'education', text: 'Education' },
+  { slug: 'results', text: 'Awards and results' },
+  { slug: 'skills', text: 'Skills' },
+];
+
+const skills = [
+  ['Security', 'Threat modelling (STRIDE), web exploitation (JWT, SSTI, NoSQL and command injection), applied crypto, static reverse engineering'],
+  ['Infrastructure', 'Linux, Docker Compose, nginx, systemd, Oracle Cloud, Cloudflare, Let’s Encrypt'],
+  ['Code', 'Python, Playwright, Java (Spring Boot), React, SQL (PostgreSQL)'],
+  ['Delivery', 'GitLab CI, merge request reviews, pull-based deploys with health checks and rollback'],
+];
+---
+<Base title="CV" description="James de Hair: cybersecurity engineering student at VUW, Security Engineering intern at Atlassian." scripts={['section-index', 'print']}>
+  <main class="wrap" id="main">
+    <header class="case-head">
+      <nav class="crumb label" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">CV</span></nav>
+      <h1 class="h1">James de <span class="px">HAIR</span></h1>
+      <p class="lead muted mw-52">Third-year cybersecurity engineering student at Te Herenga Waka, Victoria University of Wellington. Security Engineering intern at Atlassian, Sydney, from November 2026.</p>
+      <div class="row between gap-16 cv-contact">
+        <p class="micro muted cv-links">
+          <a class="link link--quiet" href={`mailto:${site.email}`}>{site.email}</a>
+          <span aria-hidden="true">·</span>
+          <a class="link link--quiet" href={site.github}>{site.githubLabel}</a>
+          <span aria-hidden="true">·</span>
+          <a class="link link--quiet" href={site.linkedin}>{site.linkedinLabel}</a>
+          <span aria-hidden="true">·</span>
+          <span>Wellington, NZ</span>
+        </p>
+        <button class="btn btn--primary btn--sm" type="button" data-print hidden>Save as PDF</button>
+      </div>
+    </header>
+    <div class="doc doc--colophon">
+      <aside class="doc__rail" aria-label="Page contents"><Toc items={toc} /></aside>
+      <div class="doc__body doc__body--wide cv">
+        <section aria-labelledby="experience">
+          <div class="sh"><span class="sh__id"><b>01</b><span>/</span><span id="experience">Experience</span></span><span>Starts Nov 2026</span></div>
+          <dl class="hl-list kv-list">
+            <div class="kv">
+              <dt class="label muted">Nov 2026 – Feb 2027</dt>
+              <dd><b>Security Engineering Intern</b>, Atlassian, Sydney<span class="cv-note muted">12-week internship. I'm writing a public weekly series about it on the Log.</span></dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="col-section" aria-labelledby="projects">
+          <div class="sh"><span class="sh__id"><b>02</b><span>/</span><span id="projects">Projects</span></span><span>Selected</span></div>
+          <dl class="hl-list kv-list">
+            <div class="kv">
+              <dt class="label muted">2026 · ENGR302</dt>
+              <dd>
+                <b><a class="link link--quiet" href="/work/pricepath/">PricePath</a></b>, scraper and deployment lead, team of five
+                <ul class="cv-points">
+                  <li>Built the Python and Playwright scraper for PAK'nSAVE, New World and Woolworths, mapped onto 8 shared categories. 7,083 products in the catalogue on 1 Oct 2026.</li>
+                  <li>Hosted the stack on one Oracle Cloud VM behind Cloudflare. Only nginx faces the internet; the API and database listen on localhost.</li>
+                  <li>Built pull-based deploys: a systemd timer pulls master with a read-only key, health-checks and rolls back, so no production SSH key sits in CI.</li>
+                  <li>Made the data reload transactional and batched it, cutting a local reload from 1,565 s to 23 s.</li>
+                </ul>
+              </dd>
+            </div>
+            <div class="kv">
+              <dt class="label muted">2026</dt>
+              <dd><b>Red Specter</b>, with a friend<span class="cv-note muted">An early-stage idea: pen testing for small businesses, explained in plain English.</span></dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="col-section" aria-labelledby="education">
+          <div class="sh"><span class="sh__id"><b>03</b><span>/</span><span id="education">Education</span></span><span>VUW</span></div>
+          <dl class="hl-list kv-list">
+            <div class="kv">
+              <dt class="label muted">[START YEAR] – [GRADUATION]</dt>
+              <dd><b>[DEGREE TITLE], cybersecurity engineering</b>, Te Herenga Waka, Victoria University of Wellington<span class="cv-note muted">Third year in 2026.</span></dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="col-section" aria-labelledby="results">
+          <div class="sh"><span class="sh__id"><b>04</b><span>/</span><span id="results">Awards and results</span></span><span>2026</span></div>
+          <dl class="hl-list kv-list">
+            <div class="kv">
+              <dt class="label muted">NZCSC 2026</dt>
+              <dd>Top 10 among university students, top 30 overall.{ctfLinked && <> <a class="link" href="/work/ctf-writeups/">Writeups</a></>}</dd>
+            </div>
+            <div class="kv">
+              <dt class="label muted">Scholarship</dt>
+              <dd>Graham Kelly Engineering and Computer Science Scholarship, VUW</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="col-section" aria-labelledby="skills">
+          <div class="sh"><span class="sh__id"><b>05</b><span>/</span><span id="skills">Skills</span></span><span>Used in the work above</span></div>
+          <dl class="hl-list kv-list">
+            {skills.map(([k, v]) => <div class="kv"><dt class="label muted">{k}</dt><dd>{v}</dd></div>)}
+          </dl>
+          <p class="micro muted mt-24">References available on request.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+</Base>

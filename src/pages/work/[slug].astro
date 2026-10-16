@@ -5,6 +5,7 @@ import Toc from '../../components/Toc.astro';
 import Callout from '../../components/Callout.astro';
 import ThreatStrip from '../../components/ThreatStrip.astro';
 import Flow from '../../components/Flow.astro';
+import Pipeline from '../../components/Pipeline.astro';
 import DeadEnds from '../../components/DeadEnds.astro';
 import Stats from '../../components/Stats.astro';
 import { render } from 'astro:content';
@@ -51,7 +52,7 @@ const updated = isoDate(d.updated ?? new Date(site.nowUpdated));
       <figure class="case-cover"><img src={d.cover.src} alt="" width={d.cover.width} height={d.cover.height} /></figure>
     </header>
     <div class="doc doc--case">
-      <aside class="doc__rail">
+      <aside class="doc__rail" aria-label="Page contents">
         {toc.length > 0 && <Toc items={toc} />}
         <div class="stack micro muted gap-6"><span>Read time · {readingMinutes(work.body)} min</span><span>Updated · {updated}</span></div>
       </aside>
@@ -59,7 +60,7 @@ const updated = isoDate(d.updated ?? new Date(site.nowUpdated));
         {toc.length > 0 && <Toc items={toc} mobile />}
         {d.status === 'pending' && <Callout type="warn" label="Draft · not published">This case study is still being written. It shows here because drafts are on for this build.</Callout>}
         <div class="prose">
-          <Content components={{ Callout, ThreatStrip, Flow, DeadEnds, Stats }} />
+          <Content components={{ Callout, ThreatStrip, Flow, Pipeline, DeadEnds, Stats }} />
         </div>
         {all.length > 1 && (
           <nav class="pn" aria-label="More work">
@@ -68,7 +69,7 @@ const updated = isoDate(d.updated ?? new Date(site.nowUpdated));
           </nav>
         )}
       </article>
-      <aside class="doc__aside">
+      <aside class="doc__aside" aria-label="Details">
         {d.aside?.map((a) => <div class="stack gap-6"><span class="label muted">{a.label}</span><span class="small">{a.value}</span></div>)}
         <div class="stack gap-6"><span class="label muted">Tags</span><div class="tags">{d.tags.slice(0, 2).map((t) => <span class="tag">{t}</span>)}</div></div>
       </aside>

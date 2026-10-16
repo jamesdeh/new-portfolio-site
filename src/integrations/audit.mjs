@@ -90,6 +90,12 @@ export default function audit() {
           for (const m of s.matchAll(/<(?:img|iframe|source|video|audio)\b[^>]*src="((?:https?:)?\/\/[^"]+)"/gi)) fails.push(`${where}: third-party media ${m[1]}`);
           if (/<style\b/i.test(s)) fails.push(`${where}: inline <style>`);
           if (/\sstyle="/i.test(s)) fails.push(`${where}: style="" attribute`);
+          // internal links must land on a real file, so drafts can't leak broken links
+          for (const m of s.matchAll(/\shref="(\/[^"#?]*)/g)) {
+            const target = decodeURIComponent(m[1]);
+            const candidates = [target, path.posix.join(target, 'index.html'), target + '.html'];
+            if (!candidates.some((c) => fs.existsSync(path.join(out, c)) && fs.statSync(path.join(out, c)).isFile())) fails.push(`${where}: broken link ${m[1]}`);
+          }
         }
         for (const f of js) if (/document\.cookie|cookieStore/.test(fs.readFileSync(f, 'utf8'))) cookies++;
         if (cookies) fails.push(`${cookies} script(s) touch cookies`);

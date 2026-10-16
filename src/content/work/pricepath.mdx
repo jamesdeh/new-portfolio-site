@@ -22,6 +22,41 @@ aside:
   - { label: My part, value: "Scraper, hosting, deploys" }
   - { label: Live, value: price-path.online }
   - { label: Repo, value: Private (course) }
+pipeline:
+  - label: Scrape
+    title: Python + Playwright
+    part: "I wrote the scraper. It maps each chain's sections onto 8 shared categories, reads the __NEXT_DATA__ JSON on PAK'nSAVE and New World, and replays Woolworths' own GraphQL product search."
+    security:
+      - "It only reads what each store already sends to any browser."
+      - "Foodstuffs blocks datacenter IPs. A residential proxy was considered and turned down, so Foodstuffs is scraped from my laptop instead."
+      - "Runs once a week, Monday 03:00, not continuously."
+  - label: Validate
+    title: Row checks
+    part: "Drops rows with no name, no image or a price of zero or less. Carries forward any chain a run didn't reach, and rebuilds missing Woolworths pack sizes from price ÷ unit price."
+    security:
+      - "A broken store page shows up as dropped rows, not wrong prices."
+      - "After the 28 Sep crash, data files must stay readable by the scraper version on the box."
+    gap: "The merge with last week's data runs before validation, not after."
+  - label: Store
+    title: JSON handoff + PostgreSQL
+    part: "The scraper writes one JSON file to a shared folder and calls the reload API. I made the reload transactional and batched it, which cut a local reload from 1,565 s to 23 s."
+    security:
+      - "The backend mounts the scraper's output read-only."
+      - "Reloads need a token header."
+      - "PostgreSQL listens on 127.0.0.1 only."
+      - "The old catalogue stays live until the new one commits."
+  - label: Serve
+    title: nginx + Cloudflare
+    part: "nginx is the only container with public ports. It proxies /api on the same origin, holds the Let's Encrypt certificate and caps every log at 3 × 10 MB. Cloudflare caches the catalogue for 10 minutes."
+    security:
+      - "The API listens on 127.0.0.1:8080."
+      - "Until 16 Sep the API was reachable from the internet, because Docker's iptables rules bypass firewalld. Now I test from off the box."
+  - label: Deploy
+    title: systemd timers
+    part: "A timer pulls master every 10 minutes, backs up the data, rebuilds, health-checks the site and rolls back if the check fails. A second timer checks the site, data age and disk every 15 minutes."
+    security:
+      - "The box pulls with a read-only GitLab deploy key, so no production SSH key ever sits in CI."
+    gap: "Health-check failures only reach the systemd journal. Nothing alerts me yet."
 threats:
   - { id: S, note: "The box pulls deploys with a read-only GitLab deploy key. No production SSH key sits in CI.", status: mitigated }
   - { id: T, note: "Rows with no name, no image or a price of zero or less are dropped before they reach the site.", status: mitigated }
@@ -50,9 +85,9 @@ Small project, real internet. I ran STRIDE over the scraper, the server and the 
 
 The scraper is Python and Playwright. PAK'nSAVE and New World are both Foodstuffs sites built on Next.js, and each page already ships its data as JSON in a `__NEXT_DATA__` script tag, so the scraper reads that instead of the markup. Woolworths rebuilt its site in September 2026 with hashed CSS class names, so the scraper now replays the page's own GraphQL product search request.
 
-Every run maps each chain's sections onto 8 shared categories, so "Bakery" means the same thing at all three. Rows with no name, no image or a bad price are dropped, and the backend reloads the data without a redeploy.
+Every run maps each chain's sections onto 8 shared categories, so "Bakery" means the same thing at all three. Pick a stage to see what I built there and the security calls I made:
 
-<Flow steps={["Store pages", "Playwright", "Validate", "JSON handoff", "Reload API"]} labels={["Source", "Scrape", "Check", "Hand off", "Serve"]} hot={1} />
+<Pipeline stages={frontmatter.pipeline} />
 
 Everything runs in Docker Compose on one Oracle Cloud VM with 4 cores and 24 GB of RAM, behind Cloudflare. Only nginx publishes ports to the internet:
 

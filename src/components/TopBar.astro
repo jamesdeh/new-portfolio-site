@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import StatusPill from './StatusPill.astro';
+import Shortcut from './Shortcut.astro';
 
 interface Props {
   current?: 'work' | 'log' | 'about' | 'contact';
@@ -23,13 +24,14 @@ const links = [
     </nav>
     <div class="topbar__right">
       <StatusPill />
-      <a class="kbd" href="/log/" data-cmdk-open aria-label="Open command palette"><Icon name="search" /><span class="txt">Search</span><kbd>⌘K</kbd></a>
+      <a class="kbd" href="/log/" data-cmdk-open aria-label="Open command palette"><Icon name="search" /><span class="txt">Search</span><kbd><Shortcut /></kbd></a>
       <button class="btn btn--secondary btn--icon menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu-sheet"><Icon name="menu" /></button>
     </div>
   </div>
   <div class="menu-sheet" id="menu-sheet" hidden>
     <nav class="wrap menu-sheet__in" aria-label="Menu">
       {links.map((l) => <a class="navlink" href={l.href} aria-current={current === l.id ? 'page' : undefined}>{l.label}</a>)}
+      <a class="navlink" href="/cv/">CV</a>
       <a class="navlink" href="/colophon/">Colophon</a>
       <a class="navlink" href="/log/" data-cmdk-open><Icon name="search" />Search</a>
     </nav>

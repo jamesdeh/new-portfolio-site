@@ -1,0 +1,68 @@
+# sveltia cms for the log and case studies
+# locally: npm run dev, open /admin in chrome or edge, choose "work with local repository" and pick this folder
+# live: github backend through the sveltia-cms-auth worker, with cloudflare access in front of /admin
+backend:
+  name: github
+  repo: jamesdeh/new-portfolio-site
+  branch: main
+  # [PLACEHOLDER] set once the auth worker is deployed
+  # base_url: https://[AUTH-WORKER-DOMAIN]
+
+media_folder: public/img/uploads
+public_folder: /img/uploads
+
+collections:
+  - name: log
+    label: Log
+    label_singular: Post
+    folder: src/content/log
+    extension: mdx
+    format: frontmatter
+    create: true
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    summary: '{{title}} · {{date | date("YYYY-MM-DD")}}{{draft | ternary(" · draft", "")}}'
+    sortable_fields: [date, title]
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: summary, label: Summary, widget: text, hint: 'One line for cards and feeds, 160 characters at most', pattern: ['^.{1,160}$', 'Keep it under 160 characters'] }
+      - { name: lead, label: Lead, widget: text, required: false, hint: 'The standfirst under the title. Falls back to the summary' }
+      - { name: date, label: Date, widget: datetime, time_format: false, format: 'YYYY-MM-DD' }
+      - { name: tags, label: Tags, widget: select, multiple: true, min: 1, options: [Internship, Writeups, Builds, Notes] }
+      - label: Series
+        name: series
+        widget: object
+        required: false
+        hint: 'Only for Atlassian internship posts'
+        fields:
+          - { name: id, widget: hidden, default: atlassian }
+          - { name: week, label: Week, widget: number, value_type: int, min: 1, max: 12 }
+      - { name: draft, label: Draft, widget: boolean, default: true, hint: 'Drafts never appear on the live site' }
+      - { name: body, label: Body, widget: markdown }
+
+  - name: work
+    label: Work
+    label_singular: Case study
+    folder: src/content/work
+    extension: mdx
+    format: frontmatter
+    create: true
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: pixelWord, label: Pixel word, widget: string, required: false, hint: 'One word of the title shown in pixel type' }
+      - { name: order, label: Order on home, widget: number, value_type: int }
+      - { name: year, label: Year, widget: string }
+      - { name: role, label: Role, widget: string }
+      - { name: stack, label: Stack, widget: list }
+      - { name: outcome, label: Outcome, widget: string, hint: 'One line, 160 characters at most' }
+      - { name: tags, label: Tags, widget: list }
+      - { name: cover, label: Cover, widget: image }
+      - { name: status, label: Status, widget: select, options: [published, pending], default: pending }
+      - label: Threat model
+        name: threats
+        widget: list
+        required: false
+        fields:
+          - { name: id, label: STRIDE letter, widget: select, options: [S, T, R, I, D, E] }
+          - { name: note, label: Note, widget: string }
+          - { name: status, label: Status, widget: select, options: [mitigated, accepted] }
+      - { name: body, label: Body, widget: markdown }

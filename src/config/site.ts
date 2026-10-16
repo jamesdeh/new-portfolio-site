@@ -1,4 +1,5 @@
 // one place for facts the pages share
+import { flag } from './flag.mjs';
 // anything in [brackets] is a placeholder james still has to fill
 
 export const site = {
@@ -22,11 +23,8 @@ export const site = {
     start: '2026-11-23',
     end: '2027-02-13',
   },
-  // [PLACEHOLDER] hidden flag path and text, see robots.txt
-  flag: {
-    path: 'flag-placeholder',
-    text: 'JDH{[FLAG]}',
-  },
+  // hidden flag trail, set in flag.mjs
+  flag,
   nowUpdated: '2026-10-16',
 } as const;
 

@@ -83,3 +83,77 @@ html.js .sn .cards .card:not(.is-in) {
   .sn .toast-host .toast,
   .sn .toast-host .toast.is-leaving { animation: none; }
 }
+
+/* ---------- route: a pixel flies wlg to syd once, lights the destination, then rests ---------- */
+/* rest state is the destination, so no js and reduced motion both show the finished trip */
+.sn .route__line { position: relative; }
+.sn .route__run { position: absolute; inset: 0; transform: translateX(100%); }
+.sn .route--back .route__run { transform: translateX(0); }
+.sn .route__dot { position: absolute; left: -3px; top: -2px; width: 6px; height: 6px; background: var(--accent); }
+/* with js the dot waits at the start until the route scrolls into view (card-tilt.js adds is-played) */
+html.js .sn .route:not(.is-played) .route__run { transform: translateX(0); }
+html.js .sn .route--back:not(.is-played) .route__run { transform: translateX(100%); }
+html.js .sn .route.is-played .route__run { animation: sn-route 1200ms steps(12, end) both; }
+html.js .sn .route--back.is-played .route__run { animation-name: sn-route-back; }
+html.js .sn .route.is-played .route__to,
+html.js .sn .route--back.is-played .route__from { animation: sn-arrive 700ms 1200ms steps(1, end) both; }
+html.js .sn .route--back.is-played .route__to { animation: none; }
+@keyframes sn-route { from { transform: translateX(0); } to { transform: translateX(100%); } }
+@keyframes sn-route-back { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes sn-arrive { 0% { color: var(--accent); } 100% { color: var(--text); } }
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .sn .route .route__run { animation: none; transform: translateX(100%); }
+  html.js .sn .route--back .route__run { transform: translateX(0); }
+  html.js .sn .route .route__end { animation: none; }
+}
+
+/* ---------- hand note: strokes draw on once the portrait is in view ---------- */
+html.js .sn .note-hand:not(.is-played) path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+html.js .sn .note-hand.is-played path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: sn-draw 160ms ease-out forwards; }
+.sn .note-hand__text path:nth-child(2) { animation-delay: 70ms; }
+.sn .note-hand__text path:nth-child(3) { animation-delay: 140ms; }
+.sn .note-hand__text path:nth-child(4) { animation-delay: 210ms; }
+.sn .note-hand__text path:nth-child(5) { animation-delay: 280ms; }
+.sn .note-hand__text path:nth-child(6) { animation-delay: 350ms; }
+.sn .note-hand__text path:nth-child(7) { animation-delay: 420ms; }
+.sn .note-hand__text path:nth-child(8) { animation-delay: 490ms; }
+.sn .note-hand__text path:nth-child(9) { animation-delay: 560ms; }
+.sn .note-hand__text path:nth-child(10) { animation-delay: 630ms; }
+.sn .note-hand__text path:nth-child(11) { animation-delay: 700ms; }
+.sn .note-hand__text path:nth-child(12) { animation-delay: 770ms; }
+.sn .note-hand__text path:nth-child(13) { animation-delay: 840ms; }
+.sn .note-hand__text path:nth-child(14) { animation-delay: 910ms; }
+.sn .note-hand__arrow path:nth-child(1) { animation-delay: 1000ms; animation-duration: 320ms; }
+.sn .note-hand__arrow path:nth-child(2) { animation-delay: 1320ms; }
+.sn .note-hand__arrow path:nth-child(3) { animation-delay: 1400ms; }
+@keyframes sn-draw { to { stroke-dashoffset: 0; } }
+
+/* ---------- section hairlines draw left to right the first time ---------- */
+.sn .sh[data-play] { position: relative; border-bottom-color: transparent; }
+.sn .sh[data-play]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--line); transform-origin: left; }
+html.js .sn .sh[data-play]:not(.is-played)::after { transform: scaleX(0); }
+html.js .sn .sh[data-play].is-played::after { transition: transform 400ms var(--ease-out); }
+
+/* ---------- lab kit: small hover moments, pixel stepped ---------- */
+.sn .kit__icon .fx { opacity: 0; }
+.sn .kit__icon .fx--off { fill: var(--bg); }
+@media (hover: hover) {
+  .sn .kit__item:hover .fx--ring1 { animation: sn-ring1 1.2s steps(1, end) infinite; }
+  .sn .kit__item:hover .fx--ring2 { animation: sn-ring2 1.2s steps(1, end) infinite; }
+  .sn .kit__item:hover .fx--frame1 { animation: sn-frame1 240ms steps(1, end) infinite; }
+  .sn .kit__item:hover .fx--frame2 { animation: sn-frame2 240ms steps(1, end) infinite; }
+  .sn .kit__item:hover .fx--off { animation: sn-frame1 900ms steps(1, end) infinite; }
+  .sn .kit__item:hover .fx--off2 { animation-delay: 300ms; }
+  .sn .kit__item:hover .fx--off3 { animation-delay: 600ms; }
+}
+@keyframes sn-ring1 { 0% { opacity: 1; } 40% { opacity: 0; } }
+@keyframes sn-ring2 { 0% { opacity: 0; } 30% { opacity: 1; } 70% { opacity: 0; } }
+@keyframes sn-frame1 { 0% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes sn-frame2 { 0% { opacity: 0; } 50% { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .sn .note-hand path { stroke-dashoffset: 0 !important; animation: none !important; }
+  html.js .sn .sh[data-play]::after { transform: none !important; }
+  .sn .kit__item .fx { animation: none !important; opacity: 0 !important; }
+}

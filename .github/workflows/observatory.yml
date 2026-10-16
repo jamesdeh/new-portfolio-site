@@ -1,0 +1,38 @@
+# weekly mozilla http observatory scan of the live site
+# writes the grade to src/data/observatory.json for the colophon, and commits it if it changed
+# set the repo variable SITE_HOST (e.g. example.com) once the domain is live; until then this skips
+name: observatory
+
+on:
+  schedule:
+    - cron: '17 18 * * 0' # monday 07:17 nzdt
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    if: ${{ vars.SITE_HOST != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: scan
+        env:
+          HOST: ${{ vars.SITE_HOST }}
+        run: |
+          curl -fsS -X POST "https://observatory-api.mdn.mozilla.net/api/v2/scan?host=${HOST}" -o scan.json
+          node -e '
+            const s = require("./scan.json");
+            if (s.error || !s.grade) { console.error("scan failed", s.error); process.exit(1); }
+            const out = { grade: s.grade, score: s.score, scannedAt: s.scanned_at, testsPassed: s.tests_passed, testsQuantity: s.tests_quantity, url: s.details_url };
+            require("fs").writeFileSync("src/data/observatory.json", JSON.stringify(out, null, 2) + "\n");
+            console.log(out);
+          '
+      - name: commit if changed
+        run: |
+          git diff --quiet src/data/observatory.json && exit 0
+          git config user.name "observatory-bot"
+          git config user.email "observatory-bot@users.noreply.github.com"
+          git commit -am "Update HTTP Observatory grade"
+          git push
