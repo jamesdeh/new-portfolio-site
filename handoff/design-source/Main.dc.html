@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<title>Signal Noir foundations</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./signal-noir.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&amp;display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:"Geist";src:url(../fonts/Geist-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url(../fonts/GeistMono-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Pixel Square";src:url(../fonts/GeistPixel-Square.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Geist Pixel Grid";src:url(../fonts/GeistPixel-Grid.woff2) format("woff2");font-weight:400;font-display:swap}
+body{margin:0}
+</style>
+</helmet>
+<div class="sn spec" data-accent="{{accent}}" style="min-height: 4000px">
+
+  <header class="spec__head">
+    <div class="stack" style="gap: 20px">
+      <span class="label muted">JDH / Design system / v0.1</span>
+      <h1 class="h1" style="font-size: 128px">Signal <span class="px">NOIR</span></h1>
+    </div>
+    <div class="stack label muted" style="gap: 6px; text-align: right">
+      <span>00 · Foundations</span>
+      <span>Dark default · Paper for long reads</span>
+      <span>2026-10-16</span>
+    </div>
+  </header>
+
+  <section class="spec__block" style="margin-bottom: 72px">
+    <div class="spec__k label"><span>01 / Colour</span><span>One accent · under 5% of any screen</span></div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+      <div class="stack" style="gap: 16px; padding: 24px; border: 1px solid var(--line)">
+        <div class="row label" style="justify-content: space-between; gap: 12px"><span>Noir · default</span><span class="muted">Ratios on #0A0A0A</span></div>
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+          <div class="swatch"><div class="swatch__chip" style="background: #0A0A0A"></div><div class="swatch__meta"><span class="label">--bg</span><span class="mono small">#0A0A0A</span><span class="small muted">Ground + 5% grain</span></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background: #111111"></div><div class="swatch__meta"><span class="label">--surface</span><span class="mono small">#111111</span><span class="small muted">Cards, code</span></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background: #171717"></div><div class="swatch__meta"><span class="label">--surface-2</span><span class="mono small">#171717</span><span class="small muted">Hover, selected</span></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background: #262626"></div><div class="swatch__meta"><span class="label">--line</span><span class="mono small">#262626</span><span class="small muted">Hairlines</span></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background: #636363"></div><div class="swatch__meta"><span class="label">--control</span><span class="mono small">#636363</span><span class="small muted">Input edges · 3.3:1</span></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background: #8A8A8A"></div><div class="swatch__meta"><span class="label">--muted</span><span class="mono small">#8A8A8A</span><span class="small muted">Meta text · 5.7:1</span></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background: #EDEDED"></div><div class="swatch__meta"><span class="label">--text</span><span class="mono small">#EDEDED</span><span class="small muted">Text · 16.9:1</span></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background: var(--accent)"></div><div class="swatch__meta"><span class="label acc">--accent</span><span class="mono small">{{acc.dark}}</span><span class="small muted">{{acc.name}} · {{acc.cd}}</span></div></div>
+        </div>
+      </div>
+      <div class="paper stack" style="gap: 16px; padding: 24px; border: 1px solid var(--line)">
+        <div class="row label" style="justify-content: space-between; gap: 12px"><span>Paper · long reads</span><span class="muted">Ratios on #F3F1EC</span></div>
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+          <div class="swatch"><div class="swatch__chip" style="background: #F3F1EC"></div><div class="swatch__meta"><span class="label">--bg</span><span class="mono small">#F3F1EC</span><span class="small muted">Ground + 3.5% grain</span></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background: #EAE7E0"></div><div class="swatch__meta"><span class="label">--surface</span><span class="mono small">#EAE7E0</span><span class="small muted">Cards, code</span></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background: #E2DED5"></div><div class="swatch__meta"><span class="label">--surface-2</span><span class="mono small">#E2DED5</span><span class="small muted">Hover, selected</span></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background: #D4D0C7"></div><div class="swatch__meta"><span class="label">--line</span><span class="mono small">#D4D0C7</span><span class="small muted">Hairlines</span></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background: #8A857B"></div><div class="swatch__meta"><span class="label">--control</span><span class="mono small">#8A857B</span><span class="small muted">Input edges · 3.3:1</span></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background: #5E5B55"></div><div class="swatch__meta"><span class="label">--muted</span><span class="mono small">#5E5B55</span><span class="small muted">Meta text · 6.0:1</span></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background: #111111"></div><div class="swatch__meta"><span class="label">--text</span><span class="mono small">#111111</span><span class="small muted">Text · 16.7:1</span></div></div>
+          <div class="swatch"><div class="swatch__chip" style="background: var(--accent)"></div><div class="swatch__meta"><span class="label acc">--accent</span><span class="mono small">{{acc.paper}}</span><span class="small muted">{{acc.name}} · {{acc.cp}}</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="tbl-wrap" style="margin-top: 24px">
+      <table class="tbl">
+        <thead><tr><th>Accent</th><th>Noir value</th><th>On #0A0A0A</th><th>Paper value</th><th>On #F3F1EC</th><th>Where it goes</th></tr></thead>
+        <tbody>
+          <tr><td>Signal red <span class="tag" style="margin-left: 8px">Recommended</span></td><td class="mono">#FF3B2F</td><td class="mono">5.58:1 AA</td><td class="mono">#B8261C</td><td class="mono">5.58:1 AA</td><td rowspan="4" class="small muted" style="max-width: 280px">Status dot, active index marker, links, focus rings, pixel highlights, selection. Never large fills, never body text.</td></tr>
+          <tr><td>Phosphor green</td><td class="mono">#3DFF8B</td><td class="mono">14.97:1 AAA</td><td class="mono">#08703A</td><td class="mono">5.49:1 AA</td></tr>
+          <tr><td>Amber</td><td class="mono">#FFB000</td><td class="mono">10.81:1 AAA</td><td class="mono">#875500</td><td class="mono">5.59:1 AA</td></tr>
+          <tr><td>Pāua (wild card)</td><td class="mono">#3DD6E8</td><td class="mono">11.30:1 AAA</td><td class="mono">#006E7C</td><td class="mono">5.28:1 AA</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="spec__block" style="margin-bottom: 72px">
+    <div class="spec__k label"><span>02 / Type</span><span>Geist Sans · Geist Mono · Geist Pixel Square</span></div>
+    <div class="stack" style="gap: 0; border-top: 1px solid var(--line)">
+      <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 24px; padding: 32px 0; border-bottom: 1px solid var(--line)">
+        <div class="stack label muted" style="gap: 6px"><span style="color: var(--text)">Hero pair</span><span>Sans 800 · 176/0.88 · −0.04em</span><span>Pixel Square · 176/0.88 · 0</span><span>14.2cqi on mobile</span><span>Shown here at 112</span></div>
+        <div class="hero__title" style="font-size: 112px"><span class="g">James</span><span class="px">DE HAIR<span class="acc">.</span></span></div>
+      </div>
+      <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--line)">
+        <div class="stack label muted" style="gap: 6px"><span style="color: var(--text)">H1 · page title</span><span>Sans 800 · 96/0.92 · −0.04em</span><span>Mobile 44</span></div>
+        <div class="h1" style="font-size: 96px">The <span class="px">LOG</span></div>
+      </div>
+      <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--line)">
+        <div class="stack label muted" style="gap: 6px"><span style="color: var(--text)">H2 · section</span><span>Sans 800 · 72/0.95 · −0.04em</span><span>Mobile 36</span></div>
+        <div class="h2" style="font-size: 72px">Selected <span class="px">WORK</span></div>
+      </div>
+      <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--line)">
+        <div class="stack label muted" style="gap: 6px"><span style="color: var(--text)">H3 / H4</span><span>Sans 700 · 28/1.12 · −0.03em</span><span>Sans 600 · 21/1.25 · −0.02em</span></div>
+        <div class="stack" style="gap: 10px"><div class="h3">Hardening a free-tier OCI box</div><div class="h4">What changed after the first nginx audit</div></div>
+      </div>
+      <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--line)">
+        <div class="stack label muted" style="gap: 6px"><span style="color: var(--text)">Lead / Body / Small</span><span>Sans 400 · 20/1.5</span><span>Sans 400 · 18/1.6 (17 mobile)</span><span>Sans 400 · 15/1.55</span></div>
+        <div class="stack" style="gap: 14px; max-width: 68ch">
+          <p class="lead">I like the unglamorous end of security: reading configs, writing threat models and fixing the boring thing before it becomes the interesting thing.</p>
+          <p class="body">Body copy sits in a 68-character column. It is set in Geist at 18px with a 1.6 line height, so a long Log post stays easy on the eyes in Noir and in Paper.</p>
+          <p class="small muted">Small text carries captions, excerpts and footnotes. It never drops below 15px.</p>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--line)">
+        <div class="stack label muted" style="gap: 6px"><span style="color: var(--text)">Label / Micro</span><span>Mono 500 · 12/1.3 · +0.08em · caps</span><span>Mono 500 · 11/1.3 · +0.08em · caps</span></div>
+        <div class="stack" style="gap: 12px"><span class="label">02 / Work · 2026 · Scraper + deploy · Playwright</span><span class="micro muted">Classification: public · 6 min read · W03/12</span></div>
+      </div>
+      <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--line)">
+        <div class="stack label muted" style="gap: 6px"><span style="color: var(--text)">Pixel</span><span>One word per major heading</span><span>Plus: monogram, 404, PENDING</span></div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+          <div class="stack" style="gap: 8px"><span class="px" style="font-size: 64px; line-height: 1">PRIVILEGE.</span><span class="label row" style="gap: 8px"><span style="width: 7px; height: 7px; background: var(--accent)"></span>Square · in use</span></div>
+          <div class="stack" style="gap: 8px"><span class="px-grid" style="font-size: 64px; line-height: 1; color: var(--muted)">PRIVILEGE.</span><span class="label muted">Grid · alternate, not shipped</span></div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--line)">
+        <div class="stack label muted" style="gap: 6px"><span style="color: var(--text)">Hand note</span><span>Nanum Pen Script · accent</span><span>Once, on the portrait only</span></div>
+        <div class="hand acc" style="font-size: 44px">that's me</div>
+      </div>
+    </div>
+  </section>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-bottom: 72px">
+    <section class="stack">
+      <div class="spec__k label"><span>03 / Space</span><span>4px base</span></div>
+      <div class="stack" style="gap: 10px">
+        <div class="row" style="gap: 12px"><span class="label muted" style="width: 72px">s-1 · 4</span><span style="width: 4px; height: 12px; background: var(--text)"></span></div>
+        <div class="row" style="gap: 12px"><span class="label muted" style="width: 72px">s-2 · 8</span><span style="width: 8px; height: 12px; background: var(--text)"></span></div>
+        <div class="row" style="gap: 12px"><span class="label muted" style="width: 72px">s-3 · 12</span><span style="width: 12px; height: 12px; background: var(--text)"></span></div>
+        <div class="row" style="gap: 12px"><span class="label muted" style="width: 72px">s-4 · 16</span><span style="width: 16px; height: 12px; background: var(--text)"></span></div>
+        <div class="row" style="gap: 12px"><span class="label muted" style="width: 72px">s-5 · 24</span><span style="width: 24px; height: 12px; background: var(--text)"></span></div>
+        <div class="row" style="gap: 12px"><span class="label muted" style="width: 72px">s-6 · 32</span><span style="width: 32px; height: 12px; background: var(--text)"></span></div>
+        <div class="row" style="gap: 12px"><span class="label muted" style="width: 72px">s-7 · 48</span><span style="width: 48px; height: 12px; background: var(--text)"></span></div>
+        <div class="row" style="gap: 12px"><span class="label muted" style="width: 72px">s-8 · 64</span><span style="width: 64px; height: 12px; background: var(--text)"></span></div>
+        <div class="row" style="gap: 12px"><span class="label muted" style="width: 72px">s-9 · 96</span><span style="width: 96px; height: 12px; background: var(--text)"></span></div>
+        <div class="row" style="gap: 12px"><span class="label muted" style="width: 72px">s-10 · 144</span><span style="width: 144px; height: 12px; background: var(--accent)"></span></div>
+        <p class="small muted" style="margin-top: 8px">Sections sit 144 apart on desktop and 96 on mobile.</p>
+      </div>
+    </section>
+    <section class="stack">
+      <div class="spec__k label"><span>04 / Shape</span><span>Square</span></div>
+      <div class="stack" style="gap: 20px">
+        <div class="row" style="gap: 16px"><span style="width: 96px; height: 56px; border: 1px solid var(--line)"></span><span class="stack label muted" style="gap: 4px"><span style="color: var(--text)">Hairline</span><span>1px · --line</span></span></div>
+        <div class="row" style="gap: 16px"><span style="width: 96px; height: 56px; border: 1px solid var(--line-2); border-radius: 2px"></span><span class="stack label muted" style="gap: 4px"><span style="color: var(--text)">Radius</span><span>0 default · 2px max</span></span></div>
+        <div class="row" style="gap: 16px"><span style="width: 96px; height: 56px; border: 1px solid var(--line-2); outline: 2px solid var(--accent); outline-offset: 2px"></span><span class="stack label muted" style="gap: 4px"><span style="color: var(--text)">Focus ring</span><span>2px accent · offset 2–3px</span></span></div>
+        <div class="row" style="gap: 16px"><span style="width: 96px; height: 56px; display: grid; place-items: center; border: 1px solid var(--line)"><span style="width: 7px; height: 7px; background: var(--accent)"></span></span><span class="stack label muted" style="gap: 4px"><span style="color: var(--text)">Marker</span><span>7px square · active state</span></span></div>
+      </div>
+    </section>
+    <section class="stack">
+      <div class="spec__k label"><span>05 / Motion</span><span>Quiet, then still</span></div>
+      <div class="tbl-wrap" style="border: 0">
+        <table class="tbl" style="min-width: 0">
+          <tbody>
+            <tr><td class="mono">fast · 120ms</td><td class="small muted">linear · colour, border</td></tr>
+            <tr><td class="mono">base · 200ms</td><td class="small muted">ease-out · small moves</td></tr>
+            <tr><td class="mono">slow · 320ms</td><td class="small muted">ease-out · marker, card lift</td></tr>
+            <tr><td class="mono">enter · 600ms</td><td class="small muted">card 8° tilt to rest</td></tr>
+            <tr><td class="mono">decrypt · 720ms</td><td class="small muted">first visit, 8 steps</td></tr>
+            <tr><td class="mono">dissolve · 360ms</td><td class="small muted">page change, steps(8)</td></tr>
+            <tr><td class="mono">ease-out</td><td class="small muted">cubic-bezier(.2,.7,.2,1)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted" style="margin-top: 12px">prefers-reduced-motion: every effect is static or instant.</p>
+    </section>
+  </div>
+
+  <section class="spec__block" style="margin-bottom: 72px">
+    <div class="spec__k label"><span>06 / Grid</span><span>12 columns · 1440 max · 24 gutter</span></div>
+    <div style="display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 48px; align-items: start">
+      <div class="stack" style="gap: 12px">
+        <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; height: 200px; padding: 0 48px; border: 1px solid var(--line)">
+          <div class="stack" style="grid-column: span 2; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; position: relative">
+            <span style="background: rgba(237,237,237,0.10); border-inline: 1px solid var(--line-2)"></span>
+            <span style="background: rgba(237,237,237,0.10); border-inline: 1px solid var(--line-2)"></span>
+          </div>
+          <span style="background: rgba(237,237,237,0.04); border-inline: 1px solid var(--line)"></span>
+          <span style="background: rgba(237,237,237,0.04); border-inline: 1px solid var(--line)"></span>
+          <span style="background: rgba(237,237,237,0.04); border-inline: 1px solid var(--line)"></span>
+          <span style="background: rgba(237,237,237,0.04); border-inline: 1px solid var(--line)"></span>
+          <span style="background: rgba(237,237,237,0.04); border-inline: 1px solid var(--line)"></span>
+          <span style="background: rgba(237,237,237,0.04); border-inline: 1px solid var(--line)"></span>
+          <span style="background: rgba(237,237,237,0.04); border-inline: 1px solid var(--line)"></span>
+          <span style="background: rgba(237,237,237,0.04); border-inline: 1px solid var(--line)"></span>
+          <span style="background: rgba(237,237,237,0.04); border-inline: 1px solid var(--line)"></span>
+          <span style="background: rgba(237,237,237,0.04); border-inline: 1px solid var(--line)"></span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; padding: 0 48px" class="label muted">
+          <span style="grid-column: span 2">01–02 · Rail</span>
+          <span style="grid-column: span 10">03–12 · Content (1116 wide at 1440)</span>
+        </div>
+        <div class="row label muted" style="gap: 24px"><span>Margin 48</span><span>Column 90</span><span>Gutter 24</span><span>Rail hides ≤ 1100</span><span>Single column ≤ 760</span></div>
+      </div>
+      <div class="stack" style="gap: 12px">
+        <div style="width: 130px; height: 200px; border: 1px solid var(--line); padding: 0 6px; display: grid">
+          <span style="background: rgba(237,237,237,0.06); border-inline: 1px solid var(--line-2)"></span>
+        </div>
+        <div class="stack label muted" style="gap: 4px"><span style="color: var(--text)">390 mobile</span><span>16 side gutter</span><span>1 column · no x-scroll</span><span>Targets ≥ 44px</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div style="display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 48px">
+    <section class="stack">
+      <div class="spec__k label"><span>07 / Pixel icons</span><span>8 × 8 UI at 16px · 16 × 16 kit at 64px · currentColor</span></div>
+      <div style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 16px 12px">
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 8 8" width="24" height="24" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z"/></svg><span class="micro muted">arrow</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 8 8" width="24" height="24" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 1h4v1h-4zM5 2h2v1h-2zM4 3h1v1h-1zM6 3h1v1h-1zM3 4h1v1h-1zM6 4h1v1h-1zM2 5h1v1h-1zM1 6h1v1h-1z"/></svg><span class="micro muted">ext</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 8 8" width="24" height="24" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h5v1h-5zM3 1h1v1h-1zM7 1h1v1h-1zM1 2h5v1h-5zM7 2h1v1h-1zM1 3h1v1h-1zM5 3h1v1h-1zM7 3h1v1h-1zM1 4h1v1h-1zM5 4h3v1h-3zM1 5h1v1h-1zM5 5h1v1h-1zM1 6h5v1h-5z"/></svg><span class="micro muted">copy</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 8 8" width="24" height="24" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" class="acc"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z"/></svg><span class="micro muted">check</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 8 8" width="24" height="24" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M1 0h3v1h-3zM0 1h1v1h-1zM4 1h1v1h-1zM0 2h1v1h-1zM4 2h1v1h-1zM0 3h1v1h-1zM4 3h1v1h-1zM1 4h3v1h-3zM4 5h2v1h-2zM5 6h2v1h-2zM6 7h2v1h-2z"/></svg><span class="micro muted">search</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 8 8" width="24" height="24" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 0h3v1h-3zM3 1h2v1h-2zM0 2h2v1h-2zM5 2h1v1h-1zM2 3h1v1h-1zM6 3h1v1h-1zM3 4h1v1h-1zM6 4h1v1h-1zM0 5h2v1h-2zM4 5h1v1h-1zM7 5h1v1h-1zM0 6h2v1h-2zM4 6h1v1h-1zM7 6h1v1h-1z"/></svg><span class="micro muted">rss</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 8 8" width="24" height="24" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h2v1h-2zM1 1h1v1h-1zM6 1h1v1h-1zM2 2h4v1h-4zM0 3h1v1h-1zM2 3h4v1h-4zM7 3h1v1h-1zM0 4h1v1h-1zM2 4h4v1h-4zM7 4h1v1h-1zM2 5h4v1h-4zM1 6h1v1h-1zM6 6h1v1h-1zM3 7h2v1h-2z"/></svg><span class="micro muted">paper</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 8 8" width="24" height="24" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M2 0h4v1h-4zM1 1h2v1h-2zM0 2h2v1h-2zM0 3h2v1h-2zM0 4h2v1h-2zM0 5h2v1h-2zM1 6h2v1h-2zM2 7h4v1h-4z"/></svg><span class="micro muted">noir</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 8 8" width="24" height="24" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M1 1h1v1h-1zM7 1h1v1h-1zM2 2h1v1h-1zM6 2h1v1h-1zM3 3h1v1h-1zM5 3h1v1h-1zM4 4h1v1h-1zM3 5h1v1h-1zM5 5h1v1h-1zM2 6h1v1h-1zM6 6h1v1h-1zM1 7h1v1h-1zM7 7h1v1h-1z"/></svg><span class="micro muted">close</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 8 8" width="24" height="24" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 1h1v1h-1zM1 2h1v1h-1zM2 3h1v1h-1zM1 4h1v1h-1zM0 5h1v1h-1zM4 5h4v1h-4z"/></svg><span class="micro muted">prompt</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 8 8" width="24" height="24" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 1h8v1h-8zM0 4h8v1h-8zM0 7h8v1h-8z"/></svg><span class="micro muted">menu</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 8 8" width="24" height="24" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 0h1v1h-1zM0 1h4v1h-4zM0 2h7v1h-7zM0 3h4v1h-4zM0 4h1v1h-1zM0 5h1v1h-1zM0 6h1v1h-1zM0 7h1v1h-1z"/></svg><span class="micro muted">flag</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 8 8" width="24" height="24" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h2v1h-2zM2 2h3v1h-3zM3 3h2v1h-2zM3 4h2v1h-2zM3 5h2v1h-2zM2 6h4v1h-4z"/></svg><span class="micro muted">note</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 8 8" width="24" height="24" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h2v1h-2zM2 1h1v1h-1zM5 1h1v1h-1zM2 2h1v1h-1zM5 2h1v1h-1zM1 3h1v1h-1zM3 3h2v1h-2zM6 3h1v1h-1zM1 4h1v1h-1zM3 4h2v1h-2zM6 4h1v1h-1zM0 5h1v1h-1zM7 5h1v1h-1zM0 6h1v1h-1zM3 6h2v1h-2zM7 6h1v1h-1zM0 7h8v1h-8z"/></svg><span class="micro muted">warn</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 8 8" width="24" height="24" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M1 1h2v1h-2zM0 2h1v1h-1zM3 2h5v1h-5zM0 3h1v1h-1zM3 3h1v1h-1zM5 3h1v1h-1zM7 3h1v1h-1zM1 4h2v1h-2z"/></svg><span class="micro muted">key</span></div>
+        <div class="stack" style="gap: 8px; align-items: center; grid-column: span 1"><svg viewBox="0 0 16 16" width="48" height="48" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M12 1h1v1h-1zM12 2h1v1h-1zM12 3h1v1h-1zM12 4h1v1h-1zM11 5h3v1h-3zM1 6h14v1h-14zM1 7h1v1h-1zM14 7h1v1h-1zM1 8h1v1h-1zM3 8h3v1h-3zM8 8h2v1h-2zM11 8h2v1h-2zM14 8h1v1h-1zM1 9h1v1h-1zM3 9h3v1h-3zM8 9h2v1h-2zM11 9h2v1h-2zM14 9h1v1h-1zM1 10h1v1h-1zM3 10h3v1h-3zM14 10h1v1h-1zM1 11h1v1h-1zM8 11h1v1h-1zM10 11h1v1h-1zM12 11h1v1h-1zM14 11h1v1h-1zM1 12h1v1h-1zM14 12h1v1h-1zM1 13h14v1h-14zM2 14h1v1h-1zM13 14h1v1h-1z"/></svg><span class="micro muted">sdr</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 16 16" width="48" height="48" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M5 1h6v1h-6zM5 2h1v1h-1zM10 2h1v1h-1zM5 3h1v1h-1zM7 3h2v1h-2zM10 3h1v1h-1zM5 4h1v1h-1zM10 4h1v1h-1zM4 5h8v1h-8zM4 6h1v1h-1zM11 6h1v1h-1zM4 7h1v1h-1zM6 7h4v1h-4zM11 7h1v1h-1zM4 8h1v1h-1zM6 8h1v1h-1zM9 8h1v1h-1zM11 8h1v1h-1zM4 9h1v1h-1zM6 9h1v1h-1zM9 9h1v1h-1zM11 9h1v1h-1zM4 10h1v1h-1zM6 10h4v1h-4zM11 10h1v1h-1zM4 11h1v1h-1zM11 11h1v1h-1zM4 12h1v1h-1zM7 12h2v1h-2zM11 12h1v1h-1zM4 13h1v1h-1zM11 13h1v1h-1zM4 14h8v1h-8z"/></svg><span class="micro muted">usb</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 16 16" width="48" height="48" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M2 2h1v1h-1zM7 2h1v1h-1zM12 2h1v1h-1zM2 3h1v1h-1zM7 3h1v1h-1zM12 3h1v1h-1zM2 4h1v1h-1zM7 4h1v1h-1zM12 4h1v1h-1zM2 5h1v1h-1zM7 5h1v1h-1zM12 5h1v1h-1zM2 6h1v1h-1zM7 6h1v1h-1zM12 6h1v1h-1zM1 7h14v1h-14zM1 8h1v1h-1zM14 8h1v1h-1zM1 9h1v1h-1zM3 9h1v1h-1zM5 9h1v1h-1zM7 9h1v1h-1zM14 9h1v1h-1zM1 10h1v1h-1zM14 10h1v1h-1zM1 11h14v1h-14zM2 12h1v1h-1zM13 12h1v1h-1z"/></svg><span class="micro muted">wifi</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 16 16" width="48" height="48" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M1 1h3v1h-3zM11 1h3v1h-3zM0 2h1v1h-1zM4 2h1v1h-1zM10 2h1v1h-1zM14 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM4 3h1v1h-1zM10 3h1v1h-1zM12 3h1v1h-1zM14 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM10 4h1v1h-1zM14 4h1v1h-1zM1 5h3v1h-3zM5 5h1v1h-1zM9 5h1v1h-1zM11 5h3v1h-3zM6 6h1v1h-1zM8 6h1v1h-1zM6 7h3v1h-3zM6 8h3v1h-3zM6 9h1v1h-1zM8 9h1v1h-1zM1 10h3v1h-3zM5 10h1v1h-1zM9 10h1v1h-1zM11 10h3v1h-3zM0 11h1v1h-1zM4 11h1v1h-1zM10 11h1v1h-1zM14 11h1v1h-1zM0 12h1v1h-1zM2 12h1v1h-1zM4 12h1v1h-1zM10 12h1v1h-1zM12 12h1v1h-1zM14 12h1v1h-1zM0 13h1v1h-1zM4 13h1v1h-1zM10 13h1v1h-1zM14 13h1v1h-1zM1 14h3v1h-3zM11 14h3v1h-3z"/></svg><span class="micro muted">drone</span></div>
+        <div class="stack" style="gap: 8px; align-items: center"><svg viewBox="0 0 16 16" width="48" height="48" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M1 1h14v1h-14zM1 2h1v1h-1zM14 2h1v1h-1zM1 3h1v1h-1zM3 3h2v1h-2zM11 3h1v1h-1zM14 3h1v1h-1zM1 4h1v1h-1zM14 4h1v1h-1zM1 5h14v1h-14zM1 6h1v1h-1zM14 6h1v1h-1zM1 7h1v1h-1zM3 7h2v1h-2zM11 7h1v1h-1zM14 7h1v1h-1zM1 8h1v1h-1zM14 8h1v1h-1zM1 9h14v1h-14zM1 10h1v1h-1zM14 10h1v1h-1zM1 11h1v1h-1zM3 11h2v1h-2zM11 11h1v1h-1zM14 11h1v1h-1zM1 12h1v1h-1zM14 12h1v1h-1zM1 13h14v1h-14zM3 14h1v1h-1zM12 14h1v1h-1z"/></svg><span class="micro muted">server</span></div>
+      </div>
+    </section>
+    <section class="stack">
+      <div class="spec__k label"><span>08 / Never</span><span>Hard no</span></div>
+      <ul class="stack" style="gap: 10px; list-style: none">
+        <li class="row label muted" style="gap: 10px"><span style="width: 14px; height: 1px; background: var(--muted)"></span>Drop shadows, gradients, glassmorphism</li>
+        <li class="row label muted" style="gap: 10px"><span style="width: 14px; height: 1px; background: var(--muted)"></span>Stock illustration</li>
+        <li class="row label muted" style="gap: 10px"><span style="width: 14px; height: 1px; background: var(--muted)"></span>Padlocks, hooded hackers, matrix rain</li>
+        <li class="row label muted" style="gap: 10px"><span style="width: 14px; height: 1px; background: var(--muted)"></span>3D desk scenes, purple gradients</li>
+        <li class="row label muted" style="gap: 10px"><span style="width: 14px; height: 1px; background: var(--muted)"></span>Loaders that block content</li>
+        <li class="row label muted" style="gap: 10px"><span style="width: 14px; height: 1px; background: var(--muted)"></span>Scroll hijacking, custom cursors</li>
+        <li class="row label muted" style="gap: 10px"><span style="width: 14px; height: 1px; background: var(--muted)"></span>Accent over 5% of a screen</li>
+      </ul>
+    </section>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"enum","options":["red","green","amber","paua"],"default":"red","section":"Theme"},"$preview":{"width":1440,"height":4000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const a = this.props.accent ?? 'red';
+    const map = {
+      red: { name: 'Signal red', dark: '#FF3B2F', cd: '5.58:1', paper: '#B8261C', cp: '5.58:1' },
+      green: { name: 'Phosphor green', dark: '#3DFF8B', cd: '14.97:1', paper: '#08703A', cp: '5.49:1' },
+      amber: { name: 'Amber', dark: '#FFB000', cd: '10.81:1', paper: '#875500', cp: '5.59:1' },
+      paua: { name: 'Pāua', dark: '#3DD6E8', cd: '11.30:1', paper: '#006E7C', cp: '5.28:1' }
+    };
+    return { accent: a, acc: map[a] || map.red };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<title>Signal Noir components: controls</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./signal-noir.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Geist";src:url(../fonts/Geist-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url(../fonts/GeistMono-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Pixel Square";src:url(../fonts/GeistPixel-Square.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Geist Pixel Grid";src:url(../fonts/GeistPixel-Grid.woff2) format("woff2");font-weight:400;font-display:swap}
+body{margin:0}
+</style>
+</helmet>
+<div class="sn spec" data-accent="{{accent}}" style="min-height: 2800px">
+
+  <header class="spec__head">
+    <div class="stack" style="gap: 20px">
+      <span class="label muted">JDH / Design system / v0.1</span>
+      <h1 class="h1" style="font-size: 96px">The <span class="px">CONTROLS</span></h1>
+    </div>
+    <div class="stack label muted" style="gap: 6px; text-align: right">
+      <span>03 · Components</span>
+      <span>Buttons · Links · Tags · Inputs</span>
+      <span>Toggle · Toast</span>
+    </div>
+  </header>
+
+  <section class="spec__block" style="margin-bottom: 80px">
+    <div class="spec__k label"><span>Buttons</span><span>44 tall · mono caps · square · focus ring offset 3</span></div>
+    <div class="stack" style="gap: 36px">
+      <div style="display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 24px; align-items: center">
+        <div class="stack" style="gap: 4px"><span class="label">Primary</span><span class="small muted">Accent outline. One per view.</span></div>
+        <div class="states">
+          <div class="state"><span class="label">Default</span><a class="btn btn--primary" href="#x">Read the Log<svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z"/></svg></a></div>
+          <div class="state"><span class="label">Hover · fills</span><a class="btn btn--primary is-hover" href="#x">Read the Log<svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z"/></svg></a></div>
+          <div class="state"><span class="label">Focus-visible</span><a class="btn btn--primary is-focus" href="#x">Read the Log<svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z"/></svg></a></div>
+          <div class="state"><span class="label">Active · down 1px</span><a class="btn btn--primary is-active" href="#x">Read the Log<svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z"/></svg></a></div>
+          <div class="state"><span class="label">Disabled</span><button class="btn btn--primary" type="button" disabled>Read the Log</button></div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 24px; align-items: center">
+        <div class="stack" style="gap: 4px"><span class="label">Secondary</span><span class="small muted">Hairline. Everything else.</span></div>
+        <div class="states">
+          <div class="state"><span class="label">Default</span><a class="btn btn--secondary" href="#x">See the work</a></div>
+          <div class="state"><span class="label">Hover</span><a class="btn btn--secondary is-hover" href="#x">See the work</a></div>
+          <div class="state"><span class="label">Focus-visible</span><a class="btn btn--secondary is-focus" href="#x">See the work</a></div>
+          <div class="state"><span class="label">Active</span><a class="btn btn--secondary is-active" href="#x">See the work</a></div>
+          <div class="state"><span class="label">Disabled</span><button class="btn btn--secondary" type="button" disabled>See the work</button></div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 24px; align-items: center">
+        <div class="stack" style="gap: 4px"><span class="label">Ghost · icon</span><span class="small muted">Toolbars, close, menu. Always labelled.</span></div>
+        <div class="states">
+          <div class="state"><span class="label">Default</span><div class="row" style="gap: 8px"><button class="btn btn--ghost btn--sm" type="button">Copy link</button><button class="btn btn--secondary btn--icon" type="button" aria-label="Close"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M1 1h1v1h-1zM7 1h1v1h-1zM2 2h1v1h-1zM6 2h1v1h-1zM3 3h1v1h-1zM5 3h1v1h-1zM4 4h1v1h-1zM3 5h1v1h-1zM5 5h1v1h-1zM2 6h1v1h-1zM6 6h1v1h-1zM1 7h1v1h-1zM7 7h1v1h-1z"/></svg></button></div></div>
+          <div class="state"><span class="label">Hover</span><div class="row" style="gap: 8px"><button class="btn btn--ghost btn--sm is-hover" type="button">Copy link</button><button class="btn btn--secondary btn--icon is-hover" type="button" aria-label="Close"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M1 1h1v1h-1zM7 1h1v1h-1zM2 2h1v1h-1zM6 2h1v1h-1zM3 3h1v1h-1zM5 3h1v1h-1zM4 4h1v1h-1zM3 5h1v1h-1zM5 5h1v1h-1zM2 6h1v1h-1zM6 6h1v1h-1zM1 7h1v1h-1zM7 7h1v1h-1z"/></svg></button></div></div>
+          <div class="state"><span class="label">Focus-visible</span><div class="row" style="gap: 8px"><button class="btn btn--ghost btn--sm is-focus" type="button">Copy link</button></div></div>
+          <div class="state"><span class="label">Active</span><div class="row" style="gap: 8px"><button class="btn btn--ghost btn--sm is-hover" type="button" style="background: var(--surface-2)">Copy link</button></div></div>
+          <div class="state"><span class="label">Disabled</span><div class="row" style="gap: 8px"><button class="btn btn--ghost btn--sm" type="button" disabled>Copy link</button></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; margin-bottom: 80px">
+    <section class="stack">
+      <div class="spec__k label"><span>Links</span><span>Pixel underline: 2px dashes, 4px period</span></div>
+      <div class="stack" style="gap: 20px">
+        <div style="display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 16px; align-items: baseline"><span class="label muted">Default</span><p class="body">I wrote up the <a class="link" href="#x">full threat model</a> here.</p></div>
+        <div style="display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 16px; align-items: baseline"><span class="label muted">Hover · solid</span><p class="body">I wrote up the <a class="link is-hover" href="#x">full threat model</a> here.</p></div>
+        <div style="display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 16px; align-items: baseline"><span class="label muted">Focus-visible</span><p class="body">I wrote up the <a class="link is-focus" href="#x">full threat model</a> here.</p></div>
+        <div style="display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 16px; align-items: baseline"><span class="label muted">Active</span><p class="body">I wrote up the <a class="link is-active" href="#x">full threat model</a> here.</p></div>
+        <div style="display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 16px; align-items: baseline"><span class="label muted">Disabled</span><p class="body">I wrote up the <a class="link" aria-disabled="true">full threat model</a> here.</p></div>
+        <div style="display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 16px; align-items: baseline"><span class="label muted">Quiet · nav</span><p class="body"><a class="link link--quiet" href="#x">Colophon</a> <span class="muted">turns accent on hover</span></p></div>
+      </div>
+    </section>
+    <section class="stack">
+      <div class="spec__k label"><span>Tags</span><span>Static 24 · filter 36 · pressed = square marker</span></div>
+      <div class="stack" style="gap: 28px">
+        <div class="states" style="gap: 16px">
+          <div class="state"><span class="label">Default</span><span class="tag">Builds</span></div>
+          <div class="state"><span class="label">Hover</span><a class="tag is-hover" href="#x">Builds</a></div>
+          <div class="state"><span class="label">Focus</span><a class="tag is-focus" href="#x">Builds</a></div>
+          <div class="state"><span class="label">Active</span><a class="tag is-active" href="#x">Builds</a></div>
+          <div class="state"><span class="label">Disabled</span><span class="tag" aria-disabled="true">Builds</span></div>
+        </div>
+        <div class="states" style="gap: 16px">
+          <div class="state"><span class="label">Filter</span><button class="tag tag--filter" type="button" aria-pressed="false">Notes <span class="count">4</span></button></div>
+          <div class="state"><span class="label">Hover</span><button class="tag tag--filter is-hover" type="button" aria-pressed="false">Notes <span class="count">4</span></button></div>
+          <div class="state"><span class="label">Focus</span><button class="tag tag--filter is-focus" type="button" aria-pressed="false">Notes <span class="count">4</span></button></div>
+          <div class="state"><span class="label">Pressed</span><button class="tag tag--filter" type="button" aria-pressed="true">Notes <span class="count">4</span></button></div>
+          <div class="state"><span class="label">Empty</span><button class="tag tag--filter" type="button" disabled>Talks <span class="count">0</span></button></div>
+        </div>
+        <p class="small muted">Filters are real buttons with aria-pressed. The list below them is a live region that announces "6 posts".</p>
+      </div>
+    </section>
+  </div>
+
+  <section class="spec__block" style="margin-bottom: 80px">
+    <div class="spec__k label"><span>Inputs</span><span>48 tall · 16px text (no iOS zoom) · label always visible · edge 3.3:1</span></div>
+    <div class="states" style="gap: 24px; align-items: start">
+      <div class="state" style="align-items: stretch"><span class="label">Default</span>
+        <div class="field"><label for="i1">Search the Log</label><div class="input-wrap"><span class="pre" aria-hidden="true">&gt;</span><input class="input" id="i1" type="search" placeholder="grep posts"></div></div>
+      </div>
+      <div class="state" style="align-items: stretch"><span class="label">Hover</span>
+        <div class="field"><label for="i2">Search the Log</label><div class="input-wrap"><span class="pre" aria-hidden="true">&gt;</span><input class="input is-hover" id="i2" type="search" placeholder="grep posts"></div></div>
+      </div>
+      <div class="state" style="align-items: stretch"><span class="label">Focus-visible · typing</span>
+        <div class="field"><label for="i3">Search the Log</label><div class="input-wrap"><span class="pre" aria-hidden="true" style="color: var(--accent)">&gt;</span><input class="input is-focus" id="i3" type="search" value="playwright"></div><span class="field__msg">3 matches</span></div>
+      </div>
+      <div class="state" style="align-items: stretch"><span class="label">Error</span>
+        <div class="field"><label for="i4">Email</label><input class="input" id="i4" type="email" value="james@" aria-invalid="true" aria-describedby="i4-msg"><span class="field__msg field__msg--err" id="i4-msg"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h2v1h-2zM2 1h1v1h-1zM5 1h1v1h-1zM2 2h1v1h-1zM5 2h1v1h-1zM1 3h1v1h-1zM3 3h2v1h-2zM6 3h1v1h-1zM1 4h1v1h-1zM3 4h2v1h-2zM6 4h1v1h-1zM0 5h1v1h-1zM7 5h1v1h-1zM0 6h1v1h-1zM3 6h2v1h-2zM7 6h1v1h-1zM0 7h8v1h-8z"/></svg>Err: needs a domain after @</span></div>
+      </div>
+      <div class="state" style="align-items: stretch"><span class="label">Disabled</span>
+        <div class="field"><label for="i5">Search the Log</label><div class="input-wrap"><span class="pre" aria-hidden="true">&gt;</span><input class="input" id="i5" type="search" placeholder="Offline" disabled></div></div>
+      </div>
+    </div>
+    <p class="small muted" style="margin-top: 24px">Error is never colour alone: dashed edge, warning glyph, "Err:" prefix and aria-describedby. The site has no forms that post data; contact is a mailto link.</p>
+  </section>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; margin-bottom: 80px">
+    <section class="stack">
+      <div class="spec__k label"><span>Paper toggle</span><span>Button with aria-pressed · remembered per browser</span></div>
+      <div class="states" style="grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+        <div class="state"><span class="label">Noir · default</span><button class="toggle" type="button" aria-pressed="false" aria-label="Paper mode"><span class="on"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M2 0h4v1h-4zM1 1h2v1h-2zM0 2h2v1h-2zM0 3h2v1h-2zM0 4h2v1h-2zM0 5h2v1h-2zM1 6h2v1h-2zM2 7h4v1h-4z"/></svg>Noir</span><span><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h2v1h-2zM1 1h1v1h-1zM6 1h1v1h-1zM2 2h4v1h-4zM0 3h1v1h-1zM2 3h4v1h-4zM7 3h1v1h-1zM0 4h1v1h-1zM2 4h4v1h-4zM7 4h1v1h-1zM2 5h4v1h-4zM1 6h1v1h-1zM6 6h1v1h-1zM3 7h2v1h-2z"/></svg>Paper</span></button></div>
+        <div class="state"><span class="label">Hover · focus</span><button class="toggle is-hover is-focus" type="button" aria-pressed="false" aria-label="Paper mode"><span class="on">Noir</span><span>Paper</span></button></div>
+        <div class="state"><span class="label">Paper · pressed</span><div class="paper" style="padding: 12px; border: 1px solid var(--line)"><button class="toggle" type="button" aria-pressed="true" aria-label="Paper mode"><span>Noir</span><span class="on">Paper</span></button></div></div>
+      </div>
+    </section>
+    <section class="stack">
+      <div class="spec__k label"><span>Toast</span><span>Bottom left · role=status · 4s · Esc dismisses</span></div>
+      <div class="stack" style="gap: 16px; align-items: flex-start">
+        <div class="toast" role="status"><span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z"/></svg></span>PGP fingerprint copied<button class="btn btn--ghost btn--icon" type="button" aria-label="Dismiss" style="min-height: 36px; width: 36px"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M1 1h1v1h-1zM7 1h1v1h-1zM2 2h1v1h-1zM6 2h1v1h-1zM3 3h1v1h-1zM5 3h1v1h-1zM4 4h1v1h-1zM3 5h1v1h-1zM5 5h1v1h-1zM2 6h1v1h-1zM6 6h1v1h-1zM1 7h1v1h-1zM7 7h1v1h-1z"/></svg></button></div>
+        <div class="toast toast--err" role="status"><span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h2v1h-2zM2 1h1v1h-1zM5 1h1v1h-1zM2 2h1v1h-1zM5 2h1v1h-1zM1 3h1v1h-1zM3 3h2v1h-2zM6 3h1v1h-1zM1 4h1v1h-1zM3 4h2v1h-2zM6 4h1v1h-1zM0 5h1v1h-1zM7 5h1v1h-1zM0 6h1v1h-1zM3 6h2v1h-2zM7 6h1v1h-1zM0 7h8v1h-8z"/></svg></span>Clipboard blocked. Select the key instead<button class="btn btn--ghost btn--icon" type="button" aria-label="Dismiss" style="min-height: 36px; width: 36px"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M1 1h1v1h-1zM7 1h1v1h-1zM2 2h1v1h-1zM6 2h1v1h-1zM3 3h1v1h-1zM5 3h1v1h-1zM4 4h1v1h-1zM3 5h1v1h-1zM5 5h1v1h-1zM2 6h1v1h-1zM6 6h1v1h-1zM1 7h1v1h-1zM7 7h1v1h-1z"/></svg></button></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="spec__block paper" style="margin-bottom: 0; padding: 40px; border: 1px solid var(--line)">
+    <div class="spec__k label"><span>Same controls in Paper</span><span>Tokens swap, components don't change</span></div>
+    <div class="row" style="gap: 16px; align-items: center">
+      <a class="btn btn--primary" href="#x">Read the Log</a>
+      <a class="btn btn--secondary" href="#x">See the work</a>
+      <span class="tag">Builds</span>
+      <button class="tag tag--filter" type="button" aria-pressed="true">Notes <span class="count">4</span></button>
+      <p class="body">Body text with a <a class="link" href="#x">pixel link</a> and <code class="inline">inline code</code>.</p>
+      <div style="width: 240px"><div class="pbar" role="progressbar" aria-label="Atlassian series" aria-valuemin="0" aria-valuemax="12" aria-valuenow="3"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"enum","options":["red","green","amber","paua"],"default":"red","section":"Theme"},"$preview":{"width":1440,"height":2800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? 'red' };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<title>Signal Noir components: chrome</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./signal-noir.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Geist";src:url(../fonts/Geist-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url(../fonts/GeistMono-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Pixel Square";src:url(../fonts/GeistPixel-Square.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Geist Pixel Grid";src:url(../fonts/GeistPixel-Grid.woff2) format("woff2");font-weight:400;font-display:swap}
+body{margin:0}
+</style>
+</helmet>
+<div class="sn spec" data-accent="{{accent}}" style="min-height: 2900px">
+
+  <header class="spec__head">
+    <div class="stack" style="gap: 20px">
+      <span class="label muted">JDH / Design system / v0.1</span>
+      <h1 class="h1" style="font-size: 96px">Site <span class="px">CHROME</span></h1>
+    </div>
+    <div class="stack label muted" style="gap: 6px; text-align: right">
+      <span>01 · Components</span>
+      <span>Top bar · Index · Section header</span>
+      <span>Command palette · Footer</span>
+    </div>
+  </header>
+
+  <section class="spec__block" style="margin-bottom: 80px">
+    <div class="spec__k label"><span>Top bar · 1440</span><span>Sticky · 64 tall · solid ground, no blur</span></div>
+    <div style="border: 1px solid var(--line)">
+      <header class="topbar" style="position: relative">
+        <div class="topbar__in" style="padding-inline: 24px">
+          <div class="topbar__left">
+            <a class="brand" href="#top" aria-label="James de Hair, home"><span class="monogram">JDH</span><span class="label">James de Hair</span></a>
+          </div>
+          <nav class="nav" aria-label="Primary">
+            <a href="#work">Work</a>
+            <a href="#log" aria-current="page">Log</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+          </nav>
+          <div class="topbar__right">
+            <a class="status" href="#now" aria-label="Status: in Wellington, moving to Sydney in November"><span class="status__dot" aria-hidden="true"></span>WLG <span class="sep">→</span> SYD <span class="sep">·</span> Nov</a>
+            <button class="kbd" type="button" aria-label="Open command palette"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M1 0h3v1h-3zM0 1h1v1h-1zM4 1h1v1h-1zM0 2h1v1h-1zM4 2h1v1h-1zM0 3h1v1h-1zM4 3h1v1h-1zM1 4h3v1h-3zM4 5h2v1h-2zM5 6h2v1h-2zM6 7h2v1h-2z"/></svg><span class="txt">Search</span><kbd>⌘K</kbd></button>
+          </div>
+        </div>
+      </header>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 390px minmax(0, 1fr); gap: 48px; margin-top: 32px; align-items: start">
+      <div class="stack" style="gap: 12px">
+        <span class="label muted">Top bar · 390</span>
+        <div class="sn no-grain" data-accent="{{accent}}" style="border: 1px solid var(--line)">
+          <header class="topbar" style="position: relative">
+            <div class="topbar__in" style="padding-inline: 16px">
+              <div class="topbar__left"><a class="brand" href="#top" aria-label="James de Hair, home"><span class="monogram">JDH</span><span class="label">James de Hair</span></a></div>
+              <div class="topbar__right">
+                <a class="status" href="#now" aria-label="Status: in Wellington, moving to Sydney in November"><span class="status__dot" aria-hidden="true"></span>WLG <span class="sep">→</span> SYD <span class="sep">·</span> Nov</a>
+                <button class="btn btn--secondary btn--icon menu-btn" type="button" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 1h8v1h-8zM0 4h8v1h-8zM0 7h8v1h-8z"/></svg></button>
+              </div>
+            </div>
+          </header>
+          <nav aria-label="Menu, open state" class="stack" style="border-top: 1px solid var(--line)">
+            <a class="navlink" href="#work" style="height: 56px; padding-inline: 16px; border-bottom: 1px solid var(--line)"><span class="k">02</span>Work</a>
+            <a class="navlink is-active" href="#log" style="height: 56px; padding-inline: 16px; border-bottom: 1px solid var(--line)" aria-current="page"><span class="k">03</span>Log</a>
+            <a class="navlink" href="#about" style="height: 56px; padding-inline: 16px; border-bottom: 1px solid var(--line)"><span class="k">05</span>About</a>
+            <a class="navlink" href="#contact" style="height: 56px; padding-inline: 16px"><span class="k">06</span>Contact</a>
+          </nav>
+        </div>
+        <p class="small muted">Menu opens as a full-width sheet under the bar. Esc or the button closes it and focus returns to the button.</p>
+      </div>
+
+      <div class="stack" style="gap: 32px">
+        <div class="stack" style="gap: 16px">
+          <span class="label muted">Nav link</span>
+          <div class="states">
+            <div class="state"><span class="label">Default</span><a class="navlink" href="#x">Work</a></div>
+            <div class="state"><span class="label">Hover</span><a class="navlink is-hover" href="#x">Work</a></div>
+            <div class="state"><span class="label">Focus-visible</span><a class="navlink is-focus" href="#x">Work</a></div>
+            <div class="state"><span class="label">Active · current</span><a class="navlink is-active" href="#x" aria-current="page">Work</a></div>
+            <div class="state"><span class="label">Disabled</span><a class="navlink" aria-disabled="true">Work</a></div>
+          </div>
+        </div>
+        <div class="stack" style="gap: 16px">
+          <span class="label muted">Monogram</span>
+          <div class="states">
+            <div class="state"><span class="label">Default</span><a class="brand" href="#x"><span class="monogram">JDH</span></a></div>
+            <div class="state"><span class="label">Hover</span><a class="brand is-hover" href="#x"><span class="monogram">JDH</span></a></div>
+            <div class="state"><span class="label">Focus-visible</span><a class="brand is-focus" href="#x" style="outline-offset: 2px"><span class="monogram">JDH</span></a></div>
+            <div class="state"><span class="label">Active</span><a class="brand is-active" href="#x"><span class="monogram">JDH</span></a></div>
+            <div class="state"><span class="label">Disabled</span><span class="monogram" style="color: var(--muted); border-color: var(--line)">JDH</span></div>
+          </div>
+        </div>
+        <div class="stack" style="gap: 16px">
+          <span class="label muted">Status pill · three phases</span>
+          <div class="states">
+            <div class="state"><span class="label">Before · now</span><span class="status"><span class="status__dot" aria-hidden="true"></span>WLG <span class="sep">→</span> SYD <span class="sep">·</span> Nov</span></div>
+            <div class="state"><span class="label">During · week count</span><span class="status"><span class="status__dot" aria-hidden="true"></span>SYD <span class="sep">·</span> W03/12</span></div>
+            <div class="state"><span class="label">Hover · focus</span><span class="status is-hover is-focus"><span class="status__dot" aria-hidden="true"></span>SYD <span class="sep">·</span> W03/12</span></div>
+            <div class="state"><span class="label">After</span><span class="status status--idle"><span class="status__dot" aria-hidden="true"></span>WLG <span class="sep">·</span> 12/12 done</span></div>
+            <div class="state"><span class="label">Search · ⌘K</span><button class="kbd is-hover" type="button"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M1 0h3v1h-3zM0 1h1v1h-1zM4 1h1v1h-1zM0 2h1v1h-1zM4 2h1v1h-1zM0 3h1v1h-1zM4 3h1v1h-1zM1 4h3v1h-3zM4 5h2v1h-2zM5 6h2v1h-2zM6 7h2v1h-2z"/></svg><kbd>⌘K</kbd></button></div>
+          </div>
+          <p class="small muted">The pill links to 01 NOW. Week number comes from the build date, so it never needs a manual edit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div style="display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 64px; margin-bottom: 80px">
+    <section class="stack" style="gap: 0">
+      <div class="spec__k label"><span>Section index</span><span>Sticky · left rail</span></div>
+      <nav aria-label="On this page">
+        <ul class="idx" style="--i: 1">
+          <li class="idx__marker" aria-hidden="true"></li>
+          <li><a href="#intro"><span class="n">00</span>Intro</a></li>
+          <li><a href="#now" aria-current="true"><span class="n">01</span>Now</a></li>
+          <li><a href="#work"><span class="n">02</span>Work</a></li>
+          <li><a href="#log"><span class="n">03</span>Log</a></li>
+          <li><a href="#lab"><span class="n">04</span>Lab</a></li>
+          <li><a href="#about"><span class="n">05</span>About</a></li>
+          <li><a href="#contact"><span class="n">06</span>Contact</a></li>
+        </ul>
+      </nav>
+      <p class="small muted" style="margin-top: 20px">One marker. An observer sets --i and the square slides 36px per step (M2).</p>
+    </section>
+    <section class="stack">
+      <div class="spec__k label"><span>Index item · states</span><span>36 tall · whole row is the target</span></div>
+      <div class="states">
+        <div class="state"><span class="label">Default</span><ul class="idx" style="width: 100%"><li><a href="#x"><span class="n">03</span>Log</a></li></ul></div>
+        <div class="state"><span class="label">Hover</span><ul class="idx" style="width: 100%"><li><a class="is-hover" href="#x"><span class="n">03</span>Log</a></li></ul></div>
+        <div class="state"><span class="label">Focus-visible</span><ul class="idx" style="width: 100%"><li><a class="is-focus" href="#x"><span class="n">03</span>Log</a></li></ul></div>
+        <div class="state"><span class="label">Active · in view</span><ul class="idx" style="width: 100%; position: relative"><li class="idx__marker" aria-hidden="true"></li><li><a class="is-active" href="#x" aria-current="true"><span class="n">03</span>Log</a></li></ul></div>
+        <div class="state"><span class="label">Disabled</span><ul class="idx" style="width: 100%"><li><a aria-disabled="true"><span class="n">04</span>Lab</a></li></ul></div>
+      </div>
+
+      <div class="spec__k label" style="margin-top: 64px"><span>Section header</span><span>Mono number + label over a hairline, then the heading</span></div>
+      <div class="sh"><span class="sh__id"><b>02</b><span>/</span><span>Work</span></span><span>4 projects · 2025–2026</span></div>
+      <h2 class="h2 sh-title" style="margin-bottom: 0">Selected <span class="px">WORK</span></h2>
+      <div class="row label muted" style="gap: 24px; margin-top: 24px"><span>Number in --text</span><span>Label + meta in --muted</span><span>H2 one pixel word only</span><span>Gap 32 to heading, 48 to content</span></div>
+    </section>
+  </div>
+
+  <section class="spec__block" style="margin-bottom: 80px">
+    <div class="spec__k label"><span>Command palette</span><span>⌘K or Ctrl K · also / · terminal prompt</span></div>
+    <div style="display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 48px; align-items: start">
+      <div class="cmdk-scrim" style="padding: 48px 24px; border: 1px solid var(--line)">
+        <div class="cmdk" role="dialog" aria-modal="true" aria-label="Command palette">
+          <div class="cmdk__head">
+            <span class="ps1">jdh@log<b>:</b>~$</span>
+            <label class="sr-only" for="cmdk-q">Search pages, posts and actions</label>
+            <input id="cmdk-q" type="text" value="threat" role="combobox" aria-expanded="true" aria-controls="cmdk-list" aria-activedescendant="cmdk-1" autocomplete="off" spellcheck="false">
+            <span class="cmdk__caret" aria-hidden="true"></span>
+          </div>
+          <div id="cmdk-list" role="listbox" aria-label="Results">
+            <div class="cmdk__group" role="group" aria-label="Posts">
+              <div class="cmdk__group-k micro">Posts · 2</div>
+              <a class="cmdk__item" id="cmdk-1" role="option" aria-selected="true" href="#x"><span class="mk" aria-hidden="true">&gt;</span><span>W02/12: Onboarding is a <mark>threat</mark> model</span><span class="hint">↵ Open</span></a>
+              <a class="cmdk__item" role="option" aria-selected="false" href="#x"><span class="mk" aria-hidden="true">&gt;</span><span>PricePath: the <mark>threat</mark> model I wish I'd started with</span><span class="hint">Case</span></a>
+            </div>
+            <div class="cmdk__group" role="group" aria-label="Pages">
+              <div class="cmdk__group-k micro">Pages</div>
+              <a class="cmdk__item" role="option" aria-selected="false" href="#x"><span class="mk" aria-hidden="true">&gt;</span><span>cd /log/series/atlassian</span><span class="hint">G S</span></a>
+              <a class="cmdk__item" role="option" aria-selected="false" href="#x"><span class="mk" aria-hidden="true">&gt;</span><span>cd /colophon</span><span class="hint">G C</span></a>
+            </div>
+            <div class="cmdk__group" role="group" aria-label="Actions" style="border-bottom: 0">
+              <div class="cmdk__group-k micro">Actions</div>
+              <button class="cmdk__item" role="option" aria-selected="false" type="button" style="width: 100%; background: transparent; border: 0; text-align: left; cursor: pointer"><span class="mk" aria-hidden="true">&gt;</span><span>toggle --paper</span><span class="hint">Shift P</span></button>
+              <button class="cmdk__item" role="option" aria-selected="false" type="button" style="width: 100%; background: transparent; border: 0; text-align: left; cursor: pointer"><span class="mk" aria-hidden="true">&gt;</span><span>copy pgp --fingerprint</span><span class="hint">Copy</span></button>
+            </div>
+          </div>
+          <div class="cmdk__foot micro" style="border-top: 1px solid var(--line)"><span><kbd>↑↓</kbd> Move</span><span><kbd>↵</kbd> Open</span><span><kbd>Esc</kbd> Close</span><span style="margin-left: auto">6 results</span></div>
+        </div>
+      </div>
+      <div class="stack" style="gap: 20px">
+        <div class="stack" style="gap: 8px"><span class="label">Behaviour</span><p class="small muted">Native &lt;dialog&gt; with showModal(). Focus starts in the prompt and is trapped until Esc. Arrow keys move aria-activedescendant. The index is a small JSON file built at compile time, about 4 kB, fetched on first open only.</p></div>
+        <div class="stack" style="gap: 8px"><span class="label">States</span><p class="small muted">Empty: shows recent pages. No match: "command not found: query" in --muted with a hint to try a tag. Selected row: --surface-2 and an accent caret.</p></div>
+        <div class="stack" style="gap: 8px"><span class="label">No JS</span><p class="small muted">The trigger is a link to /log with the search field focused, so it still works.</p></div>
+        <div class="stack" style="gap: 8px"><span class="label">Mobile</span><p class="small muted">Opens full width from the top, 16px gutters. Trigger lives in the menu sheet.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="spec__block" style="margin-bottom: 0">
+    <div class="spec__k label"><span>Footer</span><span>Security readout · PGP · RSS · sign-off</span></div>
+    <footer class="footer" style="margin-top: 0; border: 1px solid var(--line); padding: 48px 32px 24px">
+      <div class="footer__grid">
+        <div class="footer__sign">
+          <p class="bye">Ngā mihi, James</p>
+          <p class="small muted" style="max-width: 44ch">Built by hand in Te Whanganui-a-Tara, Wellington. Static pages, no trackers, no cookies.</p>
+          <div class="readout" aria-label="Security readout">
+            <span class="item">CSP <b>strict</b> <span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-label="pass" role="img"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z"/></svg></span></span>
+            <span class="dot" aria-hidden="true">·</span>
+            <span class="item">HSTS <b>preload</b> <span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-label="pass" role="img"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z"/></svg></span></span>
+            <span class="dot" aria-hidden="true">·</span>
+            <span class="item">Trackers <b>0</b></span>
+            <span class="dot" aria-hidden="true">·</span>
+            <span class="item">Cookies <b>0</b></span>
+            <span class="dot" aria-hidden="true">·</span>
+            <span class="item">JS <b>{size}</b></span>
+          </div>
+        </div>
+        <div class="footer__col">
+          <span class="label">Site</span>
+          <a href="#work">Work</a><a href="#log">Log</a><a href="#about">About</a><a href="#colophon">Colophon</a>
+        </div>
+        <div class="footer__col">
+          <span class="label">Elsewhere</span>
+          <a href="#gh">GitHub</a><a href="#li">LinkedIn</a>
+          <a href="#rss" style="display: inline-flex; align-items: center; gap: 8px"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 0h3v1h-3zM3 1h2v1h-2zM0 2h2v1h-2zM5 2h1v1h-1zM2 3h1v1h-1zM6 3h1v1h-1zM3 4h1v1h-1zM6 4h1v1h-1zM0 5h2v1h-2zM4 5h1v1h-1zM7 5h1v1h-1zM0 6h2v1h-2zM4 6h1v1h-1zM7 6h1v1h-1z"/></svg>RSS</a>
+        </div>
+        <div class="footer__pgp">
+          <span class="label muted">PGP fingerprint</span>
+          <span class="fpr">XXXX XXXX XXXX XXXX XXXX<br>XXXX XXXX XXXX XXXX XXXX</span>
+          <a class="link label" href="#pgp" style="width: fit-content">Get key · /pgp.asc</a>
+        </div>
+        <div class="footer__base micro">
+          <span>© 2026 James de Hair</span>
+          <span>Views are my own</span>
+          <a class="link link--quiet" href="#top">Back to top</a>
+        </div>
+      </div>
+    </footer>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"enum","options":["red","green","amber","paua"],"default":"red","section":"Theme"},"$preview":{"width":1440,"height":2900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? 'red' };
+  }
+}
+</script>
+</body>
+</html>
