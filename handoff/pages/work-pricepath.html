@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PricePath case study · James de Hair</title>
+<link rel="stylesheet" href="preview.css">
+<style>
+@font-face{font-family:"Geist";src:url(../fonts/Geist-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url(../fonts/GeistMono-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Pixel Square";src:url(../fonts/GeistPixel-Square.woff2) format("woff2");font-weight:400;font-display:swap}
+body{margin:0}
+</style>
+<style>
+/* preview only: grain covers the whole page so full-page screenshots match */
+.sn::after { position: absolute; }
+</style>
+</head>
+<body>
+<div class="sn" data-accent="red" id="top">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="wrap topbar__in">
+      <div class="topbar__left">
+        <a class="brand" href="home.html" aria-label="James de Hair, home"><span class="monogram">JDH</span><span class="label">James de Hair</span></a>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="home.html#work" aria-current="page">Work</a>
+        <a href="log.html">Log</a>
+        <a href="home.html#about">About</a>
+        <a href="home.html#contact">Contact</a>
+      </nav>
+      <div class="topbar__right">
+        <a class="status" href="home.html#now" aria-label="Status: in Wellington, moving to Sydney in November"><span class="status__dot" aria-hidden="true"></span>WLG <span class="sep">→</span> SYD <span class="sep">·</span> Nov</a>
+        <button class="kbd" type="button" aria-label="Open command palette"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M1 0h3v1h-3zM0 1h1v1h-1zM4 1h1v1h-1zM0 2h1v1h-1zM4 2h1v1h-1zM0 3h1v1h-1zM4 3h1v1h-1zM1 4h3v1h-3zM4 5h2v1h-2zM5 6h2v1h-2zM6 7h2v1h-2z" /></svg><span class="txt">Search</span><kbd>⌘K</kbd></button>
+        <button class="btn btn--secondary btn--icon menu-btn" type="button" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 1h8v1h-8zM0 4h8v1h-8zM0 7h8v1h-8z" /></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" id="main">
+    <header class="case-head">
+      <nav class="crumb label" aria-label="Breadcrumb"><a href="home.html#work">Work</a><span aria-hidden="true">/</span><span aria-current="page">PricePath</span><span aria-hidden="true">·</span><span>Case study 01</span></nav>
+      <h1 class="h1" style="font-size: clamp(3rem, 9cqi, 8.5rem)">Price<span class="px">PATH</span></h1>
+      <p class="lead" style="font-size: 1.5rem; line-height: 1.4; max-width: 40ch">Grocery prices from three NZ supermarket chains, scraped nightly and shipped to a locked-down OCI box by CI.</p>
+      <div class="meta-row">
+        <div><span class="label">Year</span><span class="small">2026 · ENGR302, VUW</span></div>
+        <div><span class="label">Role</span><span class="small">Scraper and deployment lead, team of five</span></div>
+        <div><span class="label">Stack</span><span class="small">Playwright (Python), OCI, nginx, GitLab CI/CD</span></div>
+        <div><span class="label">Status</span><span class="small">Live on HTTPS · [URL]</span></div>
+      </div>
+      <figure class="case-cover"><img src="../img/cover-pricepath.png" alt="" width="560" height="350"></figure>
+    </header>
+
+    <div class="doc" style="margin-top: 96px">
+      <aside class="doc__rail">
+        <nav aria-label="Contents" class="stack" style="gap: 12px">
+          <span class="label muted">Contents</span>
+          <ol class="toc">
+            <li><a href="#problem" aria-current="true"><span class="n">01</span>Problem</a></li>
+            <li><a href="#threats"><span class="n">02</span>Threat model</a></li>
+            <li><a href="#approach"><span class="n">03</span>Approach</a></li>
+            <li><a href="#dead-ends"><span class="n">04</span>Dead ends</a></li>
+            <li><a href="#result"><span class="n">05</span>Result</a></li>
+            <li><a href="#change"><span class="n">06</span>What I'd change</a></li>
+          </ol>
+        </nav>
+        <div class="stack micro muted" style="gap: 6px"><span>Read time · 8 min</span><span>Updated · 2026-10-16</span></div>
+      </aside>
+
+      <article class="doc__body">
+        <details class="toc-mobile" style="margin-bottom: 32px">
+          <summary class="label">Contents <span class="muted">6 parts</span></summary>
+          <ol class="toc" style="margin: 0 16px 16px">
+            <li><a href="#problem"><span class="n">01</span>Problem</a></li>
+            <li><a href="#threats"><span class="n">02</span>Threat model</a></li>
+            <li><a href="#approach"><span class="n">03</span>Approach</a></li>
+            <li><a href="#dead-ends"><span class="n">04</span>Dead ends</a></li>
+            <li><a href="#result"><span class="n">05</span>Result</a></li>
+            <li><a href="#change"><span class="n">06</span>What I'd change</a></li>
+          </ol>
+        </details>
+
+        <div class="prose">
+          <h2 id="problem" style="margin-top: 0"><span class="n">01</span>Problem</h2>
+          <p>Grocery prices in New Zealand live on three websites built three different ways. Our ENGR302 team set out to build PricePath: type a shopping list, see where it's cheapest and get a route through the shop.</p>
+          <p>I owned two pieces. The scraper that pulls prices in every night, and the deployment that keeps the whole thing running. The course brief was a working product. My own brief was quieter: a scraper that never gets the team blocked, and a server nobody has to babysit.</p>
+
+          <h2 id="threats"><span class="n">02</span>Threat model</h2>
+          <p>Small project, real internet. I ran STRIDE over the scraper, the API box and the pipeline, then kept one line per threat so the team would actually read it.</p>
+        </div>
+        <div class="stride stride--3" style="margin-top: 28px">
+          <div><span class="stride__l" aria-hidden="true">S</span><span class="stride__name label">Spoofing</span><p class="stride__note">Only the CI runner can deploy. One SSH key per environment, password login off.</p><span class="stride__st ok micro">Mitigated</span></div>
+          <div><span class="stride__l" aria-hidden="true">T</span><span class="stride__name label">Tampering</span><p class="stride__note">Scraped rows are schema-checked before they reach the database.</p><span class="stride__st ok micro">Mitigated</span></div>
+          <div><span class="stride__l" aria-hidden="true">R</span><span class="stride__name label">Repudiation</span><p class="stride__note">Every scrape run logs source, start time and row count.</p><span class="stride__st ok micro">Mitigated</span></div>
+          <div><span class="stride__l" aria-hidden="true">I</span><span class="stride__name label">Info disclosure</span><p class="stride__note">No secrets in the repo. CI variables are masked and protected.</p><span class="stride__st ok micro">Mitigated</span></div>
+          <div><span class="stride__l" aria-hidden="true">D</span><span class="stride__name label">Denial of service</span><p class="stride__note">nginx rate limits requests. One small VM is still a single point of failure.</p><span class="stride__st acc-risk micro">Accepted</span></div>
+          <div><span class="stride__l" aria-hidden="true">E</span><span class="stride__name label">Elevation</span><p class="stride__note">Services run as unprivileged users under systemd. No root in the app.</p><span class="stride__st ok micro">Mitigated</span></div>
+        </div>
+
+        <div class="prose" style="margin-top: 0">
+          <h2 id="approach"><span class="n">03</span>Approach</h2>
+          <p>PAK'nSAVE and New World are both Foodstuffs sites built on Next.js. Each page already ships its data as JSON in a <code>__NEXT_DATA__</code> script tag, so the scraper reads that instead of guessing at markup. Woolworths needed real DOM scraping with Playwright locators.</p>
+          <figure class="code">
+            <div class="code__bar">
+              <span class="code__tab">scraper/next_data.py <span class="lang">py</span></span>
+              <button class="code__copy" type="button" aria-label="Copy code"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h5v1h-5zM3 1h1v1h-1zM7 1h1v1h-1zM1 2h5v1h-5zM7 2h1v1h-1zM1 3h1v1h-1zM5 3h1v1h-1zM7 3h1v1h-1zM1 4h1v1h-1zM5 4h3v1h-3zM1 5h1v1h-1zM5 5h1v1h-1zM1 6h5v1h-5z" /></svg>Copy</button>
+            </div>
+<pre><code><span class="ln">1</span><span class="k">import</span> json
+<span class="ln">2</span>
+<span class="ln">3</span><span class="c"># read the json the page already ships, no dom guessing</span>
+<span class="ln">4</span><span class="k">async def</span> <span class="f">read_next_data</span>(page):
+<span class="hl"><span class="ln">5</span>    raw = <span class="k">await</span> page.locator(<span class="s">"script#__NEXT_DATA__"</span>).text_content()</span><span class="ln">6</span>    <span class="k">return</span> json.loads(raw)[<span class="s">"props"</span>][<span class="s">"pageProps"</span>]</code></pre>
+          </figure>
+          <p>Runs are polite: one store at a time, with a pause between pages. Every row passes a schema check before it's written, so a store redesign shows up as a failed run, not as bad prices.</p>
+          <div class="flow" role="list" aria-label="Pipeline">
+            <div role="listitem"><span class="label">01 · Source</span><b>Store pages</b></div>
+            <div role="listitem" class="hot"><span class="label">02 · Scrape</span><b>Playwright</b></div>
+            <div role="listitem"><span class="label">03 · Check</span><b>Schema</b></div>
+            <div role="listitem"><span class="label">04 · Store</span><b>Database</b></div>
+            <div role="listitem"><span class="label">05 · Serve</span><b>API via nginx</b></div>
+          </div>
+          <p>The app runs on a single OCI instance behind nginx, with a DuckDNS domain and HTTPS. The GitLab pipeline lints, tests and deploys on every merge to main, over SSH with a deploy-only key.</p>
+
+          <h2 id="dead-ends"><span class="n">04</span>Dead ends</h2>
+          <ol class="dead">
+            <li><span class="no" aria-hidden="true">01</span><p><span class="k">Tried</span>Calling the stores' internal APIs directly.</p><p><span class="k">Why not</span>Undocumented, brittle and against the spirit of the sites' terms.</p><p><span class="k">Now</span>Read only what the page already sends to any browser.</p></li>
+            <li><span class="no" aria-hidden="true">02</span><p><span class="k">Tried</span>Visiting every product page.</p><p><span class="k">Why not</span>Slow, and rude to the stores.</p><p><span class="k">Now</span>Category pages carry almost everything we need.</p></li>
+            <li><span class="no" aria-hidden="true">03</span><p><span class="k">Tried</span>Running the scraper as root on the API box.</p><p><span class="k">Why not</span>One bug away from owning everything.</p><p><span class="k">Now</span>Its own unprivileged user and systemd unit. No sudo.</p></li>
+          </ol>
+
+          <h2 id="result"><span class="n">05</span>Result</h2>
+          <p>PricePath runs on HTTPS behind nginx. Prices refresh nightly across all three chains, and the pipeline ships every merge to main without anyone logging in to the server.</p>
+          <div class="stats">
+            <div><span class="v">3</span><span class="label">Supermarket chains</span></div>
+            <div><span class="v">[N]</span><span class="label">Products per nightly run</span></div>
+            <div><span class="v">0</span><span class="label">Manual deploys after week [N]</span></div>
+          </div>
+
+          <h2 id="change"><span class="n">06</span>What I'd change</h2>
+          <ul>
+            <li>Write the threat model in week one, not halfway through.</li>
+            <li>Swap DuckDNS for a real domain with DNSSEC and CAA records.</li>
+            <li>Alert when a store changes its markup, instead of finding out from an empty table.</li>
+            <li>Containerise the scraper so it isn't tied to one VM.</li>
+          </ul>
+        </div>
+
+        <nav class="pn" aria-label="More work">
+          <a href="#oci-lab"><span class="label"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" style="transform: scaleX(-1)"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z" /></svg>Previous</span><span class="t">Hardened OCI lab</span></a>
+          <a href="#ctf"><span class="label">Next<svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z" /></svg></span><span class="t">CTF writeups</span></a>
+        </nav>
+      </article>
+
+      <aside class="doc__aside">
+        <div class="stack" style="gap: 6px"><span class="label muted">Team</span><span class="small">ENGR302 · Team 8</span></div>
+        <div class="stack" style="gap: 6px"><span class="label muted">My part</span><span class="small">Scraper, CI/CD, server</span></div>
+        <div class="stack" style="gap: 6px"><span class="label muted">Repo</span><span class="small">Private (course)</span></div>
+        <div class="stack" style="gap: 6px"><span class="label muted">Tags</span><div class="tags"><span class="tag">Builds</span><span class="tag">Cloud</span></div></div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__grid">
+      <div class="footer__sign">
+        <p class="bye">Ngā mihi, James</p>
+        <div class="readout" aria-label="Security readout">
+          <span class="item">CSP <b>strict</b> <span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" role="img" aria-label="pass"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z" /></svg></span></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">HSTS <b>preload</b> <span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" role="img" aria-label="pass"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z" /></svg></span></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">Trackers <b>0</b></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">Cookies <b>0</b></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">JS <b>{size}</b></span>
+        </div>
+      </div>
+      <div class="footer__col"><span class="label">Site</span><a href="home.html#work">Work</a><a href="log.html">Log</a><a href="home.html#about">About</a><a href="colophon.html">Colophon</a></div>
+      <div class="footer__col"><span class="label">Elsewhere</span><a href="#gh">GitHub</a><a href="#li">LinkedIn</a><a href="#rss">RSS</a></div>
+      <div class="footer__pgp"><span class="label muted">PGP fingerprint</span><span class="fpr">XXXX XXXX XXXX XXXX XXXX<br>XXXX XXXX XXXX XXXX XXXX</span></div>
+      <div class="footer__base micro"><span>© 2026 James de Hair</span><span>Views are my own</span><a class="link link--quiet" href="#top">Back to top</a></div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

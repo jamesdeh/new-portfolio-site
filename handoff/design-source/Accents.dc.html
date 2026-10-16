@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<title>Accent comparison</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./signal-noir.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Geist";src:url(../fonts/Geist-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url(../fonts/GeistMono-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Pixel Square";src:url(../fonts/GeistPixel-Square.woff2) format("woff2");font-weight:400;font-display:swap}
+body{margin:0}
+</style>
+</helmet>
+<div class="sn" data-accent="red" style="width: 2760px; min-height: 2000px; padding: 72px 64px 80px">
+
+  <header class="spec__head" style="margin-bottom: 48px">
+    <div class="stack" style="gap: 20px">
+      <span class="label muted">JDH / Design system / Accent</span>
+      <h1 class="h1" style="font-size: 104px">One <span class="px">SIGNAL</span></h1>
+    </div>
+    <div class="stack label muted" style="gap: 6px; text-align: right">
+      <span>Same hero, same post, four accents</span>
+      <span>All pass AA as text on #0A0A0A and on Paper #F3F1EC</span>
+      <span>Accent stays under 5% of each screen</span>
+    </div>
+  </header>
+
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; align-items: start">
+    <sc-for list="{{cols}}" as="c" hint-placeholder-count="4">
+      <div class="sn no-grain stack" data-accent="{{c.id}}" style="gap: 24px; background: transparent">
+
+        <div class="stack" style="gap: 16px; padding-bottom: 20px; border-bottom: 1px solid var(--line)">
+          <div class="row" style="justify-content: space-between; gap: 12px">
+            <span class="label muted">{{c.no}}</span>
+            <sc-if value="{{c.rec}}" hint-placeholder-val="{{ false }}"><span class="tag" style="color: var(--text); border-color: var(--accent)">Recommended</span></sc-if>
+          </div>
+          <h2 class="h3" style="font-size: 32px">{{c.name}}</h2>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+            <div class="row" style="gap: 12px"><span style="width: 40px; height: 40px; background: var(--a-dark); flex: none"></span><span class="stack" style="gap: 2px"><span class="label">{{c.dark}}</span><span class="micro muted">Noir · {{c.cd}}</span></span></div>
+            <div class="row" style="gap: 12px"><span style="width: 40px; height: 40px; background: var(--a-paper); flex: none; outline: 1px solid var(--line)"></span><span class="stack" style="gap: 2px"><span class="label">{{c.paper}}</span><span class="micro muted">Paper · {{c.cp}}</span></span></div>
+          </div>
+        </div>
+
+        <div style="border: 1px solid var(--line); background: var(--bg)">
+          <div class="row" style="justify-content: space-between; height: 56px; padding: 0 16px; border-bottom: 1px solid var(--line); gap: 12px">
+            <span class="monogram" style="width: 36px; height: 36px; font-size: 13px">JDH</span>
+            <div class="row" style="gap: 8px">
+              <span class="status"><span class="status__dot" aria-hidden="true"></span>WLG <span class="sep">→</span> SYD <span class="sep">·</span> Nov</span>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; padding: 32px 20px 28px 0">
+            <ul class="idx" style="--i: 0; margin-left: 20px">
+              <li class="idx__marker" aria-hidden="true"></li>
+              <li><a href="#intro" aria-current="true"><span class="n">00</span>Intro</a></li>
+              <li><a href="#now"><span class="n">01</span>Now</a></li>
+              <li><a href="#work"><span class="n">02</span>Work</a></li>
+              <li><a href="#log"><span class="n">03</span>Log</a></li>
+            </ul>
+            <div class="stack" style="gap: 0; min-width: 0">
+              <span class="label muted" style="margin-bottom: 20px">00 / Intro</span>
+              <div class="stack" style="font-size: 72px; line-height: 0.88; text-transform: uppercase">
+                <span style="font-weight: 800; letter-spacing: -0.04em">JAMES</span>
+                <span class="px" style="margin-top: 4px">DE HAIR<span class="acc">.</span></span>
+              </div>
+              <p class="mono small muted" style="margin-top: 20px; font-size: 13px; line-height: 1.6">Third-year cybersecurity engineering student at VUW. Security Engineering intern at Atlassian, Sydney, from November 2026.</p>
+              <div class="row" style="gap: 10px; margin-top: 20px">
+                <a class="btn btn--primary btn--sm" href="#log">Read the Log</a>
+                <a class="btn btn--secondary btn--sm is-focus" href="#work">See the work</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="border: 1px solid var(--line); background: var(--bg)">
+          <div class="pbar" style="height: 4px; gap: 2px" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="42"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="stack" style="gap: 20px; padding: 24px 24px 28px">
+            <div class="classif" style="font-size: 11px"><span class="lvl">Classification: public</span><span class="dot">·</span><span>6 min</span><span class="dot">·</span><b>W03/12</b></div>
+            <h3 class="h3" style="font-size: 30px">W03/12: Reading before writing</h3>
+            <p class="small" style="font-size: 16px; line-height: 1.6">Week three was mostly reading. Design docs, old reviews and a lot of <code class="inline">git log</code>. The <a class="link" href="#x">STRIDE notes from PricePath</a> turned out to be a decent warm-up.</p>
+            <aside class="callout callout--flag" role="note" aria-label="Flag" style="padding: 14px 16px">
+              <span class="callout__k label"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 0h1v1h-1zM0 1h4v1h-4zM0 2h7v1h-7zM0 3h4v1h-4zM0 4h1v1h-1zM0 5h1v1h-1zM0 6h1v1h-1zM0 7h1v1h-1z"/></svg>Flag</span>
+              <p style="font-size: 15px">Which review comments would I still make if I wrote the code?</p>
+            </aside>
+            <div class="code" style="font-size: 13px">
+              <pre style="padding: 14px 16px; font-size: 13px"><code><span class="ln">4</span><span class="k">async def</span> <span class="f">read</span>(page):
+<span class="hl" style="margin-inline: -16px; padding-inline: 16px"><span class="ln">5</span>    raw = <span class="k">await</span> page.text()</span></code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="paper stack" style="gap: 16px; padding: 24px; border: 1px solid var(--line)">
+          <div class="classif" style="font-size: 11px"><span class="lvl">Classification: public</span><span class="dot">·</span><span>Paper mode</span></div>
+          <p class="small" style="font-size: 16px; line-height: 1.6">Long reads switch to Paper. Same post, <a class="link" href="#x">same links</a>, darker accent so it still passes.</p>
+          <div class="row" style="gap: 10px">
+            <a class="btn btn--primary btn--sm" href="#x">Next post</a>
+            <div style="width: 160px"><div class="pbar pbar--sm" role="progressbar" aria-label="Atlassian series" aria-valuemin="0" aria-valuemax="12" aria-valuenow="3"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+          </div>
+        </div>
+
+      </div>
+    </sc-for>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":2760,"height":2000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      cols: [
+        { id: 'red', no: 'A · Signal red', name: 'Signal red', dark: '#FF3B2F', cd: '5.58:1', paper: '#B8261C', cp: '5.58:1', rec: true },
+        { id: 'green', no: 'B · Phosphor green', name: 'Phosphor green', dark: '#3DFF8B', cd: '14.97:1', paper: '#08703A', cp: '5.49:1', rec: false },
+        { id: 'amber', no: 'C · Amber', name: 'Amber', dark: '#FFB000', cd: '10.81:1', paper: '#875500', cp: '5.59:1', rec: false },
+        { id: 'paua', no: 'D · Wild card', name: 'Pāua', dark: '#3DD6E8', cd: '11.30:1', paper: '#006E7C', cp: '5.28:1', rec: false }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

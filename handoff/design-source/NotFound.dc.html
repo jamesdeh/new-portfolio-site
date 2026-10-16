@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<title>404 · Access denied</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./signal-noir.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Geist";src:url(../fonts/Geist-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url(../fonts/GeistMono-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Pixel Square";src:url(../fonts/GeistPixel-Square.woff2) format("woff2");font-weight:400;font-display:swap}
+body{margin:0}
+</style>
+</helmet>
+<div class="sn" data-accent="{{accent}}" id="top">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="wrap topbar__in">
+      <div class="topbar__left">
+        <a class="brand" href="Home.dc.html" aria-label="James de Hair, home"><span class="monogram">JDH</span><span class="label">James de Hair</span></a>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="Home.dc.html#work">Work</a>
+        <a href="Log.dc.html">Log</a>
+        <a href="Home.dc.html#about">About</a>
+        <a href="Home.dc.html#contact">Contact</a>
+      </nav>
+      <div class="topbar__right">
+        <a class="status" href="Home.dc.html#now" aria-label="Status: in Wellington, moving to Sydney in November"><span class="status__dot" aria-hidden="true"></span>WLG <span class="sep">→</span> SYD <span class="sep">·</span> Nov</a>
+        <button class="kbd" type="button" aria-label="Open command palette"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M1 0h3v1h-3zM0 1h1v1h-1zM4 1h1v1h-1zM0 2h1v1h-1zM4 2h1v1h-1zM0 3h1v1h-1zM4 3h1v1h-1zM1 4h3v1h-3zM4 5h2v1h-2zM5 6h2v1h-2zM6 7h2v1h-2z"/></svg><span class="txt">Search</span><kbd>⌘K</kbd></button>
+        <button class="btn btn--secondary btn--icon menu-btn" type="button" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 1h8v1h-8zM0 4h8v1h-8zM0 7h8v1h-8z"/></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" id="main" style="padding-top: 96px">
+    <div class="classif" style="margin-bottom: 48px"><span class="lvl">Classification: restricted</span><span class="dot" aria-hidden="true">·</span><span>HTTP 404</span><span class="dot" aria-hidden="true">·</span><span>This page doesn't exist, or never did</span></div>
+    <h1 class="stack" style="gap: 0; font-weight: 400; text-transform: uppercase; line-height: 0.9">
+      <span class="px" style="font-size: clamp(2.6rem, 10.6cqi, 9.5rem)">ACCESS DENIED</span>
+      <span class="px" style="font-size: clamp(2.6rem, 10.6cqi, 9.5rem); color: var(--muted)"><span class="acc">/</span> 404</span>
+    </h1>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 32px 48px; margin-top: 64px; align-items: start">
+      <figure class="code" style="margin: 0">
+        <div class="code__bar"><span class="code__tab">tty1 <span class="lang">sh</span></span></div>
+<pre aria-label="Terminal"><code><span class="muted">$</span> cat /flag.txt
+cat: /flag.txt: Permission denied
+<span class="muted">$</span> ls -a /
+.  ..  .well-known  log  work  robots.txt
+<span class="muted">$</span> <span class="cmdk__caret" style="display: inline-block; vertical-align: -3px" aria-hidden="true"></span>
+<span class="c"># hint: robots know more than they say</span></code></pre>
+      </figure>
+      <div class="stack" style="gap: 24px">
+        <p class="lead">Wrong turn, old link or curiosity. All three are fine.</p>
+        <p class="body muted">If you followed a link from somewhere on this site, tell me and I'll fix it. If you're poking around on purpose, there is a flag. It's harmless and it's yours if you find it.</p>
+        <div class="row" style="gap: 12px">
+          <a class="btn btn--primary" href="Home.dc.html">Back home<svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z"/></svg></a>
+          <a class="btn btn--secondary" href="Log.dc.html">Read the Log</a>
+        </div>
+        <span class="micro muted">Or press ⌘K and type where you meant to go</span>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__grid">
+      <div class="footer__sign">
+        <p class="bye">Ngā mihi, James</p>
+        <div class="readout" aria-label="Security readout">
+          <span class="item">CSP <b>strict</b> <span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" role="img" aria-label="pass"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z"/></svg></span></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">HSTS <b>preload</b> <span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" role="img" aria-label="pass"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z"/></svg></span></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">Trackers <b>0</b></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">Cookies <b>0</b></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">JS <b>{size}</b></span>
+        </div>
+      </div>
+      <div class="footer__col"><span class="label">Site</span><a href="Home.dc.html#work">Work</a><a href="Log.dc.html">Log</a><a href="Home.dc.html#about">About</a><a href="Colophon.dc.html">Colophon</a></div>
+      <div class="footer__col"><span class="label">Elsewhere</span><a href="#gh">GitHub</a><a href="#li">LinkedIn</a><a href="#rss">RSS</a></div>
+      <div class="footer__pgp"><span class="label muted">PGP fingerprint</span><span class="fpr">XXXX XXXX XXXX XXXX XXXX<br>XXXX XXXX XXXX XXXX XXXX</span></div>
+      <div class="footer__base micro"><span>© 2026 James de Hair</span><span>Views are my own</span><a class="link link--quiet" href="#top">Back to top</a></div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"enum","options":["red","green","amber","paua"],"default":"red","section":"Theme"},"$preview":{"width":1440,"height":1700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? 'red' };
+  }
+}
+</script>
+</body>
+</html>

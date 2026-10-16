@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Handoff for Claude Code</title>
+<link rel="stylesheet" href="preview.css">
+<style>
+@font-face{font-family:"Geist";src:url(../fonts/Geist-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url(../fonts/GeistMono-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Pixel Square";src:url(../fonts/GeistPixel-Square.woff2) format("woff2");font-weight:400;font-display:swap}
+body{margin:0}
+</style>
+<style>
+/* preview only: grain covers the whole page so full-page screenshots match */
+.sn::after { position: absolute; }
+</style>
+</head>
+<body>
+<div class="sn spec" data-accent="red" style="min-height: 3600px">
+
+  <header class="spec__head">
+    <div class="stack" style="gap: 20px">
+      <span class="label muted">JDH / Handoff / v0.1</span>
+      <h1 class="h1" style="font-size: 112px">For Claude <span class="px">CODE</span></h1>
+    </div>
+    <div class="stack label muted" style="gap: 6px; text-align: right">
+      <span>Bundle · HANDOFF.md · signal-noir.css</span>
+      <span>fonts/ · img/</span>
+      <span>Port the stylesheet, don't redraw it</span>
+    </div>
+  </header>
+
+  <section class="spec__block" style="margin-bottom: 72px">
+    <div class="spec__k label"><span>01 / Stack</span><span>Fixed · do not swap</span></div>
+    <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); border: 1px solid var(--line)">
+      <div class="stack" style="gap: 10px; padding: 20px; border-right: 1px solid var(--line)"><span class="label muted">Framework</span><span class="h4">Astro 6</span><span class="small muted">output: static. No UI framework. Plain script modules.</span></div>
+      <div class="stack" style="gap: 10px; padding: 20px; border-right: 1px solid var(--line)"><span class="label muted">Styles</span><span class="h4">Vanilla CSS</span><span class="small muted">Custom properties, container queries, one sheet.</span></div>
+      <div class="stack" style="gap: 10px; padding: 20px; border-right: 1px solid var(--line)"><span class="label muted">Content</span><span class="h4">MDX collections</span><span class="small muted">Content Layer, glob loader, zod schemas for log and work.</span></div>
+      <div class="stack" style="gap: 10px; padding: 20px; border-right: 1px solid var(--line)"><span class="label muted">CMS</span><span class="h4">Sveltia at /admin</span><span class="small muted">GitHub backend, self-hosted bundle, OAuth worker.</span></div>
+      <div class="stack" style="gap: 10px; padding: 20px; border-right: 1px solid var(--line)"><span class="label muted">Host</span><span class="h4">Cloudflare</span><span class="small muted">Static assets. Headers in public/_headers.</span></div>
+      <div class="stack" style="gap: 10px; padding: 20px"><span class="label muted">Budget</span><span class="h4">JS &lt; 5 kB</span><span class="small muted">CSS &lt; 20 kB gz. 0 third-party requests. CLS 0.</span></div>
+    </div>
+  </section>
+
+  <div style="display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; margin-bottom: 72px; align-items: start">
+    <section class="stack">
+      <div class="spec__k label"><span>02 / Structure</span><span>src + public</span></div>
+      <figure class="code" style="margin: 0">
+        <div class="code__bar"><span class="code__tab">tree <span class="lang">txt</span></span></div>
+<pre><code>src/
+  content.config.ts
+  content/log/*.mdx
+  content/work/*.mdx
+  styles/signal-noir.css
+  layouts/Base · Post · CaseStudy
+  components/
+    TopBar  StatusPill  SectionIndex
+    SectionHeader  CaseCard  PostCard
+    PostRow  SeriesFeature  ClassBanner
+    PixelProgress  Callout  CodeFigure
+    ThreatStrip  Readout  Button  Tag
+    Field  Toast  CommandPalette
+    PaperToggle  Footer  Icon
+  pages/
+    index  work/[slug]  log/index
+    log/[slug]  log/series/atlassian
+    colophon  404  rss.xml  search.json
+public/
+  admin/  fonts/  img/
+  _headers  robots.txt  pgp.asc
+  .well-known/security.txt</code></pre>
+      </figure>
+    </section>
+    <section class="stack">
+      <div class="spec__k label"><span>03 / Porting rules</span><span>Canvas to build</span></div>
+      <ol class="now__list" style="grid-column: auto">
+        <li><span class="n micro">01</span><span class="body">Move the <code class="inline">.sn</code> token block to <code class="inline">:root</code>. Paper becomes <code class="inline">html[data-mode="paper"]</code>.</span></li>
+        <li><span class="n micro">02</span><span class="body">Keep one <code class="inline">.sn</code> wrapper with <code class="inline">container-type</code> so the container rules still fire. Breakpoints 1100 and 760.</span></li>
+        <li><span class="n micro">03</span><span class="body">No <code class="inline">style=""</code> in shipped markup. CSP is <code class="inline">style-src 'self'</code>. Runtime values go through <code class="inline">style.setProperty</code>.</span></li>
+        <li><span class="n micro">04</span><span class="body">Drop the demo classes (<code class="inline">.is-hover</code>, <code class="inline">.is-focus</code>, <code class="inline">.is-active</code>) and the <code class="inline">.spec</code> helpers.</span></li>
+        <li><span class="n micro">05</span><span class="body">Accent is <code class="inline">data-accent="red"</code> on <code class="inline">html</code>. The other three stay one attribute away.</span></li>
+        <li><span class="n micro">06</span><span class="body">Pixel icons are inline SVG paths from the system boards. currentColor, crispEdges, aria-hidden unless they carry meaning.</span></li>
+        <li><span class="n micro">07</span><span class="body">The readout, week number and JS size are written by the build. Never typed.</span></li>
+      </ol>
+    </section>
+  </div>
+
+  <section class="spec__block" style="margin-bottom: 72px">
+    <div class="spec__k label"><span>04 / Motion</span><span>Every row has a reduced-motion version</span></div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th scope="col">ID</th><th scope="col">Effect</th><th scope="col">Trigger</th><th scope="col">Spec</th><th scope="col">Reduced motion</th><th scope="col">Cost</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">M1</td><td>Pixel word decrypts</td><td class="small muted">First visit only</td><td class="small">8 steps × 90ms. Charset from the word. Width locked. sessionStorage flag</td><td class="small muted">Final word, no animation</td><td class="mono">~0.5 kB</td></tr>
+          <tr><td class="mono">M2</td><td>Index marker slides</td><td class="small muted">Section at 40% of viewport</td><td class="small">translateY(--i × 36px), 320ms, cubic-bezier(.2,.7,.2,1)</td><td class="small muted">Jumps instantly</td><td class="mono">~0.4 kB</td></tr>
+          <tr><td class="mono">M3</td><td>Cards tilt in</td><td class="small muted">20% visible</td><td class="small">rotateX(8°) + 32px down, opacity 0, to resting ±1.5°. 600ms, 80ms stagger</td><td class="small muted">Resting tilt from the start</td><td class="mono">~0.3 kB</td></tr>
+          <tr><td class="mono">M4</td><td>Pixel dissolve</td><td class="small muted">Page navigation</td><td class="small">Cross-document View Transitions, 8 Bayer mask steps over 360ms</td><td class="small muted">No transition</td><td class="mono">CSS only</td></tr>
+          <tr><td class="mono">M5</td><td>Dithered field bends</td><td class="small muted">Pointer move, pointer: fine</td><td class="small">Max 24px, rAF throttled, paused off screen. Optional</td><td class="small muted">Static field</td><td class="mono">~0.4 kB</td></tr>
+          <tr><td class="mono">Dot</td><td>Status pulse</td><td class="small muted">Always</td><td class="small">1px ring, 2.4s, steps(6)</td><td class="small muted">Solid dot</td><td class="mono">CSS only</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted" style="margin-top: 16px">Never: content-blocking loaders, scroll hijacking, custom cursors, smooth-scroll overrides.</p>
+  </section>
+
+  <section class="spec__block" style="margin-bottom: 72px">
+    <div class="spec__k label"><span>05 / Component states</span><span>Default · hover · focus-visible · active · disabled</span></div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th scope="col">Component</th><th scope="col">Hover</th><th scope="col">Focus-visible</th><th scope="col">Active</th><th scope="col">Disabled</th></tr></thead>
+        <tbody>
+          <tr><td>Nav link</td><td class="small muted">Text colour</td><td class="small muted">2px ring</td><td class="small muted">aria-current + accent square</td><td class="small muted">Line colour, not focusable</td></tr>
+          <tr><td>Status pill</td><td class="small muted">Border line-2</td><td class="small muted">2px ring</td><td class="small muted">Live: pulsing dot</td><td class="small muted">Idle: grey dot (before, after)</td></tr>
+          <tr><td>Section index</td><td class="small muted">Label to text</td><td class="small muted">Inset ring</td><td class="small muted">Accent number + marker</td><td class="small muted">Muted, aria-disabled</td></tr>
+          <tr><td>Case card</td><td class="small muted">Flat, lift 4, accent border</td><td class="small muted">Ring offset 4</td><td class="small muted">Scale 0.995</td><td class="small muted">Dashed, dim cover, no link</td></tr>
+          <tr><td>Post card · row</td><td class="small muted">Surface, accent title / arrow</td><td class="small muted">Ring (inset on rows)</td><td class="small muted">Surface-2</td><td class="small muted">Dashed or muted title</td></tr>
+          <tr><td>Button primary</td><td class="small muted">Accent fill</td><td class="small muted">Ring offset 3</td><td class="small muted">Down 1px</td><td class="small muted">Line border, muted text</td></tr>
+          <tr><td>Button secondary</td><td class="small muted">Text border, surface</td><td class="small muted">Ring offset 3</td><td class="small muted">Surface-2, down 1px</td><td class="small muted">Line border, muted text</td></tr>
+          <tr><td>Link</td><td class="small muted">Dashed to solid underline</td><td class="small muted">2px ring</td><td class="small muted">Text colour</td><td class="small muted">Muted, no underline</td></tr>
+          <tr><td>Tag filter</td><td class="small muted">Border line-2</td><td class="small muted">2px ring</td><td class="small muted">aria-pressed, accent square</td><td class="small muted">Dashed, count 0</td></tr>
+          <tr><td>Input</td><td class="small muted">Edge muted</td><td class="small muted">2px ring</td><td class="small muted">Error: dashed accent + Err text</td><td class="small muted">Surface fill</td></tr>
+          <tr><td>Code copy</td><td class="small muted">Surface-2</td><td class="small muted">Inset ring</td><td class="small muted">Copied, accent, 2s, aria-live</td><td class="small muted">Hidden without JS</td></tr>
+          <tr><td>Command palette</td><td class="small muted">Row surface-2</td><td class="small muted">Trapped in dialog</td><td class="small muted">aria-selected + accent caret</td><td class="small muted">No-JS link to /log</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div style="display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; align-items: start">
+    <section class="stack">
+      <div class="spec__k label"><span>06 / Headers</span><span>public/_headers</span></div>
+      <figure class="code" style="margin: 0">
+        <div class="code__bar"><span class="code__tab">public/_headers <span class="lang">txt</span></span></div>
+<pre><code>/*
+  Content-Security-Policy: default-src 'none'; script-src 'self';
+    style-src 'self'; img-src 'self'; font-src 'self';
+    connect-src 'self'; base-uri 'none'; form-action 'none';
+    frame-ancestors 'none'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+
+<span class="hl">/admin/*
+  ! Content-Security-Policy</span>  <span class="c"># own policy for the cms, see HANDOFF.md</span></code></pre>
+      </figure>
+    </section>
+    <section class="stack">
+      <div class="spec__k label"><span>07 / Fill before launch</span><span>Placeholders in the boards</span></div>
+      <ul class="hl-list" style="margin-top: 0">
+        <li><span class="k micro">Contact</span><span class="small">Email domain, LinkedIn URL, repo name</span></li>
+        <li><span class="k micro">Keys</span><span class="small">PGP fingerprint and /pgp.asc</span></li>
+        <li><span class="k micro">Portrait</span><span class="small">Real photo, 1-bit Atkinson, 240 × 300 at 2×</span></li>
+        <li><span class="k micro">PricePath</span><span class="small">Live URL, products per run, confirm Python and GitLab CI</span></li>
+        <li><span class="k micro">Lab</span><span class="small">Home server spec</span></li>
+        <li><span class="k micro">Copy</span><span class="small">Sample post titles and bodies are drafts</span></li>
+      </ul>
+    </section>
+  </div>
+
+</div>
+</body>
+</html>

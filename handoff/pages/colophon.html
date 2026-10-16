@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Colophon · James de Hair</title>
+<link rel="stylesheet" href="preview.css">
+<style>
+@font-face{font-family:"Geist";src:url(../fonts/Geist-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url(../fonts/GeistMono-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Pixel Square";src:url(../fonts/GeistPixel-Square.woff2) format("woff2");font-weight:400;font-display:swap}
+body{margin:0}
+</style>
+<style>
+/* preview only: grain covers the whole page so full-page screenshots match */
+.sn::after { position: absolute; }
+</style>
+</head>
+<body>
+<div class="sn" data-accent="red" id="top">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="wrap topbar__in">
+      <div class="topbar__left">
+        <a class="brand" href="home.html" aria-label="James de Hair, home"><span class="monogram">JDH</span><span class="label">James de Hair</span></a>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="home.html#work">Work</a>
+        <a href="log.html">Log</a>
+        <a href="home.html#about">About</a>
+        <a href="home.html#contact">Contact</a>
+      </nav>
+      <div class="topbar__right">
+        <a class="status" href="home.html#now" aria-label="Status: in Wellington, moving to Sydney in November"><span class="status__dot" aria-hidden="true"></span>WLG <span class="sep">→</span> SYD <span class="sep">·</span> Nov</a>
+        <button class="kbd" type="button" aria-label="Open command palette"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M1 0h3v1h-3zM0 1h1v1h-1zM4 1h1v1h-1zM0 2h1v1h-1zM4 2h1v1h-1zM0 3h1v1h-1zM4 3h1v1h-1zM1 4h3v1h-3zM4 5h2v1h-2zM5 6h2v1h-2zM6 7h2v1h-2z" /></svg><span class="txt">Search</span><kbd>⌘K</kbd></button>
+        <button class="btn btn--secondary btn--icon menu-btn" type="button" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 1h8v1h-8zM0 4h8v1h-8zM0 7h8v1h-8z" /></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" id="main">
+    <header class="case-head">
+      <nav class="crumb label" aria-label="Breadcrumb"><a href="home.html">Home</a><span aria-hidden="true">/</span><span aria-current="page">Colophon</span></nav>
+      <h1 class="h1">How it's <span class="px">BUILT</span></h1>
+      <p class="lead muted" style="max-width: 52ch">What this site runs on, the headers it sends and what changed. If you spot a weak header, I'd like to know.</p>
+    </header>
+
+    <div class="doc" style="margin-top: 72px">
+      <aside class="doc__rail">
+        <nav aria-label="Contents" class="stack" style="gap: 12px">
+          <span class="label muted">Contents</span>
+          <ol class="toc">
+            <li><a href="#stack" aria-current="true"><span class="n">01</span>Stack</a></li>
+            <li><a href="#headers"><span class="n">02</span>Security headers</a></li>
+            <li><a href="#budget"><span class="n">03</span>Budget</a></li>
+            <li><a href="#changelog"><span class="n">04</span>Changelog</a></li>
+          </ol>
+        </nav>
+      </aside>
+
+      <div class="doc__body doc__body--wide">
+        <section aria-labelledby="stack">
+          <div class="sh"><span class="sh__id"><b>01</b><span>/</span><span id="stack">Stack</span></span><span>Static, near-zero JS</span></div>
+          <dl class="hl-list" style="margin: 24px 0 0; border-top: 0">
+            <div class="kv"><dt class="label muted">Framework</dt><dd style="margin: 0">Astro 6, static output. No client framework.</dd></div>
+            <div class="kv"><dt class="label muted">Styles</dt><dd style="margin: 0">Vanilla CSS with custom properties and container queries. One stylesheet.</dd></div>
+            <div class="kv"><dt class="label muted">Content</dt><dd style="margin: 0">MDX content collections with typed front matter for posts and case studies.</dd></div>
+            <div class="kv"><dt class="label muted">CMS</dt><dd style="margin: 0">Sveltia CMS at /admin. Git-backed, so every edit is a commit.</dd></div>
+            <div class="kv"><dt class="label muted">Hosting</dt><dd style="margin: 0">Cloudflare. Headers set in one file in the repo.</dd></div>
+            <div class="kv"><dt class="label muted">Type</dt><dd style="margin: 0">Geist Sans, Geist Mono and Geist Pixel Square, self-hosted under the SIL Open Font License.</dd></div>
+            <div class="kv"><dt class="label muted">Analytics</dt><dd style="margin: 0">None. Not even the privacy-friendly kind.</dd></div>
+            <div class="kv"><dt class="label muted">Source</dt><dd style="margin: 0"><a class="link" href="#repo">github.com/jamesdeh/[repo]</a></dd></div>
+          </dl>
+        </section>
+
+        <section aria-labelledby="headers" style="margin-top: 96px">
+          <div class="sh"><span class="sh__id"><b>02</b><span>/</span><span id="headers">Security headers</span></span><span>Checked in CI on every deploy</span></div>
+          <div class="row" style="gap: 16px; margin: 24px 0">
+            <div class="row" style="gap: 12px; padding: 12px 16px; border: 1px solid var(--line)"><span class="grade top">A+</span><span class="stack" style="gap: 2px"><span class="label">HTTP Observatory</span><span class="micro muted">Target · scored at launch</span></span></div>
+            <div class="row" style="gap: 12px; padding: 12px 16px; border: 1px solid var(--line)"><span class="grade top">A+</span><span class="stack" style="gap: 2px"><span class="label">securityheaders.com</span><span class="micro muted">Target · scored at launch</span></span></div>
+          </div>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead><tr><th scope="col">Header</th><th scope="col">Value</th><th scope="col">Why</th><th scope="col">Status</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">Content-Security-Policy</td><td class="mono" style="max-width: 420px">default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests</td><td class="small muted">No inline script, nothing third-party. /admin gets its own looser policy for the CMS.</td><td><span class="grade top">Set</span></td></tr>
+                <tr><td class="mono">Strict-Transport-Security</td><td class="mono">max-age=63072000; includeSubDomains; preload</td><td class="small muted">Two years, on the preload list.</td><td><span class="grade top">Set</span></td></tr>
+                <tr><td class="mono">X-Content-Type-Options</td><td class="mono">nosniff</td><td class="small muted">No MIME guessing.</td><td><span class="grade top">Set</span></td></tr>
+                <tr><td class="mono">Referrer-Policy</td><td class="mono">no-referrer</td><td class="small muted">Outbound links don't say where you came from.</td><td><span class="grade top">Set</span></td></tr>
+                <tr><td class="mono">Permissions-Policy</td><td class="mono">camera=(), microphone=(), geolocation=(), browsing-topics=()</td><td class="small muted">The site needs none of these.</td><td><span class="grade top">Set</span></td></tr>
+                <tr><td class="mono">Cross-Origin-Opener-Policy</td><td class="mono">same-origin</td><td class="small muted">Isolates the browsing context.</td><td><span class="grade top">Set</span></td></tr>
+                <tr><td class="mono">Cross-Origin-Resource-Policy</td><td class="mono">same-origin</td><td class="small muted">Assets can't be embedded elsewhere.</td><td><span class="grade top">Set</span></td></tr>
+                <tr><td class="mono">X-Frame-Options</td><td class="mono">DENY</td><td class="small muted">Legacy backup for frame-ancestors.</td><td><span class="grade">Legacy</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section aria-labelledby="budget" style="margin-top: 96px">
+          <div class="sh"><span class="sh__id"><b>03</b><span>/</span><span id="budget">Budget</span></span><span>The build fails if these slip</span></div>
+          <div style="border: 1px solid var(--line); background: var(--surface); padding: 20px 24px; margin-top: 24px" class="stack">
+            <span class="readout"><span class="prompt">$ ./audit --headers --budget</span></span>
+            <div class="readout" style="margin-top: 12px">
+              <span class="item">CSP <b>strict</b> <span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" role="img" aria-label="pass"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z" /></svg></span></span>
+              <span class="dot" aria-hidden="true">·</span>
+              <span class="item">HSTS <b>preload</b> <span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" role="img" aria-label="pass"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z" /></svg></span></span>
+              <span class="dot" aria-hidden="true">·</span>
+              <span class="item">Trackers <b>0</b></span>
+              <span class="dot" aria-hidden="true">·</span>
+              <span class="item">Cookies <b>0</b></span>
+              <span class="dot" aria-hidden="true">·</span>
+              <span class="item">JS <b>{size}</b></span>
+            </div>
+          </div>
+          <div class="stats" style="margin-top: 24px">
+            <div><span class="v" style="font-size: 2rem">0</span><span class="label">Third-party requests</span></div>
+            <div><span class="v" style="font-size: 2rem">0</span><span class="label">Cookies set</span></div>
+            <div><span class="v" style="font-size: 2rem">1</span><span class="label">Stylesheet</span></div>
+          </div>
+        </section>
+
+        <section aria-labelledby="changelog" style="margin-top: 96px">
+          <div class="sh"><span class="sh__id"><b>04</b><span>/</span><span id="changelog">Changelog</span></span><a class="link link--quiet" href="#commits">All commits</a></div>
+          <ol class="rows" style="list-style: none; margin-top: 24px">
+            <li class="prow prow--log"><time class="prow__date label" datetime="2026-10-16">2026-10-16</time><span class="label">v0.1</span><span class="small">Signal Noir design system and page designs.</span><span class="tag">Design</span></li>
+            <li class="prow prow--log"><span class="prow__date label">[Date]</span><span class="label muted">v0.2</span><span class="small muted">Astro build, content collections, Sveltia CMS, headers in CI.</span><span class="tag" style="border-style: dashed">Planned</span></li>
+            <li class="prow prow--log"><span class="prow__date label">[Date]</span><span class="label muted">v1.0</span><span class="small muted">Launch. Replaces jamesdeh.github.io.</span><span class="tag" style="border-style: dashed">Planned</span></li>
+          </ol>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__grid">
+      <div class="footer__sign">
+        <p class="bye">Ngā mihi, James</p>
+        <div class="readout" aria-label="Security readout">
+          <span class="item">CSP <b>strict</b> <span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" role="img" aria-label="pass"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z" /></svg></span></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">HSTS <b>preload</b> <span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" role="img" aria-label="pass"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z" /></svg></span></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">Trackers <b>0</b></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">Cookies <b>0</b></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">JS <b>{size}</b></span>
+        </div>
+      </div>
+      <div class="footer__col"><span class="label">Site</span><a href="home.html#work">Work</a><a href="log.html">Log</a><a href="home.html#about">About</a><a href="colophon.html">Colophon</a></div>
+      <div class="footer__col"><span class="label">Elsewhere</span><a href="#gh">GitHub</a><a href="#li">LinkedIn</a><a href="#rss">RSS</a></div>
+      <div class="footer__pgp"><span class="label muted">PGP fingerprint</span><span class="fpr">XXXX XXXX XXXX XXXX XXXX<br>XXXX XXXX XXXX XXXX XXXX</span></div>
+      <div class="footer__base micro"><span>© 2026 James de Hair</span><span>Views are my own</span><a class="link link--quiet" href="#top">Back to top</a></div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

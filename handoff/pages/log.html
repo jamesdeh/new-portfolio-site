@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Log · James de Hair</title>
+<link rel="stylesheet" href="preview.css">
+<style>
+@font-face{font-family:"Geist";src:url(../fonts/Geist-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url(../fonts/GeistMono-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Pixel Square";src:url(../fonts/GeistPixel-Square.woff2) format("woff2");font-weight:400;font-display:swap}
+body{margin:0}
+</style>
+<style>
+/* preview only: grain covers the whole page so full-page screenshots match */
+.sn::after { position: absolute; }
+</style>
+</head>
+<body>
+<div class="sn" data-accent="red" id="top">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="wrap topbar__in">
+      <div class="topbar__left">
+        <a class="brand" href="home.html" aria-label="James de Hair, home"><span class="monogram">JDH</span><span class="label">James de Hair</span></a>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="home.html#work">Work</a>
+        <a href="log.html" aria-current="page">Log</a>
+        <a href="home.html#about">About</a>
+        <a href="home.html#contact">Contact</a>
+      </nav>
+      <div class="topbar__right">
+        <a class="status" href="home.html#now" aria-label="Status: in Wellington, moving to Sydney in November"><span class="status__dot" aria-hidden="true"></span>WLG <span class="sep">→</span> SYD <span class="sep">·</span> Nov</a>
+        
+        <button class="kbd" type="button" aria-label="Open command palette"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M1 0h3v1h-3zM0 1h1v1h-1zM4 1h1v1h-1zM0 2h1v1h-1zM4 2h1v1h-1zM0 3h1v1h-1zM4 3h1v1h-1zM1 4h3v1h-3zM4 5h2v1h-2zM5 6h2v1h-2zM6 7h2v1h-2z" /></svg><span class="txt">Search</span><kbd>⌘K</kbd></button>
+        <button class="btn btn--secondary btn--icon menu-btn" type="button" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 1h8v1h-8zM0 4h8v1h-8zM0 7h8v1h-8z" /></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" id="main">
+    <header class="case-head">
+      <nav class="crumb label" aria-label="Breadcrumb"><a href="home.html">Home</a><span aria-hidden="true">/</span><span aria-current="page">Log</span></nav>
+      <h1 class="h1">The <span class="px">LOG</span></h1>
+      <div class="row" style="justify-content: space-between; align-items: flex-end; gap: 24px">
+        <p class="lead muted" style="max-width: 52ch">Internship posts, CTF writeups, builds and short notes. Written as I learn, kept public, nothing internal.</p>
+        <a class="btn btn--secondary btn--sm" href="#rss"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 0h3v1h-3zM3 1h2v1h-2zM0 2h2v1h-2zM5 2h1v1h-1zM2 3h1v1h-1zM6 3h1v1h-1zM3 4h1v1h-1zM6 4h1v1h-1zM0 5h2v1h-2zM4 5h1v1h-1zM7 5h1v1h-1zM0 6h2v1h-2zM4 6h1v1h-1zM7 6h1v1h-1z" /></svg>RSS feed</a>
+      </div>
+    </header>
+
+    <div class="grid" style="margin-top: 64px">
+      <div class="col-main">
+        <section class="series" aria-labelledby="series-h">
+          <div class="series__l">
+            <span class="label muted">Series · Atlassian, Sydney</span>
+            <h2 class="h3" id="series-h" style="font-size: 2rem">Twelve weeks on a security team</h2>
+            <p class="body muted" style="max-width: 50ch">One post a week from November 2026. Public knowledge only, views my own.</p>
+            <div class="row" style="gap: 12px; margin-top: 4px"><a class="btn btn--secondary" href="series.html">Open the series</a><span class="label muted">Starts November</span></div>
+          </div>
+          <div class="series__r">
+            <div class="series__count" aria-hidden="true">00<span class="of">/12</span></div>
+            <div class="pbar pbar--lg" role="progressbar" aria-label="Series progress, starts November" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </section>
+
+        <div class="row" style="justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 24px">
+          <div class="stack" style="gap: 10px">
+            <span class="label muted" id="filter-k">Filter by tag</span>
+            <div class="tags" role="group" aria-labelledby="filter-k" style="gap: 8px">
+              
+                <button class="tag tag--filter" type="button" aria-pressed="true">All <span class="count">6</span></button>
+              
+                <button class="tag tag--filter" type="button" aria-pressed="false" disabled>Internship <span class="count">0</span></button>
+              
+                <button class="tag tag--filter" type="button" aria-pressed="false">Writeups <span class="count">2</span></button>
+              
+                <button class="tag tag--filter" type="button" aria-pressed="false">Builds <span class="count">2</span></button>
+              
+                <button class="tag tag--filter" type="button" aria-pressed="false">Notes <span class="count">2</span></button>
+              
+            </div>
+          </div>
+          <div class="field" style="width: 320px; max-width: 100%">
+            <label for="log-q">Search the Log</label>
+            <div class="input-wrap"><span class="pre" aria-hidden="true">&gt;</span><input class="input" id="log-q" type="search" placeholder="grep posts" value="" autocomplete="off"></div>
+          </div>
+        </div>
+        <p class="micro muted" aria-live="polite" style="margin-bottom: 12px">6 posts</p>
+
+        <div class="rows">
+          
+            <article class="prow">
+              <time class="prow__date label" datetime="2026-10-12">2026-10-12</time>
+              <h3 class="prow__title">
+                
+                <a href="#oci">Hardening a free-tier OCI box</a>
+                <span class="prow__arrow" aria-hidden="true"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z" /></svg></span>
+              </h3>
+              <div class="tags"><span class="tag">Builds</span></div>
+              <span class="prow__time label">9 min</span>
+            </article>
+          
+            <article class="prow">
+              <time class="prow__date label" datetime="2026-09-29">2026-09-29</time>
+              <h3 class="prow__title">
+                
+                <a href="#nzcsc">NZCSC: three challenges I nearly quit on</a>
+                <span class="prow__arrow" aria-hidden="true"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z" /></svg></span>
+              </h3>
+              <div class="tags"><span class="tag">Writeups</span></div>
+              <span class="prow__time label">12 min</span>
+            </article>
+          
+            <article class="prow">
+              <time class="prow__date label" datetime="2026-09-14">2026-09-14</time>
+              <h3 class="prow__title">
+                
+                <a href="work-pricepath.html">Playwright vs three supermarkets</a>
+                <span class="prow__arrow" aria-hidden="true"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z" /></svg></span>
+              </h3>
+              <div class="tags"><span class="tag">Builds</span></div>
+              <span class="prow__time label">8 min</span>
+            </article>
+          
+            <article class="prow">
+              <time class="prow__date label" datetime="2026-08-31">2026-08-31</time>
+              <h3 class="prow__title">
+                
+                <a href="#htb">HTB [retired box]: foothold to root</a>
+                <span class="prow__arrow" aria-hidden="true"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z" /></svg></span>
+              </h3>
+              <div class="tags"><span class="tag">Writeups</span></div>
+              <span class="prow__time label">10 min</span>
+            </article>
+          
+            <article class="prow">
+              <time class="prow__date label" datetime="2026-08-14">2026-08-14</time>
+              <h3 class="prow__title">
+                
+                <a href="#cipher">Cipher modes on one page</a>
+                <span class="prow__arrow" aria-hidden="true"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z" /></svg></span>
+              </h3>
+              <div class="tags"><span class="tag">Notes</span></div>
+              <span class="prow__time label">3 min</span>
+            </article>
+          
+            <article class="prow">
+              <time class="prow__date label" datetime="2026-07-30">2026-07-30</time>
+              <h3 class="prow__title">
+                
+                <a href="#pc">Shipping a PC to Sydney in pieces</a>
+                <span class="prow__arrow" aria-hidden="true"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z" /></svg></span>
+              </h3>
+              <div class="tags"><span class="tag">Notes</span></div>
+              <span class="prow__time label">4 min</span>
+            </article>
+          
+        </div>
+        
+      </div>
+      <aside style="grid-column: 1 / span 2; grid-row: 1; position: sticky; top: 96px; align-self: start" class="stack rail">
+        <span class="label muted" style="margin-bottom: 12px">Archive</span>
+        <ul class="idx" style="--i: 0">
+          <li class="idx__marker" aria-hidden="true"></li>
+          <li><a href="#y2026" aria-current="true"><span class="n">06</span>2026</a></li>
+        </ul>
+        <span class="micro muted" style="margin-top: 16px">One row per post. Years group as the Log grows.</span>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__grid">
+      <div class="footer__sign">
+        <p class="bye">Ngā mihi, James</p>
+        <div class="readout" aria-label="Security readout">
+          <span class="item">CSP <b>strict</b> <span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" role="img" aria-label="pass"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z" /></svg></span></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">HSTS <b>preload</b> <span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" role="img" aria-label="pass"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z" /></svg></span></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">Trackers <b>0</b></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">Cookies <b>0</b></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">JS <b>{size}</b></span>
+        </div>
+      </div>
+      <div class="footer__col"><span class="label">Site</span><a href="home.html#work">Work</a><a href="log.html">Log</a><a href="home.html#about">About</a><a href="colophon.html">Colophon</a></div>
+      <div class="footer__col"><span class="label">Elsewhere</span><a href="#gh">GitHub</a><a href="#li">LinkedIn</a><a href="#rss">RSS</a></div>
+      <div class="footer__pgp"><span class="label muted">PGP fingerprint</span><span class="fpr">XXXX XXXX XXXX XXXX XXXX<br>XXXX XXXX XXXX XXXX XXXX</span></div>
+      <div class="footer__base micro"><span>© 2026 James de Hair</span><span>Views are my own</span><a class="link link--quiet" href="#top">Back to top</a></div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

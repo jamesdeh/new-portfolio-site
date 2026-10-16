@@ -1,0 +1,67 @@
+---
+title: "W03/12: Reading before writing"
+summary: Week three was mostly reading. How I read a design doc for risk before I touch any code.
+date: 2026-11-24
+tags: [Internship]
+series: { id: atlassian, week: 3 }
+draft: true
+---
+
+{/* sample post from the design: shows every post component. keep as a draft, it is not a real week */}
+
+Week three was mostly reading: design docs, old reviews and a lot of git log. This is the checklist I ended up using to read for risk before touching any code.
+
+## Why reading first
+
+I came in expecting to write code from day one. Instead, most of week three went on reading. It felt slow on Monday. By Friday it felt like the job.
+
+Security review is mostly questions, and you can't ask good ones about a system you haven't read. So the first skill is reading quickly without skimming past the risky parts.
+
+<Callout type="note">
+Everything in this series is public knowledge or my own opinion. Nothing internal, nothing under NDA.
+</Callout>
+
+## The checklist
+
+I borrowed the shape from STRIDE[^1] and cut it down to five questions I can answer from a design doc in about twenty minutes:
+
+- Where does data cross a trust boundary, and who checks it on the way in?
+- What happens if this request is replayed, reordered or sent twice?
+- Which secrets does this touch, and where do they live at rest?
+- What does the log line look like when this goes wrong?
+- Who can change this config, and would anyone notice?
+
+## A small example
+
+One pattern I now look for straight away: parsing untrusted input with a loader that can build arbitrary objects. In Python the classic one is YAML.
+
+```py title="config_loader.py" {7}
+import yaml
+
+# unsafe: can build any python object
+cfg = yaml.load(raw, Loader=yaml.Loader)
+
+# safe: plain types only
+cfg = yaml.safe_load(raw)
+```
+
+<Callout type="warn">
+Don't pass untrusted YAML to `yaml.load` with the full loader. Use `yaml.safe_load` unless you can say exactly why not.
+</Callout>
+
+It's an old, well-documented bug class[^2], which is the point. Reading for risk is mostly spotting old patterns in new code.
+
+## What I'd tell week-one me
+
+> Read the boring parts. That's where the assumptions live.
+>
+> <cite>Note to self · W03</cite>
+
+Next week I want to run the checklist against a real review and see which questions survive contact. If one never catches anything, it goes.
+
+<Callout type="flag" label="Flag · for W04">
+Which of these five questions catch real issues, and which ones only feel thorough?
+</Callout>
+
+[^1]: STRIDE was developed by Loren Kohnfelder and Praerit Garg at Microsoft in 1999.
+[^2]: PyYAML documentation, "Loading YAML", on why `yaml.load` needs a safe loader for untrusted input.

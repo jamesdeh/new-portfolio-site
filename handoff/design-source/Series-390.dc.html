@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<title>Series at 390</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./signal-noir.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Geist";src:url(../fonts/Geist-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url(../fonts/GeistMono-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Pixel Square";src:url(../fonts/GeistPixel-Square.woff2) format("woff2");font-weight:400;font-display:swap}
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 100%; background: #0A0A0A">
+  <dc-import name="Series" accent="{{accent}}" phase="{{phase}}" hint-size="100%,3100px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"enum","options":["red","green","amber","paua"],"default":"red","section":"Theme"},"phase":{"editor":"enum","options":["before","during"],"default":"before","section":"Theme"},"$preview":{"width":390,"height":3100}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? 'red', phase: this.props.phase ?? 'before' };
+  }
+}
+</script>
+</body>
+</html>

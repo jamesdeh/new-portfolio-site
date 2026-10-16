@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<title>Signal Noir components: content</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./signal-noir.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Geist";src:url(../fonts/Geist-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url(../fonts/GeistMono-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Pixel Square";src:url(../fonts/GeistPixel-Square.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Geist Pixel Grid";src:url(../fonts/GeistPixel-Grid.woff2) format("woff2");font-weight:400;font-display:swap}
+body{margin:0}
+</style>
+</helmet>
+<div class="sn spec" data-accent="{{accent}}" style="min-height: 4300px">
+
+  <header class="spec__head">
+    <div class="stack" style="gap: 20px">
+      <span class="label muted">JDH / Design system / v0.1</span>
+      <h1 class="h1" style="font-size: 96px">Content <span class="px">BLOCKS</span></h1>
+    </div>
+    <div class="stack label muted" style="gap: 6px; text-align: right">
+      <span>02 · Components</span>
+      <span>Cards · Rows · Post furniture</span>
+      <span>Threat model · Readout</span>
+    </div>
+  </header>
+
+  <section class="spec__block" style="margin-bottom: 88px">
+    <div class="spec__k label"><span>Case study card</span><span>16:10 cover · title · one-line outcome · meta · tags · resting tilt ±1.5°</span></div>
+    <div class="states" style="gap: 32px; align-items: start">
+      <div class="state"><span class="label">Default · tilted</span>
+        <article class="card" style="--tilt: -1.5deg">
+          <div class="card__media"><img src="../img/cover-pricepath.png" alt="" width="560" height="350"><span class="card__no micro">01</span></div>
+          <div class="card__body">
+            <div class="card__meta micro"><b>2026</b><span>·</span><span>Scraper lead</span></div>
+            <h3 class="card__title" style="font-size: 22px"><a href="#x">PricePath</a></h3>
+            <p class="card__outcome small">Nightly prices from three NZ supermarkets.</p>
+            <div class="card__foot"><div class="tags"><span class="tag">Builds</span></div><span class="card__go"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z"/></svg></span></div>
+          </div>
+        </article>
+      </div>
+      <div class="state"><span class="label">Hover · flat, lift 4</span>
+        <article class="card is-hover">
+          <div class="card__media"><img src="../img/cover-pricepath.png" alt="" width="560" height="350"><span class="card__no micro">01</span></div>
+          <div class="card__body">
+            <div class="card__meta micro"><b>2026</b><span>·</span><span>Scraper lead</span></div>
+            <h3 class="card__title" style="font-size: 22px"><a href="#x">PricePath</a></h3>
+            <p class="card__outcome small">Nightly prices from three NZ supermarkets.</p>
+            <div class="card__foot"><div class="tags"><span class="tag">Builds</span></div><span class="card__go"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z"/></svg></span></div>
+          </div>
+        </article>
+      </div>
+      <div class="state"><span class="label">Focus-visible</span>
+        <article class="card is-focus">
+          <div class="card__media"><img src="../img/cover-pricepath.png" alt="" width="560" height="350"><span class="card__no micro">01</span></div>
+          <div class="card__body">
+            <div class="card__meta micro"><b>2026</b><span>·</span><span>Scraper lead</span></div>
+            <h3 class="card__title" style="font-size: 22px"><a href="#x">PricePath</a></h3>
+            <p class="card__outcome small">Nightly prices from three NZ supermarkets.</p>
+            <div class="card__foot"><div class="tags"><span class="tag">Builds</span></div><span class="card__go"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z"/></svg></span></div>
+          </div>
+        </article>
+      </div>
+      <div class="state"><span class="label">Active · pressed</span>
+        <article class="card is-active">
+          <div class="card__media"><img src="../img/cover-pricepath.png" alt="" width="560" height="350"><span class="card__no micro">01</span></div>
+          <div class="card__body">
+            <div class="card__meta micro"><b>2026</b><span>·</span><span>Scraper lead</span></div>
+            <h3 class="card__title" style="font-size: 22px"><a href="#x">PricePath</a></h3>
+            <p class="card__outcome small">Nightly prices from three NZ supermarkets.</p>
+            <div class="card__foot"><div class="tags"><span class="tag">Builds</span></div><span class="card__go"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z"/></svg></span></div>
+          </div>
+        </article>
+      </div>
+      <div class="state"><span class="label">Disabled · write-up pending</span>
+        <article class="card is-disabled" style="--tilt: -1.5deg" aria-disabled="true">
+          <div class="card__media"><img src="../img/cover-ocilab.png" alt="" width="560" height="350"><span class="card__no micro">04</span></div>
+          <div class="card__body">
+            <div class="card__meta micro"><b>2026</b><span>·</span><span>Solo</span></div>
+            <h3 class="card__title" style="font-size: 22px">OCI lab</h3>
+            <p class="card__outcome small">Write-up in progress. No link yet.</p>
+            <div class="card__foot"><div class="tags"><span class="tag">Soon</span></div></div>
+          </div>
+        </article>
+      </div>
+    </div>
+    <p class="small muted" style="margin-top: 32px; max-width: 90ch">The title link stretches over the whole card (one tab stop, one accessible name). Cover art is 1-bit and decorative (alt=""). Entry motion M3 starts each card at rotateX(8°) and settles to its resting tilt.</p>
+  </section>
+
+  <div style="display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 56px; margin-bottom: 88px; align-items: start">
+    <section class="stack">
+      <div class="spec__k label"><span>Post card</span><span>Home · latest three</span></div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+        <div class="state"><span class="label">Default</span>
+          <article class="pcard" style="width: 100%">
+            <div class="pcard__meta micro"><span>2026-11-24</span><span>·</span><span>6 min</span></div>
+            <h3 class="pcard__title"><a href="#x">W03/12: Reading before writing</a></h3>
+            <div class="pcard__foot"><div class="tags"><span class="tag">Internship</span></div></div>
+          </article>
+        </div>
+        <div class="state"><span class="label">Hover</span>
+          <article class="pcard is-hover" style="width: 100%">
+            <div class="pcard__meta micro"><span>2026-11-24</span><span>·</span><span>6 min</span></div>
+            <h3 class="pcard__title"><a href="#x">W03/12: Reading before writing</a></h3>
+            <div class="pcard__foot"><div class="tags"><span class="tag">Internship</span></div></div>
+          </article>
+        </div>
+        <div class="state"><span class="label">Focus-visible</span>
+          <article class="pcard is-focus" style="width: 100%">
+            <div class="pcard__meta micro"><span>2026-11-24</span><span>·</span><span>6 min</span></div>
+            <h3 class="pcard__title"><a href="#x">W03/12: Reading before writing</a></h3>
+            <div class="pcard__foot"><div class="tags"><span class="tag">Internship</span></div></div>
+          </article>
+        </div>
+        <div class="state"><span class="label">Active · disabled</span>
+          <div class="stack" style="gap: 12px; width: 100%">
+            <article class="pcard is-active" style="width: 100%">
+              <div class="pcard__meta micro"><span>2026-11-24</span><span>·</span><span>6 min</span></div>
+              <h3 class="pcard__title"><a href="#x">W03/12: Reading before writing</a></h3>
+            </article>
+            <article class="pcard is-disabled" style="width: 100%" aria-disabled="true">
+              <div class="pcard__meta micro"><span>Draft</span><span>·</span><span>Not published</span></div>
+              <h3 class="pcard__title">W04/12: Pending</h3>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stack">
+      <div class="spec__k label"><span>Post list row</span><span>Date · title · tags · reading time</span></div>
+      <div class="stack" style="gap: 0">
+        <div style="display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: center; gap: 16px"><span class="label muted">Default</span>
+          <div class="rows"><article class="prow"><span class="prow__date label">2026-11-03</span><h3 class="prow__title"><a href="#x">Hardening a free-tier OCI box</a><span class="prow__arrow"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z"/></svg></span></h3><div class="tags"><span class="tag">Builds</span></div><span class="prow__time label">9 min</span></article></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: center; gap: 16px"><span class="label muted">Hover</span>
+          <div><article class="prow is-hover"><span class="prow__date label">2026-11-03</span><h3 class="prow__title"><a href="#x">Hardening a free-tier OCI box</a><span class="prow__arrow"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z"/></svg></span></h3><div class="tags"><span class="tag">Builds</span></div><span class="prow__time label">9 min</span></article></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: center; gap: 16px"><span class="label muted">Focus-visible</span>
+          <div><article class="prow is-focus"><span class="prow__date label">2026-11-03</span><h3 class="prow__title"><a href="#x">Hardening a free-tier OCI box</a><span class="prow__arrow"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 1h1v1h-1zM5 2h1v1h-1zM0 3h7v1h-7zM5 4h1v1h-1zM4 5h1v1h-1z"/></svg></span></h3><div class="tags"><span class="tag">Builds</span></div><span class="prow__time label">9 min</span></article></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: center; gap: 16px"><span class="label muted">Active · series</span>
+          <div><article class="prow is-active"><span class="prow__date label">2026-11-24</span><h3 class="prow__title"><span class="prow__series label">W03/12</span><a href="#x">Reading before writing</a></h3><div class="tags"><span class="tag">Internship</span></div><span class="prow__time label">6 min</span></article></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: center; gap: 16px"><span class="label muted">Disabled</span>
+          <div><article class="prow is-disabled" aria-disabled="true"><span class="prow__date label">Due 12-01</span><h3 class="prow__title"><span class="prow__series label" style="color: var(--muted)">W04/12</span>Pending</h3><div class="tags"><span class="tag">Internship</span></div><span class="prow__time label">Draft</span></article></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="spec__block" style="margin-bottom: 88px">
+    <div class="spec__k label"><span>Post header · classification banner</span><span>Repeats at the end: END OF DOCUMENT</span></div>
+    <div class="stack" style="gap: 20px">
+      <div class="classif"><span class="lvl">Classification: public</span><span class="dot">·</span><span>6 min read</span><span class="dot">·</span><b>W03/12</b><span class="dot">·</span><time datetime="2026-11-24">2026-11-24</time></div>
+      <div class="classif"><span class="lvl">Classification: public</span><span class="dot">·</span><span>12 min read</span><span class="dot">·</span><b>Writeup</b><span class="dot">·</span><time datetime="2026-10-20">2026-10-20</time><span class="dot">·</span><span>Updated 2026-10-28</span></div>
+      <div class="classif" style="justify-content: center"><span>End of document</span><span class="dot">·</span><span class="lvl">Classification: public</span></div>
+    </div>
+  </section>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; margin-bottom: 88px">
+    <section class="stack">
+      <div class="spec__k label"><span>Pixel progress · 12 cells</span><span>role=progressbar · value in text too</span></div>
+      <div class="stack" style="gap: 28px">
+        <div class="stack" style="gap: 10px">
+          <div class="row label" style="justify-content: space-between"><span>Series · large</span><span class="muted">W03/12 · this week blinks</span></div>
+          <div class="pbar pbar--lg" role="progressbar" aria-label="Atlassian series" aria-valuemin="0" aria-valuemax="12" aria-valuenow="3"><i class="on"></i><i class="on"></i><i class="now"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="stack" style="gap: 10px">
+          <div class="row label" style="justify-content: space-between"><span>Series · default</span><span class="muted">10 tall</span></div>
+          <div class="pbar" role="progressbar" aria-label="Atlassian series" aria-valuemin="0" aria-valuemax="12" aria-valuenow="3"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="stack" style="gap: 10px">
+          <div class="row label" style="justify-content: space-between"><span>Series · inline</span><span class="muted">6 tall · in rows</span></div>
+          <div style="width: 160px"><div class="pbar pbar--sm" role="progressbar" aria-label="Atlassian series" aria-valuemin="0" aria-valuemax="12" aria-valuenow="3"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        </div>
+        <div class="stack" style="gap: 10px">
+          <div class="row label" style="justify-content: space-between"><span>Reading · sticky under top bar</span><span class="muted">4 tall · fills per 1/12 read</span></div>
+          <div class="pbar" style="height: 4px; gap: 2px" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="58"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </section>
+    <section class="stack">
+      <div class="spec__k label"><span>Terminal readout</span><span>Footer inline · Colophon boxed</span></div>
+      <div class="stack" style="gap: 24px">
+        <div class="readout">
+          <span class="item">CSP <b>strict</b> <span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" role="img" aria-label="pass"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z"/></svg></span></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">HSTS <b>preload</b> <span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" role="img" aria-label="pass"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z"/></svg></span></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">Trackers <b>0</b></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">Cookies <b>0</b></span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span class="item">JS <b>{size}</b></span>
+        </div>
+        <div style="border: 1px solid var(--line); background: var(--surface); padding: 20px 24px" class="stack">
+          <span class="readout"><span class="prompt">$ ./audit --headers --budget</span></span>
+          <div class="readout" style="margin-top: 12px">
+            <span class="item">CSP <b>strict</b> <span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" role="img" aria-label="pass"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z"/></svg></span></span>
+            <span class="dot" aria-hidden="true">·</span>
+            <span class="item">HSTS <b>preload</b> <span class="ok"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" role="img" aria-label="pass"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z"/></svg></span></span>
+            <span class="dot" aria-hidden="true">·</span>
+            <span class="item">Trackers <b>0</b></span>
+            <span class="dot" aria-hidden="true">·</span>
+            <span class="item">Cookies <b>0</b></span>
+            <span class="dot" aria-hidden="true">·</span>
+            <span class="item">JS <b>{size}</b></span>
+          </div>
+          <span class="readout" style="margin-top: 12px"><span>Exit 0 · generated at build, never typed by hand</span></span>
+        </div>
+        <p class="small muted">A failed check renders as "CSP missing" with no tick and fails the build in CI, so the footer can never lie.</p>
+      </div>
+    </section>
+  </div>
+
+  <section class="spec__block" style="margin-bottom: 88px">
+    <div class="spec__k label"><span>Callouts</span><span>Told apart by icon, label and border, not colour alone</span></div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+      <aside class="callout" role="note" aria-label="Note">
+        <span class="callout__k label"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h2v1h-2zM2 2h3v1h-3zM3 3h2v1h-2zM3 4h2v1h-2zM3 5h2v1h-2zM2 6h4v1h-4z"/></svg>Note</span>
+        <p>Everything in this series is public knowledge or my own opinion. Nothing internal, nothing under NDA.</p>
+      </aside>
+      <aside class="callout callout--warn" role="note" aria-label="Warning">
+        <span class="callout__k label"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h2v1h-2zM2 1h1v1h-1zM5 1h1v1h-1zM2 2h1v1h-1zM5 2h1v1h-1zM1 3h1v1h-1zM3 3h2v1h-2zM6 3h1v1h-1zM1 4h1v1h-1zM3 4h2v1h-2zM6 4h1v1h-1zM0 5h1v1h-1zM7 5h1v1h-1zM0 6h1v1h-1zM3 6h2v1h-2zM7 6h1v1h-1zM0 7h8v1h-8z"/></svg>Warn</span>
+        <p>Don't pass untrusted YAML to <code class="inline">yaml.load</code>. Use <code class="inline">yaml.safe_load</code> unless you can say why not.</p>
+      </aside>
+      <aside class="callout callout--flag" role="note" aria-label="Flag">
+        <span class="callout__k label"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 0h1v1h-1zM0 1h4v1h-4zM0 2h7v1h-7zM0 3h4v1h-4zM0 4h1v1h-1zM0 5h1v1h-1zM0 6h1v1h-1zM0 7h1v1h-1z"/></svg>Flag</span>
+        <p>A finding or question I'm carrying into next week. FLAG is the only callout that uses the accent.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="spec__block" style="margin-bottom: 88px">
+    <div class="spec__k label"><span>Code block</span><span>Filename tab · language · copy button · line numbers · one highlighted line</span></div>
+    <div style="display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 32px; align-items: start">
+      <figure class="code" style="margin: 0">
+        <div class="code__bar">
+          <span class="code__tab">scraper/next_data.py <span class="lang">py</span></span>
+          <button class="code__copy" type="button" aria-label="Copy code"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h5v1h-5zM3 1h1v1h-1zM7 1h1v1h-1zM1 2h5v1h-5zM7 2h1v1h-1zM1 3h1v1h-1zM5 3h1v1h-1zM7 3h1v1h-1zM1 4h1v1h-1zM5 4h3v1h-3zM1 5h1v1h-1zM5 5h1v1h-1zM1 6h5v1h-5z"/></svg>Copy</button>
+        </div>
+<pre><code><span class="ln">1</span><span class="k">import</span> json
+<span class="ln">2</span>
+<span class="ln">3</span><span class="c"># read the json the page already ships, no dom guessing</span>
+<span class="ln">4</span><span class="k">async def</span> <span class="f">read_next_data</span>(page):
+<span class="hl"><span class="ln">5</span>    raw = <span class="k">await</span> page.locator(<span class="s">"script#__NEXT_DATA__"</span>).text_content()</span><span class="ln">6</span>    <span class="k">return</span> json.loads(raw)[<span class="s">"props"</span>][<span class="s">"pageProps"</span>]</code></pre>
+      </figure>
+      <div class="stack" style="gap: 20px">
+        <div class="stack" style="gap: 10px"><span class="label muted">Copy · states</span>
+          <div class="row" style="gap: 0; border: 1px solid var(--line); width: fit-content">
+            <button class="code__copy" type="button" style="height: 40px; border-left: 0">Copy</button>
+            <button class="code__copy is-hover" type="button" style="height: 40px">Hover</button>
+            <button class="code__copy is-focus" type="button" style="height: 40px">Focus</button>
+            <button class="code__copy is-done" type="button" style="height: 40px"><svg viewBox="0 0 8 8" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M7 1h1v1h-1zM6 2h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM2 6h1v1h-1z"/></svg>Copied</button>
+          </div>
+          <p class="small muted">Copied holds for 2s and is announced through an aria-live region. Without JS the button is not rendered.</p>
+        </div>
+        <div class="stack" style="gap: 10px"><span class="label muted">Inline code</span>
+          <p class="body">Foodstuffs pages ship a <code class="inline">__NEXT_DATA__</code> script tag, so I read that instead of the DOM.</p>
+        </div>
+        <div class="stack" style="gap: 10px"><span class="label muted">Syntax</span>
+          <p class="small muted">Monochrome on purpose: keywords in weight, comments in muted italics, strings one step down. The accent only marks the highlighted line number.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="spec__block" style="margin-bottom: 0">
+    <div class="spec__k label"><span>Threat model strip · STRIDE</span><span>One line each · status: mitigated or accepted</span></div>
+    <div class="stride">
+      <div><span class="stride__l" aria-hidden="true">S</span><span class="stride__name label">Spoofing</span><p class="stride__note">Only the CI runner can deploy. One SSH key per environment, password login off.</p><span class="stride__st ok micro">Mitigated</span></div>
+      <div><span class="stride__l" aria-hidden="true">T</span><span class="stride__name label">Tampering</span><p class="stride__note">Scraped rows are schema-checked before they reach the database.</p><span class="stride__st ok micro">Mitigated</span></div>
+      <div><span class="stride__l" aria-hidden="true">R</span><span class="stride__name label">Repudiation</span><p class="stride__note">Every scrape run logs source, start time and row count.</p><span class="stride__st ok micro">Mitigated</span></div>
+      <div><span class="stride__l" aria-hidden="true">I</span><span class="stride__name label">Info disclosure</span><p class="stride__note">No secrets in the repo. CI variables are masked and protected.</p><span class="stride__st ok micro">Mitigated</span></div>
+      <div><span class="stride__l" aria-hidden="true">D</span><span class="stride__name label">Denial of service</span><p class="stride__note">nginx rate limits requests. One small VM is still a single point of failure.</p><span class="stride__st acc-risk micro">Accepted</span></div>
+      <div><span class="stride__l" aria-hidden="true">E</span><span class="stride__name label">Elevation</span><p class="stride__note">Services run as unprivileged users under systemd. No root in the app.</p><span class="stride__st ok micro">Mitigated</span></div>
+    </div>
+    <p class="small muted" style="margin-top: 20px">Six columns at 1440, a stacked list at 390. Rendered from case study front matter (threats: [{ id, note, status }]).</p>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"enum","options":["red","green","amber","paua"],"default":"red","section":"Theme"},"$preview":{"width":1440,"height":4300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? 'red' };
+  }
+}
+</script>
+</body>
+</html>
