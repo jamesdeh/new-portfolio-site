@@ -13,15 +13,14 @@ export const site = {
   github: 'https://github.com/jamesdeh',
   githubLabel: 'github.com/jamesdeh',
   repo: 'https://github.com/jamesdeh/new-portfolio-site',
-  // [PLACEHOLDER] linkedin url
-  linkedin: '',
-  linkedinLabel: '[linkedin.com/in/…]',
+  linkedin: 'https://www.linkedin.com/in/jamesdehair/',
+  linkedinLabel: 'linkedin.com/in/jamesdehair',
   // [PLACEHOLDER] 40 hex chars, grouped in fours
   pgpFingerprint: '',
-  // [PLACEHOLDER] internship dates, the example dates from the design until james confirms
+  // confirmed by james on 2026-10-16
   internship: {
-    start: '2026-11-09',
-    end: '2027-01-29',
+    start: '2026-11-23',
+    end: '2027-02-13',
   },
   // [PLACEHOLDER] hidden flag path and text, see robots.txt
   flag: {

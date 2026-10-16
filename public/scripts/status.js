@@ -1,5 +1,5 @@
 // status pill: keeps the phase and week right between rebuilds
-// markup: <a class="status" data-status data-start="2026-11-09" data-end="2027-01-29" href="/#now">...</a>
+// markup: <a class="status" data-status data-start="2026-11-23" data-end="2027-02-13" href="/#now">...</a>
 // the build renders the same text, this only corrects a stale page
 (() => {
   const pill = document.querySelector('[data-status]');

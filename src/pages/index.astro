@@ -28,7 +28,7 @@ const now = {
     ],
   },
   during: {
-    route: ['UTC+13 → UTC+11', 'Back in Wellington late January'],
+    route: ['UTC+13 → UTC+11', 'Back in Wellington in February'],
     bar: `W${pad2(week)}/12`,
     lines: [
       `Week ${['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'][week - 1]} of twelve as a Security Engineering intern at Atlassian in Sydney.`,
@@ -46,11 +46,11 @@ const now = {
 const barLabel = phase === 'before' ? `Series progress, starts ${monthLong}` : `Series progress, ${week} of 12 weeks`;
 
 const kit = [
-  { icon: 'sdr', name: 'HackRF One', cap: 'Software-defined radio, 1 MHz to 6 GHz. Mostly for learning how my own remotes talk.' },
-  { icon: 'usb', name: 'USB Rubber Ducky', cap: 'Keystroke injection. The fastest way to show why an unlocked laptop is a problem.' },
-  { icon: 'wifi', name: 'Wi-Fi Pineapple', cap: "Wireless auditing on my own network, and on client networks when it's in scope." },
-  { icon: 'drone', name: 'FPV drone', cap: 'Built it, crashed it, rebuilt it. Soldering practice that flies.' },
-  { icon: 'server', name: 'Home lab server', cap: 'Where things get broken on purpose. [SPEC: CPU, RAM, hypervisor]' },
+  { icon: 'sdr', name: 'HackRF One', cap: 'Software-defined radio, 1 MHz to 6 GHz.' },
+  { icon: 'usb', name: 'USB Rubber Ducky', cap: 'Keystroke injection tool.' },
+  { icon: 'wifi', name: 'Wi-Fi Pineapple', cap: "Wireless auditing on my own network, or on client networks when it's in scope." },
+  { icon: 'drone', name: 'FPV drone', cap: 'Built and repaired it myself.' },
+  { icon: 'server', name: 'Lab server', cap: 'Oracle Cloud VM, 4 cores and 24 GB of RAM.' },
 ] as const;
 ---
 <Base scripts={['decrypt', 'section-index', 'card-tilt', 'field']}>
@@ -79,7 +79,7 @@ const kit = [
           <span class="g">James</span>
           <span class="px"><span data-decrypt>DE HAIR</span><span class="acc">.</span></span>
         </h1>
-        <p class="hero__sub">Third-year cybersecurity engineering student at VUW. <b>Security Engineering intern at Atlassian, Sydney, from November 2026.</b> Breaking things so they ship safer.</p>
+        <p class="hero__sub">Third-year cybersecurity engineering student at VUW. <b>Security Engineering intern at Atlassian, Sydney, from November 2026.</b></p>
         <div class="hero__cta">
           <a class="btn btn--primary" href="/log/">Read the Log<Icon name="arrow" /></a>
           <a class="btn btn--secondary" href="#work">See the work</a>
@@ -152,8 +152,8 @@ const kit = [
           </figure>
           <div class="about__text">
             <p class="lead about__lead">I'm a third-year cybersecurity engineering student at Te Herenga Waka, Victoria University of Wellington.</p>
-            <p class="body muted">I like the unglamorous end of security: reading configs, writing threat models and fixing the boring thing before it turns into the interesting thing. Outside class I play CTFs, break my own hardware in a home lab and work on Red Specter, a pen-testing idea for small businesses, with a friend.</p>
-            <p class="body muted">I'm still a student, so most of what's here is learning in public. Where I got something wrong, I've left it in.</p>
+            <p class="body muted">I like the practical end of security: reading configs, writing threat models and fixing small problems early. Outside class I play CTFs, break my own hardware in a home lab and work on Red Specter, a pen-testing idea for small businesses, with a friend.</p>
+            <p class="body muted">I'm still a student, so most of what's here is learning in public.</p>
             <ul class="hl-list">
               <li><span class="k micro">2026</span><span>Security Engineering intern, Atlassian, Sydney</span></li>
               <li><span class="k micro">NZCSC 2026</span><span>Top 10 university students, top 30 overall</span></li>

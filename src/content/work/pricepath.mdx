@@ -4,86 +4,93 @@ pixelWord: PATH
 order: 1
 year: "2026"
 role: Scraper and deployment lead, team of five
-stack: [Playwright (Python), OCI, nginx, GitLab CI/CD]
-outcome: Grocery prices from three NZ supermarket chains, scraped nightly and shipped to a locked-down OCI box by CI.
+stack: [Python, Playwright, Docker Compose, OCI, nginx, Cloudflare, GitLab CI]
+outcome: Grocery prices from three NZ supermarket chains, scraped weekly and served from a locked-down Oracle Cloud VM.
 tags: [Builds, Cloud, Team of 5]
 cover: ../../assets/covers/cover-pricepath.png
 status: published
 meta:
   year: 2026 · ENGR302, VUW
   role: Scraper and deployment lead, team of five
-  stack: Playwright (Python), OCI, nginx, GitLab CI/CD
-  status: Live on HTTPS · [URL]
+  stack: Python + Playwright, Docker Compose, OCI, nginx, Cloudflare
+  status: Live · price-path.online
 card:
   role: Scraper + deploy lead
-  stack: Playwright, OCI, nginx, CI/CD
+  stack: Playwright, OCI, Docker, Cloudflare
 aside:
   - { label: Team, value: ENGR302 · Team 8 }
-  - { label: My part, value: "Scraper, CI/CD, server" }
+  - { label: My part, value: "Scraper, hosting, deploys" }
+  - { label: Live, value: price-path.online }
   - { label: Repo, value: Private (course) }
 threats:
-  - { id: S, note: "Only the CI runner can deploy. One SSH key per environment, password login off.", status: mitigated }
-  - { id: T, note: "Scraped rows are schema-checked before they reach the database.", status: mitigated }
-  - { id: R, note: "Every scrape run logs source, start time and row count.", status: mitigated }
-  - { id: I, note: "No secrets in the repo. CI variables are masked and protected.", status: mitigated }
-  - { id: D, note: "nginx rate limits requests. One small VM is still a single point of failure.", status: accepted }
-  - { id: E, note: "Services run as unprivileged users under systemd. No root in the app.", status: mitigated }
+  - { id: S, note: "The box pulls deploys with a read-only GitLab deploy key. No production SSH key sits in CI.", status: mitigated }
+  - { id: T, note: "Rows with no name, no image or a price of zero or less are dropped before they reach the site.", status: mitigated }
+  - { id: R, note: "Every scrape writes a timestamped archive snapshot. Container logs are lost when a container is rebuilt.", status: accepted }
+  - { id: I, note: "Only nginx faces the internet. The API and database listen on localhost. Passwords are bcrypt hashes.", status: mitigated }
+  - { id: D, note: "Cloudflare caches the catalogue in front of one VM. That VM is still a single point of failure.", status: accepted }
+  - { id: E, note: "The backend mounts scraper output read-only and only reloads it when called with a token.", status: mitigated }
 ---
 
-{/* draft copy from the design: james to confirm every claim before publishing */}
+{/* facts from the engr302 final report evidence pack (final report/evidence), measured 1 oct 2026 unless marked */}
+{/* james: confirm the "route through the shop" line and the first item under what i'd change */}
 
 ## Problem
 
-Grocery prices in New Zealand live on three websites built three different ways. Our ENGR302 team set out to build PricePath: type a shopping list, see where it's cheapest and get a route through the shop.
+Grocery prices in New Zealand live on three websites built three different ways. Our ENGR302 team built [PricePath](https://price-path.online) to compare PAK'nSAVE, New World and Woolworths in Wellington: type a shopping list, see where it's cheapest and get a route through the shop.
 
-I owned two pieces. The scraper that pulls prices in every night, and the deployment that keeps the whole thing running. The course brief was a working product. My own brief was quieter: a scraper that never gets the team blocked, and a server nobody has to babysit.
+I owned the scraper, and the hosting and deployment. The team built the React frontend and the Spring Boot backend.
 
 ## Threat model
 
-Small project, real internet. I ran STRIDE over the scraper, the API box and the pipeline, then kept one line per threat so the team would actually read it.
+Small project, real internet. I ran STRIDE over the scraper, the server and the deploy path, and kept one line per threat.
 
 <ThreatStrip threats={frontmatter.threats} />
 
 ## Approach
 
-PAK'nSAVE and New World are both Foodstuffs sites built on Next.js. Each page already ships its data as JSON in a `__NEXT_DATA__` script tag, so the scraper reads that instead of guessing at markup. Woolworths needed real DOM scraping with Playwright locators.
+The scraper is Python and Playwright. PAK'nSAVE and New World are both Foodstuffs sites built on Next.js, and each page already ships its data as JSON in a `__NEXT_DATA__` script tag, so the scraper reads that instead of the markup. Woolworths rebuilt its site in September 2026 with hashed CSS class names, so the scraper now replays the page's own GraphQL product search request.
 
-```py title="scraper/next_data.py" {5}
-import json
+Every run maps each chain's sections onto 8 shared categories, so "Bakery" means the same thing at all three. Rows with no name, no image or a bad price are dropped, and the backend reloads the data without a redeploy.
 
-# read the json the page already ships, no dom guessing
-async def read_next_data(page):
-    raw = await page.locator("script#__NEXT_DATA__").text_content()
-    return json.loads(raw)["props"]["pageProps"]
+<Flow steps={["Store pages", "Playwright", "Validate", "JSON handoff", "Reload API"]} labels={["Source", "Scrape", "Check", "Hand off", "Serve"]} hot={1} />
+
+Everything runs in Docker Compose on one Oracle Cloud VM with 4 cores and 24 GB of RAM, behind Cloudflare. Only nginx publishes ports to the internet:
+
+```text title="docker compose ps · 1 Oct 2026" {2}
+frontend   0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp
+backend    127.0.0.1:8080->8080/tcp
+db         127.0.0.1:5433->5432/tcp
+scraper
+certbot
 ```
 
-Runs are polite: one store at a time, with a pause between pages. Every row passes a schema check before it's written, so a store redesign shows up as a failed run, not as bad prices.
-
-<Flow steps={["Store pages", "Playwright", "Schema", "Database", "API via nginx"]} hot={1} />
-
-The app runs on a single OCI instance behind nginx, with a DuckDNS domain and HTTPS. The GitLab pipeline lints, tests and deploys on every merge to main, over SSH with a deploy-only key.
+Deploys are pulled, not pushed. A systemd timer checks GitLab every 10 minutes with a read-only deploy key. If master moved, it backs up the data, rebuilds, health-checks the site and rolls back if the check fails. I chose that over a CI deploy job so no production SSH key ever goes into CI variables. A second timer checks the site, data age and disk every 15 minutes.
 
 ## Dead ends
 
 <DeadEnds items={[
-  { tried: "Calling the stores' internal APIs directly.", why: "Undocumented, brittle and against the spirit of the sites' terms.", now: "Read only what the page already sends to any browser." },
-  { tried: "Visiting every product page.", why: "Slow, and rude to the stores.", now: "Category pages carry almost everything we need." },
-  { tried: "Running the scraper as root on the API box.", why: "One bug away from owning everything.", now: "Its own unprivileged user and systemd unit. No sudo." }
+  { tried: "Hosting on the 498 MB x86 free-tier VM.", why: "It couldn't build or run the stack. Constant out-of-memory errors.", now: "A 4-core Ampere VM with 24 GB of RAM." },
+  { tried: "Closing port 8080 with firewalld.", why: "Docker writes its own iptables rules ahead of firewalld, so the API was reachable from the internet until 16 Sep.", now: "Container ports bound to 127.0.0.1, and checked from off the box." },
+  { tried: "Scraping Woolworths with CSS selectors.", why: "The September rebuild used hashed class names. It first looked like an IP block.", now: "Replay the page's own GraphQL product search." },
+  { tried: "Scraping PAK'nSAVE and New World from the VM.", why: "The Foodstuffs sites serve no product data to datacenter IPs.", now: "A manual local scrape for Foodstuffs. The weekly run on the box covers Woolworths." }
 ]} />
 
 ## Result
 
-PricePath runs on HTTPS behind nginx. Prices refresh nightly across all three chains, and the pipeline ships every merge to main without anyone logging in to the server.
+PricePath is live at [price-path.online](https://price-path.online). Woolworths refreshes every Monday at 03:00, and on 1 Oct 2026 the catalogue held 7,083 products, 491 of them matched across all three chains.
 
 <Stats items={[
-  { value: "3", label: "Supermarket chains" },
-  { value: "[N]", label: "Products per nightly run" },
-  { value: "0", label: "Manual deploys after week [N]" }
+  { value: "7,083", label: "Products in the catalogue" },
+  { value: "491", label: "Matched across all 3 chains" },
+  { value: "19/19", label: "Master pipelines passed since 31 Aug" }
 ]} />
+
+In the first 14.7 hours of monitoring, the health check passed 60 of 60 runs and nginx served 1,870 requests with no server errors. That's a short window, so it's a start rather than a track record.
 
 ## What I'd change
 
 - Write the threat model in week one, not halfway through.
-- Swap DuckDNS for a real domain with DNSSEC and CAA records.
-- Alert when a store changes its markup, instead of finding out from an empty table.
-- Containerise the scraper so it isn't tied to one VM.
+- Refresh PAK'nSAVE and New World automatically, instead of by hand from my laptop.
+- Send health-check failures somewhere I'll see them. Right now they only reach the systemd journal.
+- Keep each scrape's reload result somewhere that survives a container rebuild.
+- Use a migration tool instead of Hibernate's `ddl-auto`.
