@@ -5,6 +5,7 @@ import Toc from '../../components/Toc.astro';
 import Callout from '../../components/Callout.astro';
 import ThreatStrip from '../../components/ThreatStrip.astro';
 import Flow from '../../components/Flow.astro';
+import Pipeline from '../../components/Pipeline.astro';
 import DeadEnds from '../../components/DeadEnds.astro';
 import Stats from '../../components/Stats.astro';
 import { render } from 'astro:content';
@@ -59,7 +60,7 @@ const updated = isoDate(d.updated ?? new Date(site.nowUpdated));
         {toc.length > 0 && <Toc items={toc} mobile />}
         {d.status === 'pending' && <Callout type="warn" label="Draft · not published">This case study is still being written. It shows here because drafts are on for this build.</Callout>}
         <div class="prose">
-          <Content components={{ Callout, ThreatStrip, Flow, DeadEnds, Stats }} />
+          <Content components={{ Callout, ThreatStrip, Flow, Pipeline, DeadEnds, Stats }} />
         </div>
         {all.length > 1 && (
           <nav class="pn" aria-label="More work">

@@ -9,5 +9,5 @@ interface Props {
 }
 const { n, label, id, lead, pixel } = Astro.props;
 ---
-<div class="sh"><span class="sh__id"><b>{n}</b><span>/</span><span>{label}</span></span><slot name="aside" /></div>
+<div class="sh" data-play><span class="sh__id"><b>{n}</b><span>/</span><span>{label}</span></span><slot name="aside" /></div>
 <h2 class="h2 sh-title" id={id}>{lead} <span class="px">{pixel}</span></h2>

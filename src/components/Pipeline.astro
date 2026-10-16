@@ -1,0 +1,47 @@
+---
+// interactive pipeline: pick a stage, a red square steps to it and its panel shows
+// radios and :has() do the work, so it needs no js and stays inside the csp
+// without :has() support every panel shows in order and the square hides
+interface Stage {
+  label: string;
+  title: string;
+  part: string;
+  security: string[];
+  gap?: string;
+}
+interface Props {
+  stages: Stage[];
+  id?: string;
+}
+const { stages, id = 'pipe' } = Astro.props;
+const n = (i: number) => String(i + 1).padStart(2, '0');
+---
+<div class:list={['pipe', `pipe--${stages.length}`]}>
+  <fieldset class="pipe__pick">
+    <legend class="sr-only">Pipeline stages. Pick one to see what I built and the security decisions</legend>
+    <div class="pipe__row">
+      <div class="pipe__track" aria-hidden="true"><i class="pipe__dot"></i></div>
+      {stages.map((s, i) => (
+        <>
+          <input class="pipe__radio sr-only" type="radio" name={id} id={`${id}-${i}`} checked={i === 0} aria-describedby={`${id}-p${i}`} />
+          <label class="pipe__stage" for={`${id}-${i}`}><span class="label">{n(i)} · {s.label}</span><b>{s.title}</b></label>
+        </>
+      ))}
+    </div>
+  </fieldset>
+  <div class="pipe__panels">
+    {stages.map((s, i) => (
+      <section class="pipe__panel" id={`${id}-p${i}`} aria-label={`${s.label}: ${s.title}`}>
+        <div class="pipe__col">
+          <span class="label muted">{n(i)} · {s.label} · my part</span>
+          <p>{s.part}</p>
+        </div>
+        <div class="pipe__col">
+          <span class="label muted">Security decisions</span>
+          <ul class="pipe__list">{s.security.map((x) => <li>{x}</li>)}</ul>
+          {s.gap && <p class="pipe__gap micro"><span class="acc">Known gap</span> · {s.gap}</p>}
+        </div>
+      </section>
+    ))}
+  </div>
+</div>

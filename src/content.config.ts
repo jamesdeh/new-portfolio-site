@@ -37,6 +37,12 @@ const work = defineCollection({
       // shorter role and stack for the home card when the full ones wrap
       card: z.object({ role: z.string(), stack: z.string() }).optional(),
       aside: z.array(z.object({ label: z.string(), value: z.string() })).optional(),
+      // stages for the interactive pipeline diagram
+      pipeline: z
+        .array(z.object({ label: z.string(), title: z.string(), part: z.string(), security: z.array(z.string()).min(1), gap: z.string().optional() }))
+        .min(2)
+        .max(6)
+        .optional(),
       threats: z
         .array(
           z.object({

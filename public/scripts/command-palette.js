@@ -1,12 +1,14 @@
 // command palette: cmd or ctrl k, or / when not typing
 // native dialog, index fetched from /search.json on first open
-// index shape: [{ "title": "...", "url": "/log/...", "group": "Posts" | "Pages" | "Actions", "hint": "Case" }]
+// index shape: [{ "title": "...", "url": "/log/...", "group": "Posts" | "Pages" | "Actions", "hint": "Case", "text": "summary and headings", "action": "paper" | "copy", "value": "..." }]
+// also g then a letter jumps to a page, matching the hints in the palette
 (() => {
   const dlg = document.getElementById('cmdk');
   if (!dlg || typeof dlg.showModal !== 'function') return;
   const input = dlg.querySelector('input');
   const list = dlg.querySelector('[role="listbox"]');
   const count = dlg.querySelector('[data-cmdk-count]');
+  const root = document.documentElement;
   let index = null;
   let results = [];
   let active = 0;
@@ -26,15 +28,33 @@
     return span;
   };
 
+  const toast = (msg, error) => window.jdhToast && window.jdhToast(msg, { error });
+
+  const run = (r) => {
+    dlg.close();
+    if (r.action === 'paper') {
+      const paper = root.dataset.mode !== 'paper';
+      if (paper) root.dataset.mode = 'paper';
+      else delete root.dataset.mode;
+      try { localStorage.setItem('jdh-mode', paper ? 'paper' : 'noir'); } catch (e) { /* fine */ }
+      document.querySelectorAll('[data-paper-toggle]').forEach((b) => b.setAttribute('aria-pressed', String(paper)));
+      toast(paper ? 'Paper mode on' : 'Noir mode on');
+    } else if (r.action === 'copy') {
+      navigator.clipboard.writeText(r.value).then(() => toast(r.done || 'Copied'), () => toast('Clipboard blocked', true));
+    }
+  };
+
   const render = (q) => {
-    const query = q.trim();
-    results = index.filter((r) => !query || r.title.toLowerCase().includes(query.toLowerCase())).slice(0, 12);
+    const query = q.trim().toLowerCase();
+    results = index
+      .filter((r) => !query || r.title.toLowerCase().includes(query) || (r.text || '').toLowerCase().includes(query))
+      .slice(0, 12);
     active = 0;
     list.replaceChildren();
     if (!results.length) {
       const empty = document.createElement('p');
       empty.className = 'cmdk__group-k micro';
-      empty.textContent = 'command not found: ' + query + '. Try a tag like builds';
+      empty.textContent = 'command not found: ' + q.trim() + '. Try a tag like builds';
       list.append(empty);
     }
     let group = '';
@@ -46,11 +66,16 @@
         k.textContent = group;
         list.append(k);
       }
-      const a = document.createElement('a');
-      a.className = 'cmdk__item';
-      a.id = 'cmdk-' + i;
-      a.href = r.url;
-      a.setAttribute('role', 'option');
+      const el = document.createElement(r.action ? 'button' : 'a');
+      el.className = 'cmdk__item';
+      el.id = 'cmdk-' + i;
+      el.setAttribute('role', 'option');
+      if (r.action) {
+        el.type = 'button';
+        el.addEventListener('click', () => run(r));
+      } else {
+        el.href = r.url;
+      }
       const mk = document.createElement('span');
       mk.className = 'mk';
       mk.setAttribute('aria-hidden', 'true');
@@ -58,8 +83,8 @@
       const hint = document.createElement('span');
       hint.className = 'hint';
       hint.textContent = r.hint || '';
-      a.append(mk, mark(r.title, query), hint);
-      list.append(a);
+      el.append(mk, mark(r.title, q.trim()), hint);
+      list.append(el);
     });
     if (count) count.textContent = results.length + (results.length === 1 ? ' result' : ' results');
     select(0);
@@ -83,12 +108,21 @@
     input.focus();
   };
 
+  const go = { h: '/', l: '/log/', w: '/#work', s: '/log/series/atlassian/', c: '/colophon/', v: '/cv/' };
+  let g = 0;
+
   addEventListener('keydown', (e) => {
     const typing = /^(input|textarea|select)$/i.test(document.activeElement?.tagName || '');
-    if ((e.key.toLowerCase() === 'k' && (e.metaKey || e.ctrlKey)) || (e.key === '/' && !typing)) {
+    const key = e.key.toLowerCase();
+    if ((key === 'k' && (e.metaKey || e.ctrlKey)) || (e.key === '/' && !typing)) {
       e.preventDefault();
       open();
+      return;
     }
+    if (typing || dlg.open || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (key === 'g') { g = Date.now(); return; }
+    if (go[key] && Date.now() - g < 800) location.href = go[key];
+    g = 0;
   });
 
   document.querySelectorAll('[data-cmdk-open]').forEach((b) => b.addEventListener('click', (e) => {
@@ -102,7 +136,7 @@
     if (e.key === 'ArrowUp') { e.preventDefault(); select(active - 1); }
     if (e.key === 'Enter') {
       const item = list.querySelector('[aria-selected="true"]');
-      if (item) location.href = item.href;
+      if (item) { e.preventDefault(); item.click(); }
     }
   });
 })();
