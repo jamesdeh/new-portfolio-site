@@ -1,0 +1,24 @@
+---
+// contents list for the left rail, plus the mobile details version
+interface Props {
+  items: { slug: string; text: string }[];
+  mobile?: boolean;
+}
+const { items, mobile = false } = Astro.props;
+const n = (i: number) => String(i + 1).padStart(2, '0');
+---
+{mobile ? (
+  <details class="toc-mobile">
+    <summary class="label">Contents <span class="muted">{items.length} parts</span></summary>
+    <ol class="toc toc--inset">
+      {items.map((h, i) => <li><a href={`#${h.slug}`}><span class="n">{n(i)}</span>{h.text}</a></li>)}
+    </ol>
+  </details>
+) : (
+  <nav aria-label="Contents" class="stack gap-12">
+    <span class="label muted">Contents</span>
+    <ol class="toc">
+      {items.map((h, i) => <li><a href={`#${h.slug}`} aria-current={i === 0 ? 'true' : undefined}><span class="n">{n(i)}</span>{h.text}</a></li>)}
+    </ol>
+  </nav>
+)}

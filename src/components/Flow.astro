@@ -1,0 +1,16 @@
+---
+// pipeline strip, one cell per step, one hot cell in the accent
+interface Props {
+  steps: string[];
+  labels?: string[];
+  hot?: number;
+}
+const { steps, labels = ['Source', 'Scrape', 'Check', 'Store', 'Serve'], hot } = Astro.props;
+---
+<div class="flow" role="list" aria-label="Pipeline">
+  {steps.map((s, i) => (
+    <div role="listitem" class={i === hot ? 'hot' : undefined}>
+      <span class="label">{String(i + 1).padStart(2, '0')}{labels[i] ? ` · ${labels[i]}` : ''}</span><b>{s}</b>
+    </div>
+  ))}
+</div>

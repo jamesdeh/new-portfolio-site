@@ -1,0 +1,15 @@
+---
+// 12 cells, filled up to value, the current one blinks
+interface Props {
+  value: number;
+  current?: boolean;
+  size?: 'sm' | 'lg';
+  label: string;
+  max?: number;
+}
+const { value, current = false, size, label, max = 12 } = Astro.props;
+const cells = Array.from({ length: max }, (_, i) => (i < value ? (current && i === value - 1 ? 'now' : 'on') : ''));
+---
+<div class:list={['pbar', size && `pbar--${size}`]} role="progressbar" aria-label={label} aria-valuemin="0" aria-valuemax={max} aria-valuenow={value}>
+  {cells.map((c) => <i class={c || undefined}></i>)}
+</div>

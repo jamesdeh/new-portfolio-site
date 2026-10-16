@@ -1,0 +1,73 @@
+---
+title: "NZCSC: three challenges I nearly quit on"
+summary: "The ones that took longest, the dead ends I hit and what finally cracked them."
+lead: "Three NZCSC 2026 challenges where the obvious move was a dead end: a crypto mode with a wrong assumption baked in, a phishing trail that ran out at an inbox, and a loader that lies to you twice."
+date: 2026-09-29
+tags: [Writeups]
+draft: true
+---
+
+{/* draft from C:\Users\yolob\Downloads\nzcsc2026\WRITEUP.md. james: confirm these are the three you nearly quit on, or swap them. keep draft until approved */}
+{/* check the nzcsc rules allow publishing solutions and flags before this goes live */}
+
+NZCSC 2026 went well overall: top 10 among university students, top 30 overall. [PLACEHOLDER: a line on how these three felt at the time.]
+
+## Checksum Based Key
+
+The challenge gave me a diagram of a custom AES mode and an encrypted PNG. Blocks two onwards are plain CBC. Block one has no AES at all:
+
+```text title="block one"
+C1 = P1 xor MD5(Pn) xor MD5(key)
+```
+
+The last plaintext block feeds back into the first. That looks like it hides `MD5(key)`, but a PNG gives away both ends. The first block is the PNG signature plus the start of the IHDR chunk. The file is 5276 bytes, and 5276 mod 16 is 12, so the last block is exactly the 12-byte IEND chunk plus four bytes of padding. Both blocks are fully known, so block one leaks `MD5(key)` directly.
+
+### The dead end
+
+I assumed the AES key was `MD5(password)`, since that's what the diagram seemed to say. Testing it against the last block, where `AES_K(Pn xor Cn-1)` should equal `Cn`, failed.
+
+The fix was to stop trusting my reading of the diagram. The AES key was the raw 16-byte password. The same last-block check let me test candidates without decrypting the file, and rockyou had it: `impossible2guess`. Then it was a normal CBC decrypt.
+
+<Callout type="flag">
+`NZCSC{TH3_B3G1NN1NG_0F_TH3_IEND}`. The name was the hint the whole time: the known header and the IEND trailer.
+</Callout>
+
+## Is this the real Jeff Bezos?
+
+A fake Bezos email offering $950k. The interesting part is that SPF, DKIM and DMARC all pass. They pass because they authenticate the sender's own domain, not Amazon's. The domain was registered four days before the email went out.
+
+The headers and the RDAP record didn't name anyone, so I pivoted to DNS. The DMARC record sends reports to a mailbox called `campaign-gitlab-manager`, and there's a public GitLab account with that name. Its activity led to the group's repo of phishing templates, and one template has a literal `[FLAG]` placeholder.
+
+### The dead end
+
+I went through everything static: full git history on both branches, pipelines, snippets, releases, GitLab Pages, every DNS record and the certificate transparency logs. No flag anywhere. A review note on the placeholder line explains why: the flag changes often and you have to email the group's flag keeper for it.
+
+So the flag comes from their mail autoresponder. I left that last step as a manual one rather than send mail to the campaign domain from a script.
+
+<Callout type="note">
+Passing SPF, DKIM and DMARC doesn't make an email legitimate. Check that the authenticated domain lines up with the brand it claims to be.
+</Callout>
+
+## Matryoshka
+
+A PowerShell script that allocates memory for a 2496-byte payload and runs it. The challenge warned about anti-AI features, and it meant it.
+
+### Two dead ends, on purpose
+
+Running it shows "Failed to decode and open flag". Dumping strings finds `NZCSC{NICE_TRY_CHATGPT_NOT_THIS}`, a decoy planted in an outer layer. Both are traps.
+
+The real path was peeling it statically:
+
+1. The x64 loader decodes stage two with `enc[i] xor (i and 0xFF) xor 0x67`
+2. Stage two is 32-bit shellcode that patches itself into stage three
+3. Stage three resolves APIs by hash, reads 32 bytes from `C:\Temp\flag.txt` and checks them
+
+The check XORs each of eight dwords against a constant and wants the sum to be zero. The input that does that is the constants themselves, read little-endian.
+
+<Callout type="flag">
+`NZCSC{D1D_Y0U_L1KE_TH3_L4Y3R555}`
+</Callout>
+
+## What they had in common
+
+Each one had an obvious first move, and each obvious move was the trap. [PLACEHOLDER: James to add a closing line in his own words.]

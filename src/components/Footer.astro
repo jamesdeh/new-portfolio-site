@@ -1,0 +1,36 @@
+---
+import Icon from './Icon.astro';
+import Readout from './Readout.astro';
+import { site, pgpGroups } from '../config/site';
+
+const fpr = pgpGroups(site.pgpFingerprint);
+---
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__sign">
+      <p class="bye">Ngā mihi, James</p>
+      <p class="small muted footer__blurb">Built by hand in Te Whanganui-a-Tara, Wellington. Static pages, no trackers, no cookies.</p>
+      <Readout />
+    </div>
+    <div class="footer__col">
+      <span class="label">Site</span>
+      <a href="/#work">Work</a><a href="/log/">Log</a><a href="/#about">About</a><a href="/colophon/">Colophon</a>
+    </div>
+    <div class="footer__col">
+      <span class="label">Elsewhere</span>
+      <a href={site.github}>GitHub</a>
+      {site.linkedin ? <a href={site.linkedin}>LinkedIn</a> : <a href="/#contact">LinkedIn</a>}
+      <a class="with-icon" href="/rss.xml"><Icon name="rss" />RSS</a>
+    </div>
+    <div class="footer__pgp">
+      <span class="label muted">PGP fingerprint</span>
+      <span class="fpr">{fpr.slice(0, 5).join(' ')}<br />{fpr.slice(5).join(' ')}</span>
+      <a class="link label fit" href="/pgp.asc">Get key · /pgp.asc</a>
+    </div>
+    <div class="footer__base micro">
+      <span>© 2026 James de Hair</span>
+      <span>Views are my own</span>
+      <a class="link link--quiet" href="#top">Back to top</a>
+    </div>
+  </div>
+</footer>

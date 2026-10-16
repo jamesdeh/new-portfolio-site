@@ -1,0 +1,16 @@
+---
+interface Props {
+  items: { tried: string; why: string; now: string }[];
+}
+const { items } = Astro.props;
+---
+<ol class="dead">
+  {items.map((d, i) => (
+    <li>
+      <span class="no" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+      <p><span class="k">Tried</span>{d.tried}</p>
+      <p><span class="k">Why not</span>{d.why}</p>
+      <p><span class="k">Now</span>{d.now}</p>
+    </li>
+  ))}
+</ol>

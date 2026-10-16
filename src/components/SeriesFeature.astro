@@ -1,0 +1,43 @@
+---
+// atlassian series feature, on home and the log index
+import PixelProgress from './PixelProgress.astro';
+import { phaseInfo, pad2 } from '../lib/phase';
+import type { Post } from '../lib/content';
+
+interface Props {
+  latest?: Post;
+  variant: 'home' | 'log';
+}
+const { latest, variant } = Astro.props;
+const { phase, week, monthLong } = phaseInfo();
+const label = phase === 'before' ? `Series progress, starts ${monthLong}` : `Series progress, ${week} of 12 weeks`;
+const home = variant === 'home';
+---
+<section class="series" aria-labelledby={home ? undefined : 'series-h'}>
+  <div class="series__l">
+    <span class="label muted">Series · Atlassian, Sydney</span>
+    {home ? (<>
+      <h3 class="h3 series__h series__h--home">Twelve weeks on a security team</h3>
+      <p class="body muted mw-52">One post a week from November 2026: what I'm learning, what surprised me and what I'd tell the next intern. Public knowledge only. Views are my own.</p>
+      <div class="row gap-12 mt-8"><a class="btn btn--secondary" href="/log/series/atlassian/">Open the series</a></div>
+    </>) : (<>
+      <h2 class="h3 series__h" id="series-h">Twelve weeks on a security team</h2>
+      <p class="body muted mw-50">One post a week from November 2026. Public knowledge only, views my own.</p>
+      <div class="row gap-12 mt-4">
+        <a class="btn btn--secondary" href="/log/series/atlassian/">Open the series</a>
+        {latest ? <a class="link label" href={`/log/${latest.id}/`}>Latest · W{pad2(latest.data.series!.week)}</a> : <span class="label muted">Starts {monthLong}</span>}
+      </div>
+    </>)}
+  </div>
+  <div class="series__r">
+    <div class="series__count" aria-hidden="true">{pad2(week)}<span class="of">/12</span></div>
+    {home ? (
+      <div class="stack gap-10">
+        <PixelProgress value={week} current={phase === 'during'} size="lg" label={label} />
+        <div class="row micro muted between"><span>W01 · Nov</span><span>W12 · Jan</span></div>
+      </div>
+    ) : (
+      <PixelProgress value={week} current={phase === 'during'} size="lg" label={label} />
+    )}
+  </div>
+</section>

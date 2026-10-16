@@ -1,0 +1,99 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import ClassBanner from '../../components/ClassBanner.astro';
+import PixelProgress from '../../components/PixelProgress.astro';
+import Toc from '../../components/Toc.astro';
+import Callout from '../../components/Callout.astro';
+import { render } from 'astro:content';
+import { getPosts, seriesPosts, readingMinutes, isoDate, shortTitle, type Post } from '../../lib/content';
+import { dueDate, pad2 } from '../../lib/phase';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post, posts } }));
+}
+
+interface Props {
+  post: Post;
+  posts: Post[];
+}
+const { post, posts } = Astro.props;
+const d = post.data;
+const { Content, headings } = await render(post);
+const toc = headings.filter((h) => h.depth === 2 && h.slug !== 'footnote-label');
+const minutes = readingMinutes(post.body);
+const date = isoDate(d.date);
+const week = d.series?.week;
+
+// series posts link to the neighbouring week, others to the neighbouring post
+let prev: { href: string; label: string; title: string } | undefined;
+let next: { href?: string; label: string; title: string; due?: string } | undefined;
+if (week) {
+  const series = seriesPosts(posts);
+  const p = series.find((s) => s.data.series!.week === week - 1);
+  const n = series.find((s) => s.data.series!.week === week + 1);
+  if (p) prev = { href: `/log/${p.id}/`, label: `Previous · W${pad2(week - 1)}`, title: shortTitle(p) };
+  else if (week > 1) prev = { label: `Previous · W${pad2(week - 1)}`, title: 'PENDING' };
+  if (n) next = { href: `/log/${n.id}/`, label: `Next · W${pad2(week + 1)}`, title: shortTitle(n) };
+  else if (week < 12) next = { label: `Next · W${pad2(week + 1)}`, title: 'PENDING', due: dueDate(week + 1) };
+} else {
+  const i = posts.indexOf(post);
+  const newer = posts[i - 1];
+  const older = posts[i + 1];
+  if (older) prev = { href: `/log/${older.id}/`, label: 'Previous', title: older.data.title };
+  if (newer) next = { href: `/log/${newer.id}/`, label: 'Next', title: newer.data.title };
+}
+---
+<Base title={d.title} description={d.summary} current="log" scripts={['reading-progress', 'paper-toggle', 'copy-code', 'section-index']}>
+  <div class="pbar pbar--read" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    {Array.from({ length: 12 }, () => <i></i>)}
+  </div>
+  <main class="wrap" id="main">
+    <header class="case-head">
+      <nav class="crumb label" aria-label="Breadcrumb">
+        <a href="/log/">Log</a><span aria-hidden="true">/</span>
+        {week ? <><a href="/log/series/atlassian/">Atlassian series</a><span aria-hidden="true">/</span><span aria-current="page">W{pad2(week)}</span></> : <span aria-current="page">{d.tags[0]}</span>}
+      </nav>
+      <ClassBanner minutes={minutes} week={week} date={date} />
+      <h1 class="h1 post-title">{d.title}</h1>
+      <p class="lead muted post-lead">{d.lead ?? d.summary}</p>
+      <div class="row between gap-16">
+        {week ? (
+          <div class="row gap-16">
+            <div class="post-series"><PixelProgress value={week} size="sm" label={`Series progress, ${week} of 12`} /></div>
+            <span class="micro muted">Series · {week} of 12</span>
+          </div>
+        ) : <span class="micro muted">{d.tags.join(' · ')}</span>}
+        <button class="toggle" type="button" aria-pressed="false" aria-label="Paper mode" data-paper-toggle><span class="t-noir"><Icon name="noir" />Noir</span><span class="t-paper"><Icon name="paper" />Paper</span></button>
+      </div>
+      {week && <p class="disclaimer micro"><Icon name="note" />Views are my own and don't represent Atlassian.</p>}
+    </header>
+    <div class="doc doc--post">
+      <aside class="doc__rail">{toc.length > 0 && <Toc items={toc} />}</aside>
+      <article class="doc__body">
+        {toc.length > 0 && <Toc items={toc} mobile />}
+        {d.draft && <Callout type="warn" label="Draft · not published">This post is a draft. It shows here because drafts are on for this build, and it won't appear on the live site until it's marked ready.</Callout>}
+        <div class="prose">
+          <Content components={{ Callout }} />
+        </div>
+        <ClassBanner end />
+        {(prev || next) && (
+          <nav class="pn" aria-label={week ? 'Series navigation' : 'More posts'}>
+            {prev && (prev.href
+              ? <a href={prev.href}><span class="label"><Icon name="back" />{prev.label}</span><span class="t">{prev.title}</span></a>
+              : <div class="pn__pending pn__pending--prev" aria-disabled="true"><span class="label muted">{prev.label}</span><span class="px">PENDING</span></div>)}
+            {next && (next.href
+              ? <a href={next.href}><span class="label">{next.label}<Icon name="arrow" /></span><span class="t">{next.title}</span></a>
+              : <div class="pn__pending" aria-disabled="true"><span class="label muted">{next.label}</span><span class="px">PENDING</span>{next.due && <span class="micro muted">Due {next.due}</span>}</div>)}
+          </nav>
+        )}
+      </article>
+      <aside class="doc__aside">
+        {week && <div class="stack gap-8"><span class="label muted">Series</span><span class="px aside-count">{pad2(week)}<span class="muted">/12</span></span></div>}
+        <div class="stack gap-8"><span class="label muted">Tags</span><div class="tags">{d.tags.map((t) => <a class="tag" href="/log/">{t}</a>)}</div></div>
+        <div class="stack gap-8"><span class="label muted">Share</span><button class="btn btn--ghost btn--sm btn--bare" type="button" data-copy-link hidden>Copy link</button><noscript><span class="micro muted">Copy the address bar</span></noscript></div>
+      </aside>
+    </div>
+  </main>
+</Base>

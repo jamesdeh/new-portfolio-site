@@ -1,0 +1,27 @@
+---
+// the harmless flag behind the robots.txt hint
+import Base from '../layouts/Base.astro';
+import { site } from '../config/site';
+
+export function getStaticPaths() {
+  return [{ params: { flag: site.flag.path } }];
+}
+---
+<Base title="Flag" noindex>
+  <main class="wrap nf" id="main">
+    <div class="classif"><span class="lvl">Classification: public, now</span><span class="dot" aria-hidden="true">·</span><span>You found it</span></div>
+    <h1 class="h1">Nice <span class="px">FIND.</span></h1>
+    <div class="nf__grid">
+      <figure class="code">
+        <div class="code__bar"><span class="code__tab">flag.txt <span class="lang">txt</span></span></div>
+<pre tabindex="0"><code><span class="muted">$</span> cat flag.txt
+<span class="flag-out">{site.flag.text}</span></code></pre>
+      </figure>
+      <div class="stack gap-24">
+        <p class="lead">Thanks for poking around. That's the whole prize: no login, no tracking, just a flag.</p>
+        <p class="body muted">If you found something on this site that isn't meant to be found, please tell me. The contact details are in <a class="link" href="/.well-known/security.txt">security.txt</a>.</p>
+        <div class="row gap-12"><a class="btn btn--secondary" href="/">Back home</a></div>
+      </div>
+    </div>
+  </main>
+</Base>

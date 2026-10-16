@@ -1,0 +1,22 @@
+---
+// classification banner, top of a post and again at the end
+interface Props {
+  minutes?: number;
+  week?: number;
+  date?: string;
+  end?: boolean;
+  level?: string;
+}
+const { minutes, week, date, end = false, level = 'public' } = Astro.props;
+const w = week ? `W${String(week).padStart(2, '0')}/12` : '';
+---
+{end ? (
+  <div class="classif classif--end"><span>End of document</span><span class="dot" aria-hidden="true">·</span><span class="lvl">Classification: {level}</span></div>
+) : (
+  <div class="classif">
+    <span class="lvl">Classification: {level}</span>
+    {minutes && <><span class="dot" aria-hidden="true">·</span><span>{minutes} min read</span></>}
+    {w && <><span class="dot" aria-hidden="true">·</span><b>{w}</b></>}
+    {date && <><span class="dot" aria-hidden="true">·</span><time datetime={date}>{date}</time></>}
+  </div>
+)}

@@ -1,0 +1,10 @@
+---
+interface Props {
+  items: { value: string; label: string }[];
+  small?: boolean;
+}
+const { items, small = false } = Astro.props;
+---
+<div class:list={['stats', { 'stats--sm': small }]}>
+  {items.map((s) => <div><span class="v">{s.value}</span><span class="label">{s.label}</span></div>)}
+</div>
