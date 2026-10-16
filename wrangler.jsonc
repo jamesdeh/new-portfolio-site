@@ -2,7 +2,7 @@
 // local: npm run build, then npm run preview serves dist with _headers applied
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "jdh-portfolio",
+  "name": "portfolio-site",
   "compatibility_date": "2026-10-01",
   "assets": {
     "directory": "./dist",

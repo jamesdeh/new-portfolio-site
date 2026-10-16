@@ -30,5 +30,8 @@
     "cross-env": "7.0.3",
     "esbuild": "0.28.2",
     "wrangler": "4.149.0"
+  },
+  "engines": {
+    "node": ">=22.22.0"
   }
 }
