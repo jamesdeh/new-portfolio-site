@@ -1,0 +1,15 @@
+---
+// native dialog, filled from /search.json by scripts/command-palette.js
+---
+<dialog class="cmdk-dialog" id="cmdk" aria-label="Command palette">
+  <div class="cmdk">
+    <div class="cmdk__head">
+      <span class="ps1">jdh@log<b>:</b>~$</span>
+      <label class="sr-only" for="cmdk-q">Search pages, posts and case studies</label>
+      <input id="cmdk-q" type="text" role="combobox" aria-expanded="true" aria-controls="cmdk-list" aria-autocomplete="list" autocomplete="off" spellcheck="false" />
+      <span class="cmdk__caret" aria-hidden="true"></span>
+    </div>
+    <div id="cmdk-list" class="cmdk__group cmdk__list" role="listbox" aria-label="Results"></div>
+    <div class="cmdk__foot micro"><span><kbd>↑↓</kbd> Move</span><span><kbd>↵</kbd> Open</span><span><kbd>Esc</kbd> Close</span><span class="push" data-cmdk-count aria-live="polite"></span></div>
+  </div>
+</dialog>

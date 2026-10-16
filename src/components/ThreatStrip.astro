@@ -1,0 +1,20 @@
+---
+// stride strip, fed from the case study front matter
+interface Props {
+  threats?: { id: 'S' | 'T' | 'R' | 'I' | 'D' | 'E'; note: string; status: 'mitigated' | 'accepted' }[];
+}
+const { threats = [] } = Astro.props;
+const names = { S: 'Spoofing', T: 'Tampering', R: 'Repudiation', I: 'Info disclosure', D: 'Denial of service', E: 'Elevation' };
+---
+{threats.length > 0 && (
+  <div class="stride stride--3" role="list" aria-label="Threat model, STRIDE">
+    {threats.map((t) => (
+      <div role="listitem">
+        <span class="stride__l" aria-hidden="true">{t.id}</span>
+        <span class="stride__name label">{names[t.id]}</span>
+        <p class="stride__note">{t.note}</p>
+        <span class:list={['stride__st micro', t.status === 'mitigated' ? 'ok' : 'acc-risk']}>{t.status === 'mitigated' ? 'Mitigated' : 'Accepted'}</span>
+      </div>
+    ))}
+  </div>
+)}

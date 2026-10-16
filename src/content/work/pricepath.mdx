@@ -1,0 +1,89 @@
+---
+title: PricePath
+pixelWord: PATH
+order: 1
+year: "2026"
+role: Scraper and deployment lead, team of five
+stack: [Playwright (Python), OCI, nginx, GitLab CI/CD]
+outcome: Grocery prices from three NZ supermarket chains, scraped nightly and shipped to a locked-down OCI box by CI.
+tags: [Builds, Cloud, Team of 5]
+cover: ../../assets/covers/cover-pricepath.png
+status: published
+meta:
+  year: 2026 · ENGR302, VUW
+  role: Scraper and deployment lead, team of five
+  stack: Playwright (Python), OCI, nginx, GitLab CI/CD
+  status: Live on HTTPS · [URL]
+card:
+  role: Scraper + deploy lead
+  stack: Playwright, OCI, nginx, CI/CD
+aside:
+  - { label: Team, value: ENGR302 · Team 8 }
+  - { label: My part, value: "Scraper, CI/CD, server" }
+  - { label: Repo, value: Private (course) }
+threats:
+  - { id: S, note: "Only the CI runner can deploy. One SSH key per environment, password login off.", status: mitigated }
+  - { id: T, note: "Scraped rows are schema-checked before they reach the database.", status: mitigated }
+  - { id: R, note: "Every scrape run logs source, start time and row count.", status: mitigated }
+  - { id: I, note: "No secrets in the repo. CI variables are masked and protected.", status: mitigated }
+  - { id: D, note: "nginx rate limits requests. One small VM is still a single point of failure.", status: accepted }
+  - { id: E, note: "Services run as unprivileged users under systemd. No root in the app.", status: mitigated }
+---
+
+{/* draft copy from the design: james to confirm every claim before publishing */}
+
+## Problem
+
+Grocery prices in New Zealand live on three websites built three different ways. Our ENGR302 team set out to build PricePath: type a shopping list, see where it's cheapest and get a route through the shop.
+
+I owned two pieces. The scraper that pulls prices in every night, and the deployment that keeps the whole thing running. The course brief was a working product. My own brief was quieter: a scraper that never gets the team blocked, and a server nobody has to babysit.
+
+## Threat model
+
+Small project, real internet. I ran STRIDE over the scraper, the API box and the pipeline, then kept one line per threat so the team would actually read it.
+
+<ThreatStrip threats={frontmatter.threats} />
+
+## Approach
+
+PAK'nSAVE and New World are both Foodstuffs sites built on Next.js. Each page already ships its data as JSON in a `__NEXT_DATA__` script tag, so the scraper reads that instead of guessing at markup. Woolworths needed real DOM scraping with Playwright locators.
+
+```py title="scraper/next_data.py" {5}
+import json
+
+# read the json the page already ships, no dom guessing
+async def read_next_data(page):
+    raw = await page.locator("script#__NEXT_DATA__").text_content()
+    return json.loads(raw)["props"]["pageProps"]
+```
+
+Runs are polite: one store at a time, with a pause between pages. Every row passes a schema check before it's written, so a store redesign shows up as a failed run, not as bad prices.
+
+<Flow steps={["Store pages", "Playwright", "Schema", "Database", "API via nginx"]} hot={1} />
+
+The app runs on a single OCI instance behind nginx, with a DuckDNS domain and HTTPS. The GitLab pipeline lints, tests and deploys on every merge to main, over SSH with a deploy-only key.
+
+## Dead ends
+
+<DeadEnds items={[
+  { tried: "Calling the stores' internal APIs directly.", why: "Undocumented, brittle and against the spirit of the sites' terms.", now: "Read only what the page already sends to any browser." },
+  { tried: "Visiting every product page.", why: "Slow, and rude to the stores.", now: "Category pages carry almost everything we need." },
+  { tried: "Running the scraper as root on the API box.", why: "One bug away from owning everything.", now: "Its own unprivileged user and systemd unit. No sudo." }
+]} />
+
+## Result
+
+PricePath runs on HTTPS behind nginx. Prices refresh nightly across all three chains, and the pipeline ships every merge to main without anyone logging in to the server.
+
+<Stats items={[
+  { value: "3", label: "Supermarket chains" },
+  { value: "[N]", label: "Products per nightly run" },
+  { value: "0", label: "Manual deploys after week [N]" }
+]} />
+
+## What I'd change
+
+- Write the threat model in week one, not halfway through.
+- Swap DuckDNS for a real domain with DNSSEC and CAA records.
+- Alert when a store changes its markup, instead of finding out from an empty table.
+- Containerise the scraper so it isn't tied to one VM.

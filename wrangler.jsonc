@@ -1,0 +1,12 @@
+// cloudflare workers static assets, no worker code
+// local: npm run build, then npm run preview serves dist with _headers applied
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jdh-portfolio",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  }
+}

@@ -1,0 +1,94 @@
+---
+import fs from 'node:fs';
+import Base from '../layouts/Base.astro';
+import Readout from '../components/Readout.astro';
+import Stats from '../components/Stats.astro';
+import Toc from '../components/Toc.astro';
+import { site } from '../config/site';
+import { parseHeaders } from '../integrations/audit.mjs';
+
+// the table reads the real _headers file, so it can't drift from what's sent
+const headers = parseHeaders(fs.readFileSync('public/_headers', 'utf8'))['/*'] ?? {};
+const why: Record<string, [string, string, string]> = {
+  'content-security-policy': ['Content-Security-Policy', 'No inline script, nothing third-party. /admin gets its own looser policy for the CMS.', 'Set'],
+  'strict-transport-security': ['Strict-Transport-Security', 'Two years, on the preload list.', 'Set'],
+  'x-content-type-options': ['X-Content-Type-Options', 'No MIME guessing.', 'Set'],
+  'referrer-policy': ['Referrer-Policy', "Outbound links don't say where you came from.", 'Set'],
+  'permissions-policy': ['Permissions-Policy', 'The site needs none of these.', 'Set'],
+  'cross-origin-opener-policy': ['Cross-Origin-Opener-Policy', 'Isolates the browsing context.', 'Set'],
+  'cross-origin-resource-policy': ['Cross-Origin-Resource-Policy', "Assets can't be embedded elsewhere.", 'Set'],
+  'x-frame-options': ['X-Frame-Options', 'Legacy backup for frame-ancestors.', 'Legacy'],
+};
+const rows = Object.entries(why).filter(([k]) => headers[k]).map(([k, [name, note, status]]) => ({ name, value: headers[k], note, status }));
+const styles = fs.readdirSync('public/styles').filter((f) => f.endsWith('.css')).length;
+
+const toc = [
+  { slug: 'stack', text: 'Stack' },
+  { slug: 'headers', text: 'Security headers' },
+  { slug: 'budget', text: 'Budget' },
+  { slug: 'changelog', text: 'Changelog' },
+];
+const stack = [
+  ['Framework', 'Astro 7, static output. No client framework.'],
+  ['Styles', `Vanilla CSS with custom properties and container queries. ${styles === 1 ? 'One stylesheet' : 'Two small stylesheets'}.`],
+  ['Content', 'MDX content collections with typed front matter for posts and case studies.'],
+  ['CMS', 'Sveltia CMS at /admin. Git-backed, so every edit is a commit.'],
+  ['Hosting', 'Cloudflare. Headers set in one file in the repo.'],
+  ['Type', 'Geist Sans, Geist Mono and Geist Pixel Square, self-hosted under the SIL Open Font License.'],
+  ['Analytics', 'None. Not even the privacy-friendly kind.'],
+];
+---
+<Base title="Colophon" description="What this site runs on, the headers it sends and what changed." scripts={['section-index']}>
+  <main class="wrap" id="main">
+    <header class="case-head">
+      <nav class="crumb label" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Colophon</span></nav>
+      <h1 class="h1">How it's <span class="px">BUILT</span></h1>
+      <p class="lead muted mw-52">What this site runs on, the headers it sends and what changed. If you spot a weak header, I'd like to know.</p>
+    </header>
+    <div class="doc doc--colophon">
+      <aside class="doc__rail"><Toc items={toc} /></aside>
+      <div class="doc__body doc__body--wide">
+        <section aria-labelledby="stack">
+          <div class="sh"><span class="sh__id"><b>01</b><span>/</span><span id="stack">Stack</span></span><span>Static, near-zero JS</span></div>
+          <dl class="hl-list kv-list">
+            {stack.map(([k, v]) => <div class="kv"><dt class="label muted">{k}</dt><dd>{v}</dd></div>)}
+            <div class="kv"><dt class="label muted">Source</dt><dd><a class="link" href={site.repo}>{site.repo.replace('https://', '')}</a></dd></div>
+          </dl>
+        </section>
+        <section class="col-section" aria-labelledby="headers">
+          <div class="sh"><span class="sh__id"><b>02</b><span>/</span><span id="headers">Security headers</span></span><span>Checked in CI on every deploy</span></div>
+          <div class="row grades">
+            <div class="grade-card"><span class="grade top">A+</span><span class="stack gap-4"><span class="label">HTTP Observatory</span><span class="micro muted">Target · scored at launch</span></span></div>
+            <div class="grade-card"><span class="grade top">A+</span><span class="stack gap-4"><span class="label">securityheaders.com</span><span class="micro muted">Target · scored at launch</span></span></div>
+          </div>
+          <div class="tbl-wrap" tabindex="0" role="region" aria-label="Security headers">
+            <table class="tbl">
+              <thead><tr><th scope="col">Header</th><th scope="col">Value</th><th scope="col">Why</th><th scope="col">Status</th></tr></thead>
+              <tbody>
+                {rows.map((r) => (
+                  <tr><td class="mono">{r.name}</td><td class="mono wide">{r.value}</td><td class="small muted">{r.note}</td><td><span class:list={['grade', { top: r.status === 'Set' }]}>{r.status}</span></td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section class="col-section" aria-labelledby="budget">
+          <div class="sh"><span class="sh__id"><b>03</b><span>/</span><span id="budget">Budget</span></span><span>The build fails if these slip</span></div>
+          <div class="audit-box">
+            <span class="readout"><span class="prompt">$ ./audit --headers --budget</span></span>
+            <Readout />
+          </div>
+          <div class="mt-24"><Stats small items={[{ value: '0', label: 'Third-party requests' }, { value: '0', label: 'Cookies set' }, { value: String(styles), label: styles === 1 ? 'Stylesheet' : 'Stylesheets' }]} /></div>
+        </section>
+        <section class="col-section" aria-labelledby="changelog">
+          <div class="sh"><span class="sh__id"><b>04</b><span>/</span><span id="changelog">Changelog</span></span><a class="link link--quiet" href={`${site.repo}/commits/main`}>All commits</a></div>
+          <ol class="rows changelog">
+            <li class="prow prow--log"><time class="prow__date label" datetime="2026-10-16">2026-10-16</time><span class="label">v0.1</span><span class="small">Signal Noir design system and page designs.</span><span class="tag">Design</span></li>
+            <li class="prow prow--log"><span class="prow__date label">[Date]</span><span class="label muted">v0.2</span><span class="small muted">Astro build, content collections, Sveltia CMS, headers in CI.</span><span class="tag tag--dashed">Planned</span></li>
+            <li class="prow prow--log"><span class="prow__date label">[Date]</span><span class="label muted">v1.0</span><span class="small muted">Launch. Replaces jamesdeh.github.io.</span><span class="tag tag--dashed">Planned</span></li>
+          </ol>
+        </section>
+      </div>
+    </div>
+  </main>
+</Base>

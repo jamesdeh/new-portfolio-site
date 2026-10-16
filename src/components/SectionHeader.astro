@@ -1,0 +1,13 @@
+---
+// "02 / WORK" over a hairline, then the h2 with one pixel word
+interface Props {
+  n: string;
+  label: string;
+  id: string;
+  lead: string;
+  pixel: string;
+}
+const { n, label, id, lead, pixel } = Astro.props;
+---
+<div class="sh"><span class="sh__id"><b>{n}</b><span>/</span><span>{label}</span></span><slot name="aside" /></div>
+<h2 class="h2 sh-title" id={id}>{lead} <span class="px">{pixel}</span></h2>

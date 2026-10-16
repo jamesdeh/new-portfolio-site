@@ -1,0 +1,16 @@
+---
+// values are checked by the audit hook at build, the js size is written in by it
+import Icon from './Icon.astro';
+const size = import.meta.env.DEV ? 'dev' : '__JS_SIZE__';
+---
+<div class="readout" aria-label="Security readout">
+  <span class="item">CSP <b>strict</b> <span class="ok"><Icon name="check" label="pass" /></span></span>
+  <span class="dot" aria-hidden="true">·</span>
+  <span class="item">HSTS <b>preload</b> <span class="ok"><Icon name="check" label="pass" /></span></span>
+  <span class="dot" aria-hidden="true">·</span>
+  <span class="item">Trackers <b>0</b></span>
+  <span class="dot" aria-hidden="true">·</span>
+  <span class="item">Cookies <b>0</b></span>
+  <span class="dot" aria-hidden="true">·</span>
+  <span class="item">JS <b>{size}</b></span>
+</div>

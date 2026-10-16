@@ -1,0 +1,85 @@
+/* signal noir motion layer, load after signal-noir.css */
+/* every rule here has a reduced-motion version at the bottom */
+
+/* ---------- m4 pixel dissolve between pages ---------- */
+@view-transition { navigation: auto; }
+
+::view-transition-old(root) { animation: none; }
+::view-transition-new(root) {
+  animation: sn-dissolve 360ms both;
+  animation-timing-function: steps(1, end);
+  -webkit-mask-size: 32px 32px;
+  mask-size: 32px 32px;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+}
+@keyframes sn-dissolve {
+  0%    { -webkit-mask-image: url(/img/masks/bayer-1.png); mask-image: url(/img/masks/bayer-1.png); }
+  12.5% { -webkit-mask-image: url(/img/masks/bayer-2.png); mask-image: url(/img/masks/bayer-2.png); }
+  25%   { -webkit-mask-image: url(/img/masks/bayer-3.png); mask-image: url(/img/masks/bayer-3.png); }
+  37.5% { -webkit-mask-image: url(/img/masks/bayer-4.png); mask-image: url(/img/masks/bayer-4.png); }
+  50%   { -webkit-mask-image: url(/img/masks/bayer-5.png); mask-image: url(/img/masks/bayer-5.png); }
+  62.5% { -webkit-mask-image: url(/img/masks/bayer-6.png); mask-image: url(/img/masks/bayer-6.png); }
+  75%   { -webkit-mask-image: url(/img/masks/bayer-7.png); mask-image: url(/img/masks/bayer-7.png); }
+  87.5% { -webkit-mask-image: url(/img/masks/bayer-8.png); mask-image: url(/img/masks/bayer-8.png); }
+  100%  { -webkit-mask-image: none; mask-image: none; }
+}
+
+/* ---------- m1 decrypt ---------- */
+/* the span is locked to its final width by decrypt.js so nothing reflows */
+.sn [data-decrypt] { display: inline-block; white-space: nowrap; }
+
+/* ---------- m3 cards tilt in ---------- */
+/* html.js is set by head.js, so without js the cards just show */
+html.js .sn .cards .card:not(.is-in) {
+  opacity: 0;
+  transform: perspective(1200px) rotateX(8deg) rotate(var(--tilt)) translateY(32px);
+  /* safety net: reveal anyway if the observer never runs */
+  animation: sn-reveal 0s 3s forwards;
+}
+.sn .cards .card.is-in:not(.is-settled) {
+  transition: transform 600ms var(--ease-out), opacity 600ms var(--ease-out), border-color var(--t-fast) linear;
+  transition-delay: calc(var(--stagger, 0) * 80ms);
+}
+@keyframes sn-reveal { to { opacity: 1; transform: rotate(var(--tilt)); } }
+
+/* ---------- m5 dithered field leans toward the pointer ---------- */
+.sn .hero__field {
+  transform: translate(var(--dx, 0px), var(--dy, 0px));
+  transition: transform 400ms var(--ease-out);
+  -webkit-mask-image: radial-gradient(120% 90% at var(--fx, 70%) var(--fy, 30%), #000 35%, transparent 80%);
+  mask-image: radial-gradient(120% 90% at var(--fx, 70%) var(--fy, 30%), #000 35%, transparent 80%);
+}
+
+/* ---------- mobile menu sheet ---------- */
+.sn .menu-sheet { border-bottom: 1px solid var(--line); background: var(--bg); }
+.sn .menu-sheet:not([hidden]) { animation: sn-drop 200ms var(--ease-out) both; }
+@keyframes sn-drop { from { opacity: 0; transform: translateY(-8px); } }
+
+/* ---------- command palette ---------- */
+.sn dialog.cmdk-dialog { padding: 0; border: 0; background: transparent; color: inherit; max-width: 640px; width: calc(100% - 32px); margin: 12vh auto 0; }
+.sn dialog.cmdk-dialog::backdrop { background: rgba(5, 5, 5, 0.72); }
+.sn dialog.cmdk-dialog[open] { animation: sn-pop 160ms var(--ease-out) both; }
+@keyframes sn-pop { from { opacity: 0; transform: translateY(-8px); } }
+
+/* ---------- toast ---------- */
+.sn .toast-host { position: fixed; left: var(--s-4); bottom: var(--s-4); z-index: 95; display: flex; flex-direction: column; gap: var(--s-2); }
+.sn .toast-host .toast { animation: sn-rise 200ms var(--ease-out) both; }
+.sn .toast-host .toast.is-leaving { animation: sn-fall 120ms linear both; }
+@keyframes sn-rise { from { opacity: 0; transform: translateY(8px); } }
+@keyframes sn-fall { to { opacity: 0; transform: translateY(4px); } }
+
+/* ---------- paper toggle: style from aria-pressed, swap is instant ---------- */
+.sn .toggle[aria-pressed="false"] .t-noir,
+.sn .toggle[aria-pressed="true"] .t-paper { background: var(--text); color: var(--bg); }
+
+/* ---------- reduced motion: static or instant ---------- */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-new(root), ::view-transition-old(root) { animation: none; }
+  html.js .sn .cards .card:not(.is-in) { opacity: 1; transform: rotate(var(--tilt)); animation: none; }
+  .sn .hero__field { transform: none; transition: none; }
+  .sn .menu-sheet:not([hidden]),
+  .sn dialog.cmdk-dialog[open],
+  .sn .toast-host .toast,
+  .sn .toast-host .toast.is-leaving { animation: none; }
+}

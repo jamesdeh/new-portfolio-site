@@ -1,0 +1,179 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import PixelProgress from '../components/PixelProgress.astro';
+import CaseCard from '../components/CaseCard.astro';
+import PostCard from '../components/PostCard.astro';
+import SeriesFeature from '../components/SeriesFeature.astro';
+import HandNote from '../components/HandNote.astro';
+import { site, pgpGroups } from '../config/site';
+import { phaseInfo, pad2 } from '../lib/phase';
+import { getPosts, getWork } from '../lib/content';
+
+const { phase, week, monthLong } = phaseInfo();
+const work = await getWork();
+const posts = (await getPosts()).slice(0, 3);
+const fpr = pgpGroups(site.pgpFingerprint);
+const fprShort = `${fpr.slice(0, 2).join(' ')} … ${fpr.slice(-2).join(' ')}`;
+
+const now = {
+  before: {
+    route: ['Still in Wellington', 'Flying out in November'],
+    bar: 'Starts Nov',
+    lines: [
+      'Finishing third year of cybersecurity engineering at VUW.',
+      'Getting ready for Sydney. The Security Engineering internship at Atlassian starts in November.',
+      'Working on Red Specter with a friend, and getting the Log ready for the internship series.',
+    ],
+  },
+  during: {
+    route: ['UTC+13 → UTC+11', 'Back in Wellington late January'],
+    bar: `W${pad2(week)}/12`,
+    lines: [
+      `Week ${['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'][week - 1]} of twelve as a Security Engineering intern at Atlassian in Sydney.`,
+      "Writing one Log post a week about what I'm learning. Public knowledge only, views my own.",
+      'Chipping away at Red Specter with a friend, from across the Tasman.',
+    ],
+  },
+  // [PLACEHOLDER] post-internship lines, james to write
+  after: {
+    route: ['Back in Wellington', '12 weeks done'],
+    bar: '12/12',
+    lines: ['[NOW LINE 1: after the internship]', '[NOW LINE 2]', '[NOW LINE 3]'],
+  },
+}[phase];
+const barLabel = phase === 'before' ? `Series progress, starts ${monthLong}` : `Series progress, ${week} of 12 weeks`;
+
+const kit = [
+  { icon: 'sdr', name: 'HackRF One', cap: 'Software-defined radio, 1 MHz to 6 GHz. Mostly for learning how my own remotes talk.' },
+  { icon: 'usb', name: 'USB Rubber Ducky', cap: 'Keystroke injection. The fastest way to show why an unlocked laptop is a problem.' },
+  { icon: 'wifi', name: 'Wi-Fi Pineapple', cap: "Wireless auditing on my own network, and on client networks when it's in scope." },
+  { icon: 'drone', name: 'FPV drone', cap: 'Built it, crashed it, rebuilt it. Soldering practice that flies.' },
+  { icon: 'server', name: 'Home lab server', cap: 'Where things get broken on purpose. [SPEC: CPU, RAM, hypervisor]' },
+] as const;
+---
+<Base scripts={['decrypt', 'section-index', 'card-tilt', 'field']}>
+  <div class="wrap with-rail" id="main">
+    <aside class="rail rail--home">
+      <nav aria-label="On this page">
+        <ul class="idx">
+          <li class="idx__marker" aria-hidden="true"></li>
+          <li><a href="#intro" aria-current="true"><span class="n">00</span>Intro</a></li>
+          <li><a href="#now"><span class="n">01</span>Now</a></li>
+          <li><a href="#work"><span class="n">02</span>Work</a></li>
+          <li><a href="#log"><span class="n">03</span>Log</a></li>
+          <li><a href="#lab"><span class="n">04</span>Lab</a></li>
+          <li><a href="#about"><span class="n">05</span>About</a></li>
+          <li><a href="#contact"><span class="n">06</span>Contact</a></li>
+        </ul>
+      </nav>
+      <div class="rail__foot micro muted"><span>⌘K · search</span><span>No cookies here</span></div>
+    </aside>
+
+    <main class="main">
+      <section class="hero" id="intro" aria-labelledby="intro-h">
+        <div class="hero__field" aria-hidden="true"></div>
+        <div class="hero__kicker label"><span>00 / Intro</span><span>Cybersecurity engineering · VUW</span><span>Wellington, NZ</span></div>
+        <h1 class="hero__title" id="intro-h" aria-label="James de Hair">
+          <span class="g">James</span>
+          <span class="px"><span data-decrypt>DE HAIR</span><span class="acc">.</span></span>
+        </h1>
+        <p class="hero__sub">Third-year cybersecurity engineering student at VUW. <b>Security Engineering intern at Atlassian, Sydney, from November 2026.</b> Breaking things so they ship safer.</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="/log/">Read the Log<Icon name="arrow" /></a>
+          <a class="btn btn--secondary" href="#work">See the work</a>
+        </div>
+        <dl class="hero__foot micro">
+          <div class="stack gap-4"><dt>Study</dt><dd>VUW · year 3</dd></div>
+          <div class="stack gap-4"><dt>Next</dt><dd>Atlassian · SYD</dd></div>
+          <div class="stack gap-4"><dt>NZCSC 2026</dt><dd>Top 10 uni</dd></div>
+          <div class="stack gap-4"><dt>Side project</dt><dd>Red Specter</dd></div>
+          <div class="stack gap-4"><dt>Keys</dt><dd>PGP in footer</dd></div>
+        </dl>
+      </section>
+
+      <section class="section" id="now" aria-labelledby="now-h">
+        <SectionHeader n="01" label="Now" id="now-h" lead="Right" pixel="NOW"><span slot="aside">Updated {site.nowUpdated}</span></SectionHeader>
+        <div class="now">
+          <div class="now__route">
+            <div class="route" role="img" aria-label="Wellington to Sydney"><span>WLG</span><span class="route__line" aria-hidden="true"></span><span>SYD</span></div>
+            <div class="stack micro muted gap-6">{now.route.map((r) => <span>{r}</span>)}</div>
+            <div class="stack gap-8 mt-8">
+              <div class="row micro between"><span>Internship</span><span class="muted">{now.bar}</span></div>
+              <PixelProgress value={week} current={phase === 'during'} label={barLabel} />
+            </div>
+          </div>
+          <ol class="now__list">
+            {now.lines.map((l, i) => <li><span class="n micro">{pad2(i + 1)}</span><span>{l}</span></li>)}
+          </ol>
+        </div>
+      </section>
+
+      <section class="section" id="work" aria-labelledby="work-h">
+        <SectionHeader n="02" label="Work" id="work-h" lead="Selected" pixel="WORK"><span slot="aside">{work.length} projects</span></SectionHeader>
+        <div class="cards">
+          {work.map((w, i) => <CaseCard work={w} n={i + 1} />)}
+        </div>
+      </section>
+
+      <section class="section" id="log" aria-labelledby="log-h">
+        <SectionHeader n="03" label="Log" id="log-h" lead="From the" pixel="LOG"><a slot="aside" class="link link--quiet" href="/rss.xml">RSS</a></SectionHeader>
+        <SeriesFeature variant="home" />
+        {posts.length > 0 ? (
+          <div class="pcards">{posts.map((p) => <PostCard post={p} />)}</div>
+        ) : (
+          <p class="body muted">First posts are on the way.</p>
+        )}
+        <div class="row mt-32"><a class="btn btn--secondary" href="/log/">All posts<Icon name="arrow" /></a></div>
+      </section>
+
+      <section class="section" id="lab" aria-labelledby="lab-h">
+        <SectionHeader n="04" label="Lab" id="lab-h" lead="In the" pixel="LAB"><span slot="aside">{kit.length} items</span></SectionHeader>
+        <ul class="kit">
+          {kit.map((k) => (
+            <li class="kit__item">
+              <Icon name={k.icon} class="kit__icon" />
+              <span class="kit__name">{k.name}</span>
+              <span class="kit__cap">{k.cap}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="kit__note micro"><span class="sq" aria-hidden="true"></span>Everything here is used on my own hardware, or with written permission and a scope.</p>
+      </section>
+
+      <section class="section" id="about" aria-labelledby="about-h">
+        <SectionHeader n="05" label="About" id="about-h" lead="The short" pixel="VERSION."><span slot="aside">Kia ora</span></SectionHeader>
+        <div class="about">
+          <figure class="about__fig">
+            <div class="frame"><img src="/img/portrait.png" alt="Portrait of James, 1-bit dithered" width="480" height="600" loading="lazy" decoding="async" /></div>
+            <figcaption class="micro">Fig. 01 · 1-bit portrait, Atkinson dither · placeholder</figcaption>
+            <HandNote />
+          </figure>
+          <div class="about__text">
+            <p class="lead about__lead">I'm a third-year cybersecurity engineering student at Te Herenga Waka, Victoria University of Wellington.</p>
+            <p class="body muted">I like the unglamorous end of security: reading configs, writing threat models and fixing the boring thing before it turns into the interesting thing. Outside class I play CTFs, break my own hardware in a home lab and work on Red Specter, a pen-testing idea for small businesses, with a friend.</p>
+            <p class="body muted">I'm still a student, so most of what's here is learning in public. Where I got something wrong, I've left it in.</p>
+            <ul class="hl-list">
+              <li><span class="k micro">2026</span><span>Security Engineering intern, Atlassian, Sydney</span></li>
+              <li><span class="k micro">NZCSC 2026</span><span>Top 10 university students, top 30 overall</span></li>
+              <li><span class="k micro">Award</span><span>Graham Kelly Engineering and Computer Science Scholarship, VUW</span></li>
+              <li><span class="k micro">Building</span><span>Red Specter, an early-stage idea with a friend</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contact" aria-labelledby="contact-h">
+        <SectionHeader n="06" label="Contact" id="contact-h" lead="Say" pixel="HELLO."><span slot="aside">Plain email, no forms</span></SectionHeader>
+        <a class="contact__mail" href={`mailto:${site.email}`}>{site.email}</a>
+        <div class="contact__grid">
+          <div><span class="label">PGP key</span><a class="small" href="/pgp.asc"><Icon name="key" />/pgp.asc</a><span class="fpr muted fpr--sm">{fprShort}</span></div>
+          <div><span class="label">GitHub</span><a class="small" href={site.github}>{site.githubLabel}<Icon name="ext" /></a></div>
+          <div><span class="label">LinkedIn</span>{site.linkedin ? <a class="small" href={site.linkedin}>{site.linkedinLabel}<Icon name="ext" /></a> : <span class="small muted">{site.linkedinLabel}</span>}</div>
+          <div><span class="label">Response</span><span class="small">Usually within two working days. NZT, or AEDT from November.</span></div>
+        </div>
+      </section>
+    </main>
+  </div>
+</Base>

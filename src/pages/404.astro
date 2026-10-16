@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+---
+<Base title="404 · Access denied" noindex>
+  <main class="wrap nf" id="main">
+    <div class="classif"><span class="lvl">Classification: restricted</span><span class="dot" aria-hidden="true">·</span><span>HTTP 404</span><span class="dot" aria-hidden="true">·</span><span>This page doesn't exist, or never did</span></div>
+    <h1 class="nf__title" aria-label="Access denied, 404">
+      <span class="px">ACCESS DENIED</span>
+      <span class="px"><span class="acc">/</span> 404</span>
+    </h1>
+    <div class="nf__grid">
+      <figure class="code">
+        <div class="code__bar"><span class="code__tab">tty1 <span class="lang">sh</span></span></div>
+<pre aria-label="Terminal" tabindex="0"><code><span class="muted">$</span> cat /flag.txt
+cat: /flag.txt: Permission denied
+<span class="muted">$</span> ls -a /
+.  ..  .well-known  log  work  robots.txt
+<span class="muted">$</span> <span class="cmdk__caret" aria-hidden="true"></span>
+<span class="c"># hint: robots know more than they say</span></code></pre>
+      </figure>
+      <div class="stack gap-24">
+        <p class="lead">Wrong turn, old link or curiosity. All three are fine.</p>
+        <p class="body muted">If you followed a link from somewhere on this site, tell me and I'll fix it. If you're poking around on purpose, there is a flag. It's harmless and it's yours if you find it.</p>
+        <div class="row gap-12">
+          <a class="btn btn--primary" href="/">Back home<Icon name="arrow" /></a>
+          <a class="btn btn--secondary" href="/log/">Read the Log</a>
+        </div>
+        <span class="micro muted">Or press ⌘K and type where you meant to go</span>
+      </div>
+    </div>
+  </main>
+</Base>

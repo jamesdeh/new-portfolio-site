@@ -1,0 +1,80 @@
+---
+title: CTF writeups
+pixelWord: CTF
+order: 2
+year: Ongoing
+role: Player
+stack: [NZCSC, Hack The Box]
+outcome: "NZCSC 2026: top 10 among university students, top 30 overall. Writeups for retired boxes only, dead ends left in."
+tags: [Writeups, Offence]
+cover: ../../assets/covers/cover-ctf.png
+status: pending
+meta:
+  year: 2026 · NZCSC
+  role: Player
+  stack: Python, curl, static reversing
+  status: Draft · 8 NZCSC writeups
+aside:
+  - { label: Event, value: NZCSC 2026 }
+  - { label: Result, value: "Top 10 uni, top 30 overall" }
+  - { label: Writeups, value: "8 challenges" }
+---
+
+{/* draft built from C:\Users\yolob\Downloads\nzcsc2026\WRITEUP.md, nothing added that isn't in those notes */}
+{/* before publishing: check the nzcsc rules allow posting solutions and flags after the event */}
+{/* hack the box: only retired machines, none written up yet */}
+
+## The result
+
+NZCSC 2026: top 10 among university students and top 30 overall.
+
+These are short versions of my writeups, one per challenge. The dead ends stay in, because that's where most of the time went.
+
+<Callout type="warn">
+Flags below are from a finished event and were found against the competition's own challenges. [PLACEHOLDER: confirm the NZCSC rules allow publishing solutions.]
+</Callout>
+
+## Writeups
+
+### 03 · Core Log · data analysis
+
+A reactor console with 1000 sensor readings behind a locked-down API. No injection to find: the field was whitelisted and offsets were clamped. The signal was in the data. Core temp dipped far below its baseline every ~38 rows, and each dip was a printable ASCII value. Decoded, they spell `NZCSC{B4S3LIN3_D3V1AT10N}`.
+
+### 07 · Checksum Based Key · crypto
+
+A custom CBC variant over an encrypted PNG, where block one mixes in `MD5(last block)` and `MD5(key)`. Because it's a PNG, the first and last blocks are fully known: the header, and the 12-byte IEND chunk plus padding. My first guess, that the AES key was `MD5(password)`, failed the last-block check. The key was the raw 16-byte password, which rockyou found. `NZCSC{TH3_B3G1NN1NG_0F_TH3_IEND}`
+
+### 09 · Private JWT Resolver · web
+
+Two bugs chained. The token header carried its own public key, and the server trusted it, so I could sign my own tokens. Private claims were then rendered through Jinja2, which gave code execution through `sys.modules.os`. `NZCSC{D0UBL3_BUG_D0UBL3_FUN}`
+
+### 10 · Is this the real Jeff Bezos? · OSINT
+
+A fake Bezos scam email where SPF, DKIM and DMARC all pass, because they authenticate the scammer's own freshly registered domain. The DMARC report address pointed at a mailbox name that matched a public GitLab account, which led to the campaign's templates. The flag rotates and comes from the group's mail autoresponder, so I left that last step as a manual one.
+
+### 11 · Salted Collision · web
+
+PHP loose comparison with a secret prepended to my salt. The custom hash leaked the secret's byte-sum, so I could steer it to `0e12`. Then I brute-forced a salt where the MD5 and SHA-1 prefixes were also `0e` plus digits, so all three compare equal to zero. `NZCSC{s41t3d_c0ll1s1on_type_jugg1ing_and_h4sh_extens1on}`
+
+### 13 · No More SQL Injection · web
+
+No SQL, so MongoDB instead. `{"$ne": "x"}` as the password bypassed the login, and `$regex` pulled the admin password out one character at a time. `NZCSC{n0sq1_1nj3cti0n5_t0_s33_here}`
+
+### 17 · Network Checker · web
+
+Command injection inside double quotes, with `$(...)` still expanding. No output and no way out of the container, so success and failed became a one-bit oracle, and the flag came out one character at a time. `NZCSC{d1d_y0u_d0_1t_b1ind_0r_f1nd_4_l34k}`
+
+### 19 · Matryoshka · reversing
+
+A PowerShell loader, process hollowing into notepad and three more layers of shellcode. Running it fails on purpose, and dumping strings finds a planted decoy flag. Peeling every layer statically showed the final check XORs the input against eight constants, and those constants are the flag. `NZCSC{D1D_Y0U_L1KE_TH3_L4Y3R555}`
+
+## How I write these up
+
+- Only challenges from finished events, and only retired Hack The Box machines.
+- The dead ends stay in.
+- No credentials, tokens, private IPs or other teams' names.
+- Solve scripts are trimmed to the part that matters.
+
+## What I'd change
+
+[PLACEHOLDER: James to write. What would you do differently next NZCSC?]

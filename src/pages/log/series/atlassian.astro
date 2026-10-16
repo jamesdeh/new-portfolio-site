@@ -1,0 +1,79 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Callout from '../../../components/Callout.astro';
+import PixelProgress from '../../../components/PixelProgress.astro';
+import { getPosts, seriesPosts, readingMinutes, isoDate, shortTitle } from '../../../lib/content';
+import { phaseInfo, pad2, dueDate } from '../../../lib/phase';
+
+const { phase, week, monthLong } = phaseInfo();
+const series = seriesPosts(await getPosts());
+const latestWeek = series.at(-1)?.data.series!.week ?? 0;
+const published = series.length;
+const label = published ? `Series progress, ${published} of 12 weeks` : `Series progress, starts ${monthLong}`;
+// the next unwritten week gets the dashed "writing now" frame
+const nextWeek = phase === 'after' ? 0 : Math.max(latestWeek + 1, phase === 'during' ? week : 1);
+
+const cells = Array.from({ length: 12 }, (_, i) => {
+  const w = i + 1;
+  const post = series.find((p) => p.data.series!.week === w);
+  return { w, post };
+});
+---
+<Base title="Twelve weeks · Atlassian series" description="One Log post a week from James's Security Engineering internship at Atlassian in Sydney." current="log">
+  <main class="wrap" id="main">
+    <header class="case-head">
+      <nav class="crumb label" aria-label="Breadcrumb"><a href="/log/">Log</a><span aria-hidden="true">/</span><span aria-current="page">Atlassian series</span></nav>
+      <span class="label muted">Series · Security Engineering internship · Atlassian, Sydney</span>
+      <h1 class="h1">Twelve <span class="px">WEEKS</span></h1>
+      <div class="series-head">
+        <p class="lead muted mw-50">One post a week from November 2026 to the end of January 2027. What I'm learning, what surprised me and what I'd tell the next intern. Public knowledge only, views my own.</p>
+        <div class="stack gap-12">
+          <div class="row between baseline"><span class="series__count">{pad2(published)}<span class="of">/12</span></span><a class="link label" href="/log/series/atlassian/rss.xml">Series RSS</a></div>
+          <PixelProgress value={published} current={phase === 'during' && published > 0} size="lg" label={label} />
+        </div>
+      </div>
+    </header>
+    <div class="grid series-grid">
+      <div class="col-main">
+        <ol class="weeks" aria-label="Weeks one to twelve">
+          {cells.map(({ w, post }) => {
+            const no = `W${pad2(w)}`;
+            if (post) {
+              const isLatest = post.data.series!.week === latestWeek;
+              return (
+                <li><a class="week" href={`/log/${post.id}/`} aria-current={isLatest ? 'true' : undefined}>
+                  <span class="week__k micro"><span>{isoDate(post.data.date)}</span>{isLatest ? <span class="acc">Latest</span> : <span>{readingMinutes(post.body)} min</span>}</span>
+                  <span class="week__no">{no}</span><span class="week__t">{shortTitle(post)}</span>
+                </a></li>
+              );
+            }
+            const isNext = w === nextWeek;
+            const k = isNext ? (published === 0 && phase === 'before' ? ['First up', monthLong] : ['Writing now', `Due ${dueDate(w).slice(5)}`]) : [`Week ${w}`, w === 12 ? 'Wrap-up' : ''];
+            return (
+              <li><div class:list={['week week--pending', { 'week--next': isNext }]}>
+                <span class="week__k micro"><span>{k[0]}</span><span>{k[1]}</span></span>
+                <span class="week__no">{no}</span><span class="pend">PENDING</span>
+              </div></li>
+            );
+          })}
+        </ol>
+        <div class="series-foot">
+          <Callout type="note"><p>Nothing here is internal or under NDA. If a week has nothing I can share, the post says so and talks about what I learned in general terms.</p></Callout>
+          <div class="follow">
+            <span class="label muted">Follow along</span>
+            <p class="small">New weeks land in the main Log feed and in a series-only feed.</p>
+            <div class="row gap-10"><a class="btn btn--secondary btn--sm" href="/log/series/atlassian/rss.xml">Series RSS</a><a class="btn btn--ghost btn--sm" href="/log/">Whole Log</a></div>
+          </div>
+        </div>
+      </div>
+      <aside class="rail rail--series">
+        <span class="label muted">Legend</span>
+        <ul class="legend micro muted">
+          <li><span class="sw sw--on" aria-hidden="true"></span>Published</li>
+          <li><span class="sw sw--next" aria-hidden="true"></span>Writing now</li>
+          <li><span class="sw sw--pending" aria-hidden="true"></span>Pending</li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+</Base>

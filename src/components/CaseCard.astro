@@ -1,0 +1,29 @@
+---
+import Icon from './Icon.astro';
+import { hasPage, type Work } from '../lib/content';
+interface Props {
+  work: Work;
+  n: number;
+}
+const { work, n } = Astro.props;
+const d = work.data;
+const pending = d.status === 'pending';
+const linked = hasPage(work);
+const role = d.card?.role ?? d.role;
+const stack = d.card?.stack ?? d.stack.join(', ');
+---
+<article class:list={['card', { 'is-disabled': pending && !linked }]}>
+  <div class="card__media"><img src={d.cover.src} alt="" width={d.cover.width} height={d.cover.height} loading="lazy" decoding="async" /><span class="card__no micro">{String(n).padStart(2, '0')}</span></div>
+  <div class="card__body">
+    <div class="card__meta micro"><b>{d.year}</b><span>·</span><span>{role}</span><span>·</span><span>{stack}</span></div>
+    <h3 class="card__title">{linked ? <a href={`/work/${work.id}/`}>{d.title}</a> : d.title}</h3>
+    <p class="card__outcome">{d.outcome}</p>
+    <div class="card__foot">
+      <div class="tags">
+        {d.tags.map((t) => <span class="tag">{t}</span>)}
+        {pending && <span class="tag tag--dashed">{linked ? 'Draft' : 'Write-up in progress'}</span>}
+      </div>
+      {linked && <span class="card__go" aria-hidden="true"><Icon name="arrow" /></span>}
+    </div>
+  </div>
+</article>

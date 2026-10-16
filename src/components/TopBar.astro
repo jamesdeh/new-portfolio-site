@@ -1,0 +1,37 @@
+---
+import Icon from './Icon.astro';
+import StatusPill from './StatusPill.astro';
+
+interface Props {
+  current?: 'work' | 'log' | 'about' | 'contact';
+}
+const { current } = Astro.props;
+const links = [
+  { id: 'work', href: '/#work', label: 'Work' },
+  { id: 'log', href: '/log/', label: 'Log' },
+  { id: 'about', href: '/#about', label: 'About' },
+  { id: 'contact', href: '/#contact', label: 'Contact' },
+] as const;
+---
+<header class="topbar">
+  <div class="wrap topbar__in">
+    <div class="topbar__left">
+      <a class="brand" href="/" aria-label="James de Hair, home"><span class="monogram">JDH</span><span class="label">James de Hair</span></a>
+    </div>
+    <nav class="nav" aria-label="Primary">
+      {links.map((l) => <a href={l.href} aria-current={current === l.id ? 'page' : undefined}>{l.label}</a>)}
+    </nav>
+    <div class="topbar__right">
+      <StatusPill />
+      <a class="kbd" href="/log/" data-cmdk-open aria-label="Open command palette"><Icon name="search" /><span class="txt">Search</span><kbd>⌘K</kbd></a>
+      <button class="btn btn--secondary btn--icon menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu-sheet"><Icon name="menu" /></button>
+    </div>
+  </div>
+  <div class="menu-sheet" id="menu-sheet" hidden>
+    <nav class="wrap menu-sheet__in" aria-label="Menu">
+      {links.map((l) => <a class="navlink" href={l.href} aria-current={current === l.id ? 'page' : undefined}>{l.label}</a>)}
+      <a class="navlink" href="/colophon/">Colophon</a>
+      <a class="navlink" href="/log/" data-cmdk-open><Icon name="search" />Search</a>
+    </nav>
+  </div>
+</header>

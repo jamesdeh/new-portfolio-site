@@ -1,0 +1,54 @@
+---
+import TopBar from '../components/TopBar.astro';
+import Footer from '../components/Footer.astro';
+import CommandPalette from '../components/CommandPalette.astro';
+import { site } from '../config/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  current?: 'work' | 'log' | 'about' | 'contact';
+  // extra scripts from public/scripts, loaded with defer
+  scripts?: string[];
+  noindex?: boolean;
+}
+
+const { title, description = site.description, current, scripts = [], noindex = false } = Astro.props;
+const fullTitle = title ? `${title} · James de Hair` : site.title;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const shared = ['toast', 'status', 'menu', 'command-palette'];
+---
+<!doctype html>
+<html lang="en-NZ" data-accent={site.accent}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0A0A0A" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title="The Log" href="/rss.xml" />
+    <link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/GeistPixel-Square.woff2" as="font" type="font/woff2" crossorigin />
+    <script is:inline src="/scripts/head.js"></script>
+    <link rel="stylesheet" href="/styles/signal-noir.css" />
+    <link rel="stylesheet" href="/styles/motion.css" />
+  </head>
+  <body>
+    <div class="sn" data-accent={site.accent} id="top">
+      <a class="skip" href="#main">Skip to content</a>
+      <TopBar current={current} />
+      <slot />
+      <Footer />
+      <CommandPalette />
+    </div>
+    {[...shared, ...scripts].map((s) => <script is:inline src={`/scripts/${s}.js`} defer></script>)}
+  </body>
+</html>

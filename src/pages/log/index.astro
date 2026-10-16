@@ -1,0 +1,72 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import PostRow from '../../components/PostRow.astro';
+import SeriesFeature from '../../components/SeriesFeature.astro';
+import { getPosts, seriesPosts } from '../../lib/content';
+
+const posts = await getPosts();
+const latest = seriesPosts(posts).at(-1);
+const tags = ['Internship', 'Writeups', 'Builds', 'Notes'] as const;
+const count = (t: string) => posts.filter((p) => p.data.tags.includes(t as never)).length;
+const years = [...new Set(posts.map((p) => p.data.date.getUTCFullYear()))].sort((a, b) => b - a);
+const plural = (n: number) => (n === 1 ? '1 post' : `${n} posts`);
+---
+<Base title="The Log" description="Internship posts, CTF writeups, builds and short notes from James de Hair." current="log" scripts={['log-filter', 'section-index']}>
+  <main class="wrap" id="main">
+    <header class="case-head">
+      <nav class="crumb label" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Log</span></nav>
+      <h1 class="h1">The <span class="px">LOG</span></h1>
+      <div class="row head-row">
+        <p class="lead muted mw-52">Internship posts, CTF writeups, builds and short notes. Written as I learn, kept public, nothing internal.</p>
+        <a class="btn btn--secondary btn--sm" href="/rss.xml"><Icon name="rss" />RSS feed</a>
+      </div>
+    </header>
+    <div class="grid log-grid">
+      <div class="col-main">
+        <SeriesFeature variant="log" latest={latest} />
+        <div class="row log-tools">
+          <div class="stack gap-10">
+            <span class="label muted" id="filter-k">Filter by tag</span>
+            <div class="tags" role="group" aria-labelledby="filter-k">
+              <button class="tag tag--filter" type="button" aria-pressed="true" data-filter="all">All <span class="count">{posts.length}</span></button>
+              {tags.map((t) => {
+                const n = count(t);
+                return <button class="tag tag--filter" type="button" aria-pressed="false" data-filter={t} disabled={n === 0}>{t} <span class="count">{n}</span></button>;
+              })}
+            </div>
+          </div>
+          <div class="field log-search">
+            <label for="log-q">Search the Log</label>
+            <div class="input-wrap"><span class="pre" aria-hidden="true">&gt;</span><input class="input" id="log-q" type="search" placeholder="grep posts" autocomplete="off" /></div>
+          </div>
+        </div>
+        <p class="micro muted log-count" aria-live="polite" data-log-count>{plural(posts.length)}</p>
+        {years.map((y) => (
+          <div class="rows" id={`y${y}`}>
+            {posts.filter((p) => p.data.date.getUTCFullYear() === y).map((p) => <PostRow post={p} />)}
+          </div>
+        ))}
+        {posts.length > 0 ? (
+          <div class="log-empty" data-log-empty hidden>
+            <p class="label" data-log-empty-q>grep: no posts match that search</p>
+            <p class="small muted">Try a tag instead, or clear the search.</p>
+          </div>
+        ) : (
+          <div class="log-empty">
+            <p class="label">ls: no posts yet</p>
+            <p class="small muted">The first ones are being written. The RSS feed will pick them up.</p>
+          </div>
+        )}
+      </div>
+      <aside class="stack rail rail--log">
+        <span class="label muted">Archive</span>
+        <ul class="idx">
+          <li class="idx__marker" aria-hidden="true"></li>
+          {years.map((y, i) => <li><a href={`#y${y}`} aria-current={i === 0 ? 'true' : undefined}><span class="n">{String(posts.filter((p) => p.data.date.getUTCFullYear() === y).length).padStart(2, '0')}</span>{y}</a></li>)}
+        </ul>
+        <span class="micro muted">One row per post. Years group as the Log grows.</span>
+      </aside>
+    </div>
+  </main>
+</Base>
