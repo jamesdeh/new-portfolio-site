@@ -7,8 +7,8 @@ import { rehypeCodeFigure, rehypeFootnotes } from './src/plugins/rehype-signal.m
 import audit from './src/integrations/audit.mjs';
 import { flag } from './src/config/flag.mjs';
 
-// no domain yet: .invalid is reserved, so nothing real gets linked by mistake
-const site = process.env.SITE_URL || 'https://domain.invalid';
+// live on workers.dev until the custom domain is set up, then change this or set SITE_URL
+const site = process.env.SITE_URL || 'https://portfolio-site.yoloburgur123.workers.dev';
 
 export default defineConfig({
   site,
