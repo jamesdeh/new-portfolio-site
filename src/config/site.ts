@@ -7,9 +7,10 @@ export const site = {
   title: 'James de Hair · Cybersecurity engineering student',
   description:
     'Third-year cybersecurity engineering student at VUW. Security Engineering intern at Atlassian, Sydney, from November 2026.',
-  // [PLACEHOLDER] no domain yet, swap both when it's bought
+  // [PLACEHOLDER] site domain not connected yet, the site runs on workers.dev for now
   domain: '[domain]',
-  email: 'james@[domain]',
+  // confirmed by james on 2026-10-30
+  email: 'james@castellan.co.nz',
   accent: 'red',
   github: 'https://github.com/jamesdeh',
   githubLabel: 'github.com/jamesdeh',

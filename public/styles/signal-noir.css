@@ -1152,3 +1152,5 @@ html[data-os="mac"] .sn .k-mac { display: inline; }
 }
 /* cv bullets sit inside .hl-list, so undo its row grid */
 .sn .cv .cv-points li { display: block; border: 0; padding: 0 0 0 1.2em; }
+/* the big contact address breaks after the @ (a <wbr> in the markup), not mid-domain */
+.sn .contact__mail { overflow-wrap: break-word; }
