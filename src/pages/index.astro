@@ -171,7 +171,7 @@ const kit = [
 
       <section class="section" id="contact" aria-labelledby="contact-h">
         <SectionHeader n="06" label="Contact" id="contact-h" lead="Say" pixel="HELLO."><span slot="aside">Plain email, no forms</span></SectionHeader>
-        <a class="contact__mail" href={`mailto:${site.email}`}>{site.email}</a>
+        <a class="contact__mail" href={`mailto:${site.email}`}>{site.email.split('@')[0]}@<wbr />{site.email.split('@')[1]}</a>
         <div class="contact__grid">
           <div><span class="label">PGP key</span><a class="small" href="/pgp.asc"><Icon name="key" />/pgp.asc</a><span class="fpr muted fpr--sm">{fprShort}</span></div>
           <div><span class="label">GitHub</span><a class="small" href={site.github}>{site.githubLabel}<Icon name="ext" /></a></div>
