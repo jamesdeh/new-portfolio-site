@@ -12,10 +12,27 @@
   let index = null;
   let results = [];
   let active = 0;
+  let failed = false;
+
+  const status = (text) => {
+    const p = document.createElement('p');
+    p.className = 'cmdk__status micro';
+    p.textContent = text;
+    list.replaceChildren(p);
+  };
 
   const load = async () => {
     if (index) return;
-    try { index = await (await fetch('/search.json')).json(); } catch (e) { index = []; }
+    status('Loading index…');
+    try {
+      const res = await fetch('/search.json');
+      if (!res.ok) throw new Error(res.status);
+      index = await res.json();
+      failed = false;
+    } catch (e) {
+      // leave index empty so the next open tries again
+      failed = true;
+    }
   };
 
   const mark = (text, q) => {
@@ -45,6 +62,11 @@
   };
 
   const render = (q) => {
+    if (!index) {
+      status(failed ? 'Index didn’t load. Close and try again' : 'Loading index…');
+      if (count) count.textContent = '';
+      return;
+    }
     const query = q.trim().toLowerCase();
     results = index
       .filter((r) => !query || r.title.toLowerCase().includes(query) || (r.text || '').toLowerCase().includes(query))
