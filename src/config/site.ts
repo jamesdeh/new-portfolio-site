@@ -17,8 +17,8 @@ export const site = {
   repo: 'https://github.com/jamesdeh/new-portfolio-site',
   linkedin: 'https://www.linkedin.com/in/jamesdehair/',
   linkedinLabel: 'linkedin.com/in/jamesdehair',
-  // [PLACEHOLDER] 40 hex chars, grouped in fours
-  pgpFingerprint: '',
+  // ed25519 key for james@castellan.co.nz, made 2026-11-16, expires 2028-11-15
+  pgpFingerprint: '4EBE4ADB0377B76FD9E3AB825519326995D24E6F',
   // confirmed by james on 2026-10-16
   internship: {
     start: '2026-11-23',
