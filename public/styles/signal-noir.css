@@ -1154,3 +1154,13 @@ html[data-os="mac"] .sn .k-mac { display: inline; }
 .sn .cv .cv-points li { display: block; border: 0; padding: 0 0 0 1.2em; }
 /* the big contact address breaks after the @ (a <wbr> in the markup), not mid-domain */
 .sn .contact__mail { overflow-wrap: break-word; }
+
+/* ---------- polish pass ---------- */
+/* the shortcut stays on one line when the top bar is tight */
+.sn .kbd { white-space: nowrap; }
+/* titles wrap into even lines, no one-word last line */
+.sn .card__title, .sn .prow__title a, .sn .week__t, .sn .pn a .t, .sn .kit__name,
+.sn .prose h2, .sn .prose h3, .sn .footer__sign .bye, .sn .series__h { text-wrap: balance; }
+.sn .post-lead, .sn .case-lead, .sn .about__lead, .sn .pcard__ex, .sn .kit__cap { text-wrap: pretty; }
+/* palette status line while the index loads or if it fails */
+.sn .cmdk__status { padding: var(--s-2) var(--s-4); color: var(--muted); }
