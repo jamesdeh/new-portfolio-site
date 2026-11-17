@@ -26,7 +26,7 @@ export const site = {
   },
   // hidden flag trail, set in flag.mjs
   flag,
-  nowUpdated: '2026-10-16',
+  nowUpdated: '2026-11-17',
 } as const;
 
 export const pgpGroups = (fpr: string) =>
